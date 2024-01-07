@@ -10,7 +10,7 @@ const cloudinary = require("cloudinary").v2;
 const fileUpload = require("express-fileupload");
 const tmp = require("tmp");
 
-const buildpath = path.join(__dirname, "../client/build");
+const buildpath = path.join(__dirname, "../client/dist");
 app.use(express.static(buildpath));
 
 const PORT = process.env.PORT || 5000;
