@@ -4,10 +4,14 @@ const cors = require("cors");
 const connectDB = require("./connectDB");
 const app = express();
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
+const path = require("path")
 
 const cloudinary = require("cloudinary").v2;
 const fileUpload = require("express-fileupload");
 const tmp = require("tmp");
+
+const buildpath = path.join(__dirname, "../client/build");
+app.use(express.static(buildpath));
 
 const PORT = process.env.PORT || 5000;
 
