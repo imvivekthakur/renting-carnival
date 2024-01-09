@@ -25,6 +25,7 @@ const CartItems = (props) => {
             pauseOnHover: true,
             draggable: true,
           });
+          props.refreshCart();
           //   window.location.reload();
         } else {
           toast.error(`${res.payload.data.msg}`, {
@@ -59,7 +60,7 @@ const CartItems = (props) => {
             pauseOnHover: true,
             draggable: true,
           });
-
+          props.refreshCart();
           //  window.location.reload();
         } else {
           toast.error(`${res.payload.data.msg}`, {
@@ -92,6 +93,7 @@ const CartItems = (props) => {
           pauseOnHover: true,
           draggable: true,
         });
+        props.refreshCart();
         //   window.location.reload();
         return res;
       } else {
@@ -111,7 +113,7 @@ const CartItems = (props) => {
     <>
       <div className="border-secondary border-t-2 mb-4 pt-4 sm:flex sm:flex-wrap">
         <img
-          src={props.image[0]}
+          src={props.image && props.image[0]}
           alt="cart item"
           className="w-[100%]  m-2 mx-auto
          sm:w-3/12 object-cover  rounded-md  sm:order-1"

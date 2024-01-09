@@ -3,9 +3,42 @@ import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { removeFromWishlistThunk } from "../redux/wishlistSlice";
 import { ToastContainer, toast } from "react-toastify";
+import { addToCartThunk } from "../redux/cartSlice";
+
 
 const WishlistCard = ({ img, desc, price, title, productId }) => {
   const dispatch = useDispatch();
+
+  const handleAddToCart = () => {
+    dispatch(addToCartThunk({ productId }))
+      .then((res) => {
+        if (res.payload.data.success) {
+          toast.success("Product added to cart successfully!", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+        } else {
+          toast.error(`${res.payload.data.msg}`, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+        }
+        return res;
+      })
+
+      .catch((err) => {
+        toast.error("Please Login to continue");
+        return err.response;
+      });
+  };
 
   const handleRemove = () => {
     dispatch(removeFromWishlistThunk({ productId }))
@@ -55,7 +88,7 @@ const WishlistCard = ({ img, desc, price, title, productId }) => {
       </button>
       <button
         className="bg-gray-500 p-3 rounded-lg hover:bg-primary hover:text-white hover:no-underline text-white text-center m-4"
-        onClick={handleRemove}
+        onClick={handleAddToCart}
       >
         Add to Cart
       </button>

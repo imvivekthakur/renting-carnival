@@ -12,7 +12,7 @@ const Cart = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const cart2 = cart.cart;
-
+  console.log(cart2);
   const [allCart, setAllCart] = useState([]);
   const [detailedCartItems, setdetailedCartItems] = useState([]);
   const [overallTotal, setOverallTotal] = useState(0);
@@ -25,11 +25,10 @@ const Cart = () => {
     });
   }, []);
 
-  useEffect(() => {
+  const getCartItems = () => {
     dispatch(getCartThunk())
       .then((res) => {
         setAllCart(res.payload.data.cart);
-        console.log("cart items ", res.payload.data.cart);
         setdetailedCartItems(res.payload.data.detailedCartItems);
 
         const total = res.payload.data.detailedCartItems.reduce(
@@ -41,9 +40,18 @@ const Cart = () => {
         return res;
       })
       .catch((err) => {
+        console.log(err);
         return err.response;
       });
+  }
+
+  useEffect(() => {
+    getCartItems();
   }, []);
+
+  const refreshCart = () => {
+    getCartItems();
+  }
 
   const makePayment = async () => {
     const stripe = await loadStripe(
@@ -88,7 +96,7 @@ const Cart = () => {
       console.log(result.error);
     }
   };
-
+  console.log(allCart);
   return (
     <>
       <DefaultNavbar />
@@ -104,63 +112,59 @@ const Cart = () => {
           </span>
         </h1>
       </div>
-      <div className="md:w-[90%] mx-auto flex flex-wrap my-10">
-        <div className="w-[95%] mx-auto lg:w-2/3 border-2 border-primary rounded-lg overflow-hidden">
-          <div className="bg-secondary">
-            <h1 className="text-2xl font-bold px-4 py-6 w-max mx-auto">
-              Buy Cart
-            </h1>
-          </div>
-
-          {cart2 &&
-            cart2.map((card, index) => (
-              <CartItems
-                key={index}
-                quantity={card.quantity}
-                price={card.product.price}
-                name={card.product.name}
-                description={card.product.description}
-                image={card.product.productImages}
-                // owner={card.product?.owner?.name || "vivek"}
-                productId={card.product._id}
-              />
-            ))}
-        </div>
-        <div className="w-[90%] mx-auto max-w-md lg:w-1/3 bg-primary flex flex-col items-center rounded-md h-fit">
-          <div className="text-2xl font-bold text-center m-3 p-4 text-white">
-            Cart Total
-          </div>
-
-          {/* {cart2.map((card, index) => (
-            <div key={index} className="w-[90%] mx-auto font-normal max-w-xs">
-              <div className="py-1 flex justify-between">
-                <span>
-                  {card.product.name} x {card.quantity}
-                </span>{" "}
-                <span> {card.product.price * card.quantity}</span>
-              </div>
+      {cart2.length > 0 ? (
+        <div className="md:w-[90%] mx-auto flex flex-wrap my-10">
+          <div className="w-[95%] mx-auto lg:w-2/3 border-2 border-primary rounded-lg overflow-hidden">
+            <div className="bg-secondary">
+              <h1 className="text-2xl font-bold px-4 py-6 w-max mx-auto">
+                Buy Cart
+              </h1>
             </div>
-          ))} */}
 
-          {/* Display overall total */}
-          <div className="bt text-white text-center mt-10 mb-5">
-            Total: Rs {overallTotal}
+            {cart2 &&
+              cart2.map((card, index) => (
+                <CartItems
+                  refreshCart={refreshCart}
+                  key={index}
+                  quantity={card.quantity}
+                  price={card.product.price}
+                  name={card.product.name}
+                  description={card.product.description}
+                  image={card.product.productImages}
+                  owner={card.product?.owner?.name || "vivek"}
+                  productId={card.product._id}
+                />
+              ))}
           </div>
+          <div className="w-[90%] mx-auto max-w-md lg:w-1/3 bg-primary flex flex-col items-center rounded-md h-fit">
+            <div className="text-2xl font-bold text-center m-3 p-4 text-white">
+              Cart Total
+            </div>
 
-          <hr className="border-t-2 border-white my-5 w-full" />
-          <button
-            className="btn bg-white text-primary text-center hover:scale-110 duration-300 hover:shadow-2xl p-2 rounded-md cursor-pointer mb-5"
-            onClick={makePayment}
-          >
-            Checkout
-          </button>
-          <Link to="/checkout">
-            <button className="btn bg-white text-primary text-center hover:scale-110 duration-300 hover:shadow-2xl p-2 rounded-md cursor-pointer mb-5">
-              Cash on Delivery
+            {/* Display overall total */}
+            <div className="bt text-white text-center mt-10 mb-5">
+              Total: Rs {overallTotal}
+            </div>
+
+            <hr className="border-t-2 border-white my-5 w-full" />
+            <button
+              className="btn bg-white text-primary text-center hover:scale-110 duration-300 hover:shadow-2xl p-2 rounded-md cursor-pointer mb-5"
+              onClick={makePayment}
+            >
+              Checkout
             </button>
-          </Link>
+            <Link to="/checkout">
+              <button className="btn bg-white text-primary text-center hover:scale-110 duration-300 hover:shadow-2xl p-2 rounded-md cursor-pointer mb-5">
+                Cash on Delivery
+              </button>
+            </Link>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div>
+          <h1 className="text-4xl text-center my-10 text-gray-300 font-bold">Cart is Empty!!</h1>
+        </div>
+      )}
       <Footer />
     </>
   );
