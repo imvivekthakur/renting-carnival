@@ -67,7 +67,7 @@ const Wishlist = () => {
         {currentItems.map((card, index) => (
           <WishlistCard
             key={index}
-            img={card.productImage}
+            img={card.productImages}
             title={card.name}
             desc={card.description}
             price={card.price}

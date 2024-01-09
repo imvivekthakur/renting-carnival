@@ -39,7 +39,7 @@ const WishlistCard = ({ img, desc, price, title, productId }) => {
   return (
     <div className="rounded-lg overflow-hidden bg-gray-100">
       <NavLink to="/product">
-        <img src={img} alt="Bikes" className="object-cover h-64 w-full" />
+        <img src={img[0]} alt="Bikes" className="object-cover h-64 w-full" />
       </NavLink>
 
       <div className="p-3">
@@ -52,6 +52,12 @@ const WishlistCard = ({ img, desc, price, title, productId }) => {
         onClick={handleRemove}
       >
         Remove From Wishlist
+      </button>
+      <button
+        className="bg-gray-500 p-3 rounded-lg hover:bg-primary hover:text-white hover:no-underline text-white text-center m-4"
+        onClick={handleRemove}
+      >
+        Add to Cart
       </button>
       <ToastContainer />
     </div>

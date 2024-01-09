@@ -29,6 +29,7 @@ const Cart = () => {
     dispatch(getCartThunk())
       .then((res) => {
         setAllCart(res.payload.data.cart);
+        console.log("cart items ", res.payload.data.cart);
         setdetailedCartItems(res.payload.data.detailedCartItems);
 
         const total = res.payload.data.detailedCartItems.reduce(

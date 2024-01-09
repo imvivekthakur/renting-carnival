@@ -81,7 +81,7 @@ const TogglePack = () => {
   };
   const [selectedBox, setSelectedBox] = useState(null);
   const [packages, setPackages] = useState([]);
-  const [bool, setBool] = useState("Annually");
+  // const [bool, setBool] = useState("Annually");
   const [pack, setPack] = useState();
 
   const handleBoxClick = (index) => {
@@ -116,9 +116,6 @@ const TogglePack = () => {
   const handleToggleChange = () => {
     setEnabled(!enabled);
     setSelectedBox(null); // Reset selected box when changing the plan
-    setBool((prevBool) =>
-      prevBool === "Annually" ? "Half yearly" : "Annually"
-    );
   };
 
   const fetchPack = async (packageId) => {
@@ -215,30 +212,12 @@ const TogglePack = () => {
             INVESTMENT OFFERS
           </h1>
           <p className="text-primary text-md mb-5">Choose your plans</p>
-          <p className="text-gray-600 text-center">
+          <p className="text-gray-600 text-center mb-5">
             You cannot withdraw from your principal balance until at least one
             month has passed from the deposit date.
             <br /> However, you can withdraw the profits earned during this
             period.
           </p>
-          <div className="flex flex-row items-center">
-            <span className="text-lg font-medium ml-2">
-              {bool}
-              {/* {enabled ? "Annually" : "Half yearly"} */}
-            </span>
-            <label className="cursor-pointer flex items-center">
-              <input
-                type="checkbox"
-                className="sr-only peer"
-                checked={enabled}
-                readOnly
-              />
-              <div
-                onClick={handleToggleChange}
-                className={`relative m-5 mr-2 flex items-center rounded-full w-20 h-10 bg-primary peer cursor-pointer peer-focus:ring-green-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-9 after:w-10 after:transition-transform peer-checked:transform translate-x-full`}
-              ></div>
-            </label>
-          </div>
 
           <div className="flex flex-row justify-center">
             <div className="card-Annually">
@@ -266,9 +245,7 @@ const TogglePack = () => {
                         From{" "}
                         <b className="text-4xl font-bold">
                           ₹
-                          {bool === "Annually"
-                            ? pack.durations[0].price
-                            : pack.durations[1].price}
+                          {pack.price}
                         </b>
                         /month
                       </p>

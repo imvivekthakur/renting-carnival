@@ -179,12 +179,12 @@ const Product = ({ allProducts }) => {
         <div className="w-[90%] md:w-[75%] mx-auto">
           <div className="flex justify-center text-gray-500">
             <div className="m-4 text-center" onClick={() => handleClick(1)}>
-              <h1 className={`${isActive == 1 ? "font-bold" : ""}`}>
+              <h1 className={`${isActive == 1 ? "font-bold" : ""} cursor-pointer`}>
                 Description
               </h1>
             </div>
             <div
-              className={`m-4 text-center ${isActive == 2 ? "font-bold" : ""}`}
+              className={`m-4 text-center ${isActive == 2 ? "font-bold" : ""} cursor-pointer`}
               onClick={() => handleClick(2)}
             >
               Review

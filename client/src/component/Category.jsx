@@ -72,7 +72,7 @@ const Category = ({ category, allProducts }) => {
         {filteredProducts.map((product) => (
           <ProductCard
             key={product._id}
-            img={product.productImage}
+            img={product.productImages}
             title={product.name}
             desc={product.description}
             price={product.price}
