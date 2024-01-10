@@ -148,15 +148,12 @@ const Cart = () => {
             </div>
 
             <hr className="border-t-2 border-white my-5 w-full" />
-            <button
-              className="btn bg-white text-primary text-center hover:scale-110 duration-300 hover:shadow-2xl p-2 rounded-md cursor-pointer mb-5"
-              onClick={makePayment}
-            >
-              Checkout
-            </button>
+            
             <Link to="/checkout">
-              <button className="btn bg-white text-primary text-center hover:scale-110 duration-300 hover:shadow-2xl p-2 rounded-md cursor-pointer mb-5">
-                Cash on Delivery
+              <button
+                className="btn bg-white text-primary text-center hover:scale-110 duration-300 hover:shadow-2xl p-2 rounded-md cursor-pointer mb-5"
+              >
+                Checkout
               </button>
             </Link>
           </div>
