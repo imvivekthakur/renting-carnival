@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { removeFromWishlistThunk } from "../redux/wishlistSlice";
-import { ToastContainer, toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 const WishlistCard = ({ img, desc, price, title, productId }) => {
   const dispatch = useDispatch();
@@ -11,23 +11,9 @@ const WishlistCard = ({ img, desc, price, title, productId }) => {
     dispatch(removeFromWishlistThunk({ productId }))
       .then((res) => {
         if (res.payload.data.success) {
-          toast.success("Product removed from wishlist successfully!", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          });
+          toast.success("Product removed from wishlist successfully!");
         } else {
-          toast.error(`${res.payload.data.msg}`, {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          });
+          toast.error(`${res.payload.data.msg}`);
         }
         return res;
       })
@@ -53,7 +39,6 @@ const WishlistCard = ({ img, desc, price, title, productId }) => {
       >
         Remove From Wishlist
       </button>
-      <ToastContainer />
     </div>
   );
 };

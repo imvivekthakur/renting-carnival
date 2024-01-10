@@ -32,6 +32,7 @@ import AllProductsAdmin from "./admin/AllProductsAdmin";
 import AllOrders from "./admin/AllOrders";
 import ShowPackages from "./admin/ShowPackage";
 import ProductForm from "./component/CreateProduct/ProductForm";
+import { Toaster } from "react-hot-toast";
 // import ProductForm from "./component/ProductForm";
 
 function App() {
@@ -118,6 +119,7 @@ function App() {
 
           <Route path="/product/create" element={<ProductForm />} />
         </Routes>
+        <Toaster />
       </BrowserRouter>
     </>
   );

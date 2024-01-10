@@ -40,11 +40,11 @@ const TogglePack = () => {
             },
           }
         );
-        // console.log("response ", response);
         if (!response.ok) {
           throw new Error("Failed to fetch packages");
         }
         const data = await response.json();
+        console.log(data);
         // console.log(data);
         // console.log(data.packages[0]._id);
         if (data.packages.length > 0) {
@@ -81,7 +81,6 @@ const TogglePack = () => {
   };
   const [selectedBox, setSelectedBox] = useState(null);
   const [packages, setPackages] = useState([]);
-  const [bool, setBool] = useState("Annually");
   const [pack, setPack] = useState();
 
   const handleBoxClick = (index) => {
@@ -170,12 +169,15 @@ const TogglePack = () => {
       userId: user._id,
       packageId: packageId,
     };
-  
-    const res = await fetch("https://renting-carnival.onrender.com/payment/buy_package", {
-      method: "POST",
-      headers: headers,
-      body: JSON.stringify({ ...body, metadata }),
-    });
+
+    const res = await fetch(
+      "https://renting-carnival.onrender.com/payment/buy_package",
+      {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify({ ...body, metadata }),
+      }
+    );
 
     console.log("res ", res);
     const session = await res.json();
@@ -188,7 +190,7 @@ const TogglePack = () => {
 
     if (result.error) {
       console.log(result.error);
-    } 
+    }
   };
 
   // console.log(packages);
@@ -221,24 +223,6 @@ const TogglePack = () => {
             <br /> However, you can withdraw the profits earned during this
             period.
           </p>
-          <div className="flex flex-row items-center">
-            <span className="text-lg font-medium ml-2">
-              {bool}
-              {/* {enabled ? "Annually" : "Half yearly"} */}
-            </span>
-            <label className="cursor-pointer flex items-center">
-              <input
-                type="checkbox"
-                className="sr-only peer"
-                checked={enabled}
-                readOnly
-              />
-              <div
-                onClick={handleToggleChange}
-                className={`relative m-5 mr-2 flex items-center rounded-full w-20 h-10 bg-primary peer cursor-pointer peer-focus:ring-green-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-9 after:w-10 after:transition-transform peer-checked:transform translate-x-full`}
-              ></div>
-            </label>
-          </div>
 
           <div className="flex flex-row justify-center">
             <div className="card-Annually">
@@ -263,13 +247,7 @@ const TogglePack = () => {
                     </div>
                     <div className="p-2 text-center">
                       <p className="text-md">
-                        From{" "}
-                        <b className="text-4xl font-bold">
-                          ₹
-                          {bool === "Annually"
-                            ? pack.durations[0].price
-                            : pack.durations[1].price}
-                        </b>
+                        From <b className="text-4xl font-bold">₹{pack.price}</b>
                         /month
                       </p>
                       <p>
@@ -277,22 +255,6 @@ const TogglePack = () => {
                         <br /> products
                       </p>
                       <div className="my-5">
-                        {/* {userBoughtPackage === pack._id ? (
-                          <Link to="/shop">
-                            <button className="px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
-                              Browse Catalog
-                            </button>
-                          </Link>
-                        ) : (
-                          <label className="cursor-pointer px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
-                            <input
-                              type="radio"
-                              className="hidden"
-                              onClick={() => makePayment(pack._id)}
-                            />
-                            Select Plan
-                          </label>
-                        )} */}
                         <label className="cursor-pointer px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
                           <input
                             type="radio"

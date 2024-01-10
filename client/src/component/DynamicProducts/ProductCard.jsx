@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { addToCartThunk, removeFromCartThunk } from "../../redux/cartSlice";
 import {
   addToWishlistThunk,
   getWishlistThunk,
 } from "../../redux/wishlistSlice";
 import { NavLink } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const ProductCard = ({
   img,
@@ -31,23 +30,9 @@ const ProductCard = ({
     dispatch(addToCartThunk({ productId }))
       .then((res) => {
         if (res.payload.data.success) {
-          toast.success("Product added to cart successfully!", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          });
+          toast.success("Product added to cart successfully!");
         } else {
-          toast.error(`${res.payload.data.msg}`, {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          });
+          toast.error(`${res.payload.data.msg}`);
         }
         return res;
       })
@@ -62,23 +47,9 @@ const ProductCard = ({
     dispatch(addToWishlistThunk({ productId }))
       .then((res) => {
         if (res.payload.data.success) {
-          toast.success("Product added to wishlist successfully!", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          });
+          toast.success("Product added to wishlist successfully!");
         } else {
-          toast.error(`${res.payload.data.msg}`, {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          });
+          toast.error(`${res.payload.data.msg}`);
         }
         return res;
       })
@@ -92,7 +63,11 @@ const ProductCard = ({
     <div className="product-card-link">
       <div className="rounded-lg overflow-hidden bg-gray-100 product-card">
         <NavLink to={`/product/${productId}`}>
-          <img src={selectedImage} alt="Bikes" className="object-cover h-64 w-full" />
+          <img
+            src={selectedImage}
+            alt="Bikes"
+            className="object-cover h-64 w-full"
+          />
         </NavLink>
         <div className="p-4">
           <h1 className="text-lg font-bold p-1">{title}</h1>
@@ -130,7 +105,6 @@ const ProductCard = ({
           </button>
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 };
