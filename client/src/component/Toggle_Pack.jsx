@@ -81,6 +81,7 @@ const TogglePack = () => {
   };
   const [selectedBox, setSelectedBox] = useState(null);
   const [packages, setPackages] = useState([]);
+  // const [bool, setBool] = useState("Annually");
   const [pack, setPack] = useState();
 
   const handleBoxClick = (index) => {
@@ -115,9 +116,6 @@ const TogglePack = () => {
   const handleToggleChange = () => {
     setEnabled(!enabled);
     setSelectedBox(null); // Reset selected box when changing the plan
-    setBool((prevBool) =>
-      prevBool === "Annually" ? "Half yearly" : "Annually"
-    );
   };
 
   const fetchPack = async (packageId) => {
@@ -217,7 +215,7 @@ const TogglePack = () => {
             INVESTMENT OFFERS
           </h1>
           <p className="text-primary text-md mb-5">Choose your plans</p>
-          <p className="text-gray-600 text-center">
+          <p className="text-gray-600 text-center mb-5">
             You cannot withdraw from your principal balance until at least one
             month has passed from the deposit date.
             <br /> However, you can withdraw the profits earned during this

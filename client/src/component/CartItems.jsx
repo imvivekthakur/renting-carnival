@@ -6,7 +6,7 @@ import {
   getCartThunk,
   removeFromCartThunk,
 } from "../redux/cartSlice";
-import { ToastContainer, toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 const CartItems = (props) => {
   const dispatch = useDispatch();
@@ -17,24 +17,11 @@ const CartItems = (props) => {
     dispatch(addToCartThunk({ productId }))
       .then((res) => {
         if (res.payload.data.success) {
-          toast.success("Product added to cart successfully!", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          });
+          toast.success("Product added to cart successfully!");
+          props.refreshCart();
           //   window.location.reload();
         } else {
-          toast.error(`${res.payload.data.msg}`, {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          });
+          toast.error(`${res.payload.data.msg}`);
         }
 
         return res;
@@ -51,25 +38,11 @@ const CartItems = (props) => {
     dispatch(removeFromCartThunk({ productId }))
       .then((res) => {
         if (res.payload.data.success) {
-          toast.success("Product removed from cart successfully!", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          });
-
+          toast.success("Product removed from cart successfully!");
+          props.refreshCart();
           //  window.location.reload();
         } else {
-          toast.error(`${res.payload.data.msg}`, {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          });
+          toast.error(`${res.payload.data.msg}`);
         }
 
         return res;
@@ -84,25 +57,12 @@ const CartItems = (props) => {
     const productId = props.productId;
     dispatch(deleteProductThunk({ productId })).then((res) => {
       if (res.payload.data.success) {
-        toast.success("Product deleted from cart successfully!", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        });
+        toast.success("Product deleted from cart successfully!");
+        props.refreshCart();
         //   window.location.reload();
         return res;
       } else {
-        toast.error(`${res.payload.data.msg}`, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        });
+        toast.error(`${res.payload.data.msg}`);
       }
     });
   };
@@ -111,7 +71,7 @@ const CartItems = (props) => {
     <>
       <div className="border-secondary border-t-2 mb-4 pt-4 sm:flex sm:flex-wrap">
         <img
-          src={props.image[0]}
+          src={props.image && props.image[0]}
           alt="cart item"
           className="w-[100%]  m-2 mx-auto
          sm:w-3/12 object-cover  rounded-md  sm:order-1"
@@ -158,7 +118,6 @@ const CartItems = (props) => {
           </button>
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 };

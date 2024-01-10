@@ -3,9 +3,27 @@ import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { removeFromWishlistThunk } from "../redux/wishlistSlice";
 import toast from "react-hot-toast";
+import { addToCartThunk } from "../redux/cartSlice";
 
 const WishlistCard = ({ img, desc, price, title, productId }) => {
   const dispatch = useDispatch();
+
+  const handleAddToCart = () => {
+    dispatch(addToCartThunk({ productId }))
+      .then((res) => {
+        if (res.payload.data.success) {
+          toast.success("Product added to cart successfully!");
+        } else {
+          toast.error(`${res.payload.data.msg}`);
+        }
+        return res;
+      })
+
+      .catch((err) => {
+        toast.error("Please Login to continue");
+        return err.response;
+      });
+  };
 
   const handleRemove = () => {
     dispatch(removeFromWishlistThunk({ productId }))
@@ -25,7 +43,7 @@ const WishlistCard = ({ img, desc, price, title, productId }) => {
   return (
     <div className="rounded-lg overflow-hidden bg-gray-100">
       <NavLink to="/product">
-        <img src={img} alt="Bikes" className="object-cover h-64 w-full" />
+        <img src={img[0]} alt="Bikes" className="object-cover h-64 w-full" />
       </NavLink>
 
       <div className="p-3">
@@ -38,6 +56,12 @@ const WishlistCard = ({ img, desc, price, title, productId }) => {
         onClick={handleRemove}
       >
         Remove From Wishlist
+      </button>
+      <button
+        className="bg-gray-500 p-3 rounded-lg hover:bg-primary hover:text-white hover:no-underline text-white text-center m-4"
+        onClick={handleAddToCart}
+      >
+        Add to Cart
       </button>
     </div>
   );
