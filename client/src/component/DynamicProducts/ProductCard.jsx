@@ -7,6 +7,7 @@ import {
 } from "../../redux/wishlistSlice";
 import { NavLink } from "react-router-dom";
 import toast from "react-hot-toast";
+import { ColorRing } from "react-loader-spinner";
 
 const ProductCard = ({
   img,
@@ -25,13 +26,18 @@ const ProductCard = ({
     }
   }, [img]);
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+  const [loading2, setLoading2] = useState(false);
 
   const handleAddToCart = () => {
+    setLoading(true);
     dispatch(addToCartThunk({ productId }))
       .then((res) => {
         if (res.payload.data.success) {
+          setLoading(false);
           toast.success("Product added to cart successfully!");
         } else {
+          setLoading(false);
           toast.error(`${res.payload.data.msg}`);
         }
         return res;
@@ -44,11 +50,14 @@ const ProductCard = ({
   };
 
   const addToWishlistF = () => {
+    setLoading2(true);
     dispatch(addToWishlistThunk({ productId }))
       .then((res) => {
+        setLoading2(false);
         if (res.payload.data.success) {
           toast.success("Product added to wishlist successfully!");
         } else {
+          setLoading2(false);
           toast.error(`${res.payload.data.msg}`);
         }
         return res;
@@ -90,19 +99,52 @@ const ProductCard = ({
         </div>
 
         <div className="flex">
-          <button
-            onClick={handleAddToCart}
-            className="bg-primary p-3 rounded-lg hover:bg-gray-500 hover:text-white hover:no-underline text-white text-center m-4"
-          >
-            Add To Cart
-          </button>
-
-          <button
-            className="bg-gray-500 p-3 rounded-lg hover:bg-primary hover:text-white hover:no-underline text-white text-center m-4"
-            onClick={addToWishlistF}
-          >
-            Add To Wishlist
-          </button>
+          {loading ? (
+            <div className="loader-container w-[10%] mx-auto flex items-center justify-center">
+              <ColorRing
+                visible={true}
+                height="40"
+                width="40"
+                ariaLabel="color-ring-loading"
+                wrapperStyle={{
+                  display: "flex",
+                  alignItems: "center",
+                }}
+                wrapperClass="color-ring-wrapper"
+                colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
+              />
+            </div>
+          ) : (
+            <button
+              onClick={handleAddToCart}
+              className="bg-primary p-3 rounded-lg hover:bg-gray-500 hover:text-white hover:no-underline text-white text-center m-4"
+            >
+              Add To Cart
+            </button>
+          )}
+          {loading2 ? (
+            <div className="loader-container w-[10%] mx-auto flex items-center justify-center">
+              <ColorRing
+                visible={true}
+                height="40"
+                width="40"
+                ariaLabel="color-ring-loading"
+                wrapperStyle={{
+                  display: "flex",
+                  alignItems: "center",
+                }}
+                wrapperClass="color-ring-wrapper"
+                colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
+              />
+            </div>
+          ) : (
+            <button
+              className="bg-gray-500 p-3 rounded-lg hover:bg-primary hover:text-white hover:no-underline text-white text-center m-4"
+              onClick={addToWishlistF}
+            >
+              Add To Wishlist
+            </button>
+          )}
         </div>
       </div>
     </div>

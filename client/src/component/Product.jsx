@@ -7,8 +7,9 @@ import Review from "./Review";
 import { useParams } from "react-router-dom";
 import ProductCard from "./DynamicProducts/ProductCard";
 import { addToCartThunk } from "../redux/cartSlice";
-import { ToastContainer, toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
+import { ColorRing } from "react-loader-spinner";
 
 const Product = ({ allProducts }) => {
   useEffect(() => {
@@ -23,7 +24,7 @@ const Product = ({ allProducts }) => {
   const [isActive, setIsActive] = useState(1);
   const [product, setProduct] = useState({});
 
-  const [selectedImage, setSelectedImage] = useState('');
+  const [selectedImage, setSelectedImage] = useState("");
 
   const dispatch = useDispatch();
 
@@ -32,23 +33,9 @@ const Product = ({ allProducts }) => {
     dispatch(addToCartThunk({ productId }))
       .then((res) => {
         if (res.payload.data.success) {
-          toast.success("Product added to cart successfully!", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          });
+          toast.success("Product added to cart successfully!");
         } else {
-          toast.error(`${res.payload.data.msg}`, {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          });
+          toast.error(`${res.payload.data.msg}`);
         }
         return res;
       })
@@ -58,7 +45,6 @@ const Product = ({ allProducts }) => {
         return err.response;
       });
   };
-
 
   useEffect(() => {
     // Set the initial selected image when the product details load
@@ -115,6 +101,12 @@ const Product = ({ allProducts }) => {
     fetchProductDetails();
   }, []);
 
+  function isObjectEmpty(obj) {
+    return Object.getOwnPropertyNames(obj).length === 0;
+  }
+
+  console.log(isObjectEmpty(product));
+
   return (
     <>
       <DefaultNavbar />
@@ -131,60 +123,92 @@ const Product = ({ allProducts }) => {
         </h1>
       </div>
       <div className="w-[90%] mx-auto mt-6">
-        <div className="flex flex-wrap pb-4 mb-4 border-b-2">
-          <div className="md:flex gap-2 w-full lg:w-1/2">
-            <div className="flex md:block">
-              {product?.productImages?.map((image, index) => (
-                <img
-                  key={index}
-                  className="h-12 w-16 m-1 overflow-hidden md:m-4 rounded-md cursor-pointer"
-                  src={image}
-                  alt={`product-${index}`}
-                  onClick={() => handleImageClick(image)}
-                />
-              ))}
-            </div>
-            <div className="w-full">
-              <img
-                className="md:m-4 h-80 object-contain rounded-lg w-full block"
-                src={selectedImage || product?.productImage}
-                alt="product"
-              />
-            </div>
-          </div>
-          <div className="lg:w-1/2">
-            <div className="md:w-[90%] mx-auto my-4 md:mx-10">
-              <h1 className="text-xl font-bold">{product.name}</h1>
-              <div className="text-sm text-gray-500">Rs {product.price}</div>
-              <div>
-                <Rate
-                  value={product.rating || 4}
-                  disabled
-                  className="text-sm"
-                />
+        {!isObjectEmpty(product) ? (
+          <>
+            <div className="flex flex-wrap pb-4 mb-4 border-b-2">
+              <div className="md:flex gap-2 w-full lg:w-1/2">
+                <div className="flex md:block">
+                  {product?.productImages?.map((image, index) => (
+                    <img
+                      key={index}
+                      className="h-12 w-16 m-1 overflow-hidden md:m-4 rounded-md cursor-pointer"
+                      src={image}
+                      alt={`product-${index}`}
+                      onClick={() => handleImageClick(image)}
+                    />
+                  ))}
+                </div>
+                <div className="w-full">
+                  <img
+                    className="md:m-4 h-80 object-contain rounded-lg w-full block"
+                    src={selectedImage || product?.productImage}
+                    alt="product"
+                  />
+                </div>
               </div>
-              <p className="text-sm">{product.description}</p>
+              <div className="lg:w-1/2">
+                <div className="md:w-[90%] mx-auto my-4 md:mx-10">
+                  <h1 className="text-xl font-bold">{product.name}</h1>
+                  <div className="text-sm text-gray-500">
+                    Rs {product.price}
+                  </div>
+                  <div>
+                    <Rate
+                      value={product.rating || 4}
+                      disabled
+                      className="text-sm"
+                    />
+                  </div>
+                  <p className="text-sm">{product.description}</p>
 
-              <div className="flex mt-4">
-                <div>
-                  <button className="mt-2 w-24 text-xs md:text-sm md:w-32 mr-2 md:mr-6 border-2 rounded-lg p-2 text-primary border-primary hover:text-white hover:bg-primary font-bold" onClick={handleAddToCart}>
-                    Add To Cart
-                  </button>
+                  <div className="flex mt-4">
+                    <div>
+                      <button
+                        className="mt-2 w-24 text-xs md:text-sm md:w-32 mr-2 md:mr-6 border-2 rounded-lg p-2 text-primary border-primary hover:text-white hover:bg-primary font-bold"
+                        onClick={handleAddToCart}
+                      >
+                        Add To Cart
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+          </>
+        ) : (
+          <>
+            <div className="loader-container w-full h-full flex items-center justify-center">
+              <ColorRing
+                visible={true}
+                height="80"
+                width="80"
+                ariaLabel="color-ring-loading"
+                wrapperStyle={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  minHeight: "200px", // Add this line to set a minimum height
+                }}
+                wrapperClass="color-ring-wrapper"
+                colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
+              />
+            </div>
+          </>
+        )}
 
         <div className="w-[90%] md:w-[75%] mx-auto">
           <div className="flex justify-center text-gray-500">
             <div className="m-4 text-center" onClick={() => handleClick(1)}>
-              <h1 className={`${isActive == 1 ? "font-bold" : ""} cursor-pointer`}>
+              <h1
+                className={`${isActive == 1 ? "font-bold" : ""} cursor-pointer`}
+              >
                 Description
               </h1>
             </div>
             <div
-              className={`m-4 text-center ${isActive == 2 ? "font-bold" : ""} cursor-pointer`}
+              className={`m-4 text-center ${
+                isActive == 2 ? "font-bold" : ""
+              } cursor-pointer`}
               onClick={() => handleClick(2)}
             >
               Review
@@ -243,7 +267,6 @@ const Product = ({ allProducts }) => {
           </div>
         </div>
       </div>
-      <ToastContainer/>
       <Footer />
     </>
   );

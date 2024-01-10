@@ -67,6 +67,7 @@ const Shop = ({ allProducts }) => {
   const endIndex = startIndex + itemsPerPage;
   const currentProducts = filteredProduct.slice(startIndex, endIndex);
 
+  console.log(currentProducts);
   return (
     <>
       <DefaultNavbar />
@@ -143,19 +144,20 @@ const Shop = ({ allProducts }) => {
         </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 w-[90%] mx-auto">
-        {currentProducts ? (
+        {currentProducts.length > 0 ? (
           currentProducts.map((card, index) => (
-            <ProductCard
-              key={card._id}
-              img={card.productImages}
-              title={card.name}
-              desc={card.description}
-              price={card.price}
-              stock={card.stock}
-              category={card.category}
-              seller={card.owner.name}
-              productId={card._id}
-            />
+            <div className="mt-20" key={card._id}>
+              <ProductCard
+                img={card.productImages}
+                title={card.name}
+                desc={card.description}
+                price={card.price}
+                stock={card.stock}
+                category={card.category}
+                seller={card.owner.name}
+                productId={card._id}
+              />
+            </div>
           ))
         ) : (
           <div className="loader-container w-full h-full flex items-center justify-center">
@@ -168,6 +170,7 @@ const Shop = ({ allProducts }) => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                minHeight: "200px", // Add this line to set a minimum height
               }}
               wrapperClass="color-ring-wrapper"
               colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}

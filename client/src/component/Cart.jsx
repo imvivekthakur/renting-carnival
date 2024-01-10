@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCartThunk } from "../redux/cartSlice";
 import { loadStripe } from "@stripe/stripe-js";
 import { Link } from "react-router-dom";
+import empty from "../assets/empty2.webp";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -43,7 +44,7 @@ const Cart = () => {
         console.log(err);
         return err.response;
       });
-  }
+  };
 
   useEffect(() => {
     getCartItems();
@@ -51,7 +52,7 @@ const Cart = () => {
 
   const refreshCart = () => {
     getCartItems();
-  }
+  };
 
   const makePayment = async () => {
     const stripe = await loadStripe(
@@ -161,8 +162,16 @@ const Cart = () => {
           </div>
         </div>
       ) : (
-        <div>
-          <h1 className="text-4xl text-center my-10 text-gray-300 font-bold">Cart is Empty!!</h1>
+        <div className="flex flex-col items-center">
+          <h1 className="text-4xl text-center my-10 text-gray-300 font-bold">
+            Cart is Empty!!
+          </h1>
+          <img src={empty} alt="" />
+          <Link to="/shop">
+            <button className="bg-primary p-3 rounded-lg hover:bg-gray-500 hover:text-white hover:no-underline text-white text-center m-4">
+              Continue Shopping
+            </button>
+          </Link>
         </div>
       )}
       <Footer />
