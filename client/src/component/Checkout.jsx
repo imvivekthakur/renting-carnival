@@ -13,10 +13,14 @@ const Checkout = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const cart2 = cart.cart;
+  // console.log("cart2  ", cart2);
+  // console.log("cart ", cart);
+  // console.log("cart ", cart._id);
 
   const [allCart, setAllCart] = useState([]);
   const [detailedCartItems, setdetailedCartItems] = useState([]);
   const [overallTotal, setOverallTotal] = useState(0);
+  const [cartId, setCartId] = useState("");
 
   useEffect(() => {
     // Scroll to the top when the component mounts
@@ -29,6 +33,8 @@ const Checkout = () => {
   useEffect(() => {
     dispatch(getCartThunk())
       .then((res) => {
+        setCartId(res.payload.data.cartId);
+        console.log(res.payload.data.cartId);
         setAllCart(res.payload.data.cart);
         setdetailedCartItems(res.payload.data.detailedCartItems);
 
@@ -92,6 +98,9 @@ const Checkout = () => {
       }
       console.log("Order placed:", data);
       toast.success("Order placed successfully!!")
+      
+      const cartToDelete = cartId;
+      deleteCart(cartToDelete)
       setFormData({
         firstName: "",
         lastName: "",
@@ -110,6 +119,39 @@ const Checkout = () => {
       // Handle error state
     }
   };
+
+  const deleteCart = async (cartId) => {
+    try {
+      let accessToken = await JSON.parse(localStorage.getItem("userInfo"))
+        .accessToken;
+  
+      const response = await fetch(
+        `https://renting-carnival.onrender.com/cart/delete/${cartId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+  
+      const data = await response.json();
+      if (!data.success) {
+        console.log("Error deleting cart");
+        toast.error("Error deleting cart");
+        return;
+      }
+  
+      console.log("Cart deleted successfully");
+      // Optionally handle success state or UI changes after cart deletion
+    } catch (error) {
+      console.error("Error occurred while deleting cart:", error);
+      toast.error("Error occurred while deleting cart");
+      // Handle error state
+    }
+  };
+  
 
   const makePayment = async () => {
     const stripe = await loadStripe(

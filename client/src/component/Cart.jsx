@@ -54,49 +54,6 @@ const Cart = () => {
     getCartItems();
   };
 
-  const makePayment = async () => {
-    const stripe = await loadStripe(
-      "pk_test_51OUUpPSAXRW2sHukUtP8nHfxLnDC2pX0pgP0LdWW0BEUdWQh5txtBTux9yPvNiWGQYDyqYBqBOYhn4Ej1Con6LU300fMfqNxOi"
-    );
-    const body = {
-      products: cart2,
-      customer: {
-        name: "John Doe",
-        address: {
-          line1: "123 Main St",
-          city: "New Delhi",
-          state: "Delhi",
-          postal_code: "110043",
-          country: "IN",
-        },
-      },
-    };
-
-    const user = JSON.parse(localStorage.getItem("userInfo"));
-
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${user.accessToken}`,
-    };
-
-    const res = await fetch(
-      "https://renting-carnival.onrender.com/payment/checkout",
-      {
-        method: "POST",
-        headers: headers,
-        body: JSON.stringify(body),
-      }
-    );
-
-    const session = await res.json();
-    const result = stripe.redirectToCheckout({
-      sessionId: session.id,
-    });
-
-    if (result.error) {
-      console.log(result.error);
-    }
-  };
   console.log(allCart);
   return (
     <>
