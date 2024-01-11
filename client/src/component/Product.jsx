@@ -4,11 +4,12 @@ import Products from "./Products";
 import DefaultNavbar from "./Default_Navbar";
 import Footer from "./Footer";
 import Review from "./Review";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ProductCard from "./DynamicProducts/ProductCard";
 import { addToCartThunk } from "../redux/cartSlice";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
+import empty from "../assets/empty2.webp";
 import { ColorRing } from "react-loader-spinner";
 
 const Product = ({ allProducts }) => {
@@ -23,9 +24,8 @@ const Product = ({ allProducts }) => {
   const { productId } = useParams();
   const [isActive, setIsActive] = useState(1);
   const [product, setProduct] = useState({});
-
+  const [similarProducts, setSimilarProducts] = useState([]);
   const [selectedImage, setSelectedImage] = useState("");
-
   const dispatch = useDispatch();
 
   const handleAddToCart = () => {
@@ -61,13 +61,15 @@ const Product = ({ allProducts }) => {
     setIsActive(index);
   };
 
-  const [similarProducts, setSimilarProducts] = useState([]);
-
   useEffect(() => {
-    filterSimilarProducts(product);
+    if (!isObjectEmpty(product)) {
+      console.log("in the use effec hook", product);
+      filterSimilarProducts(product);
+    }
   }, [product]);
 
   const filterSimilarProducts = (product) => {
+    console.log("inside filter similar products ");
     if (product && allProducts && allProducts.length > 0) {
       const arr = allProducts
         .filter(
@@ -78,6 +80,7 @@ const Product = ({ allProducts }) => {
       const similar = allProducts.filter(
         (item) => item.category === product.category && item._id !== product._id
       );
+      console.log("similar products", similar);
       setSimilarProducts(similar);
     }
   };
@@ -164,7 +167,7 @@ const Product = ({ allProducts }) => {
                   <div className="flex mt-4">
                     <div>
                       <button
-                        className="mt-2 w-24 text-xs md:text-sm md:w-32 mr-2 md:mr-6 border-2 rounded-lg p-2 text-primary border-primary hover:text-white hover:bg-primary font-bold"
+                        className="bg-primary p-3 rounded-lg hover:bg-gray-500 hover:text-white hover:no-underline text-white text-center my-4"
                         onClick={handleAddToCart}
                       >
                         Add To Cart
@@ -251,20 +254,31 @@ const Product = ({ allProducts }) => {
           <h1 className="text-2xl text-center font-bold mt-10 mb-5">
             Related Products
           </h1>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8 w-[90%] mx-auto mt-5 pt-5 mb-5 ">
-            {similarProducts.map((card) => (
-              <ProductCard
-                key={card.productId} // Remember to provide a unique key for list items
-                img={card.productImage}
-                desc={card.description}
-                price={card.price}
-                stock={card.stock}
-                productCard={card.productId}
-                seller={card.owner.name}
-                category={card.category}
-              />
-            ))}
-          </div>
+          {similarProducts ? (
+            <>
+              <div className="flex justify-center">
+                <img src={empty} alt="no similar products found" />
+              </div>
+              <div className="text-center mb-10">
+              <Link to="/shop" className="bg-primary p-3 rounded-lg hover:bg-gray-500 hover:text-white hover:no-underline text-white text-center m-4 px-6">Shop</Link>
+              </div>
+            </>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8 w-[90%] mx-auto mt-5 pt-5 mb-5">
+              {similarProducts.map((card) => (
+                <ProductCard
+                  key={card._id}
+                  img={card.productImage}
+                  desc={card.description}
+                  price={card.price}
+                  stock={card.stock}
+                  productCard={card.productId}
+                  seller={card.owner.name}
+                  category={card.category}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
       <Footer />

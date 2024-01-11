@@ -104,7 +104,8 @@ const TogglePack = () => {
           }
         );
         const data = await response.json();
-        setPackages(data.packages);
+        const packages = data.packages.toSorted((a,b) => a.price - b.price);
+        setPackages(packages);
       } catch (error) {
         console.error("Error fetching packages:", error);
       }
@@ -113,10 +114,10 @@ const TogglePack = () => {
     fetchPackages();
   }, []);
 
-  const handleToggleChange = () => {
-    setEnabled(!enabled);
-    setSelectedBox(null); // Reset selected box when changing the plan
-  };
+  // const handleToggleChange = () => {
+  //   setEnabled(!enabled);
+  //   setSelectedBox(null); 
+  // };
 
   const fetchPack = async (packageId) => {
     try {
@@ -135,7 +136,7 @@ const TogglePack = () => {
 
       if (response.ok) {
         const data = await response.json();
-        setPack(data.package);
+        setPack(packages);
       } else {
         console.error("Failed to fetch users");
       }

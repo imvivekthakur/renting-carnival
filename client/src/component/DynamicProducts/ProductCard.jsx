@@ -71,7 +71,7 @@ const ProductCard = ({
   // console.log("images ", img);
   return (
     <div className="product-card-link">
-      <div className="rounded-lg overflow-hidden bg-gray-100 product-card h-[40rem]">
+      <div className="rounded-lg overflow-hidden bg-gray-100 product-card h-[34rem]">
         <div className="hover-button">
           {(loading || loading2) && (
             <div className="loader-container hover-button ">
