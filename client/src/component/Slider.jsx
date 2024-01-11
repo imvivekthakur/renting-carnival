@@ -24,7 +24,7 @@ const customStyles = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    // backgroundColor: "rgba(0, 0, 0, 0.5)",
     zIndex: 1000,
   },
   content: {
@@ -52,7 +52,7 @@ const overlayStyle = {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  backgroundColor: "rgba(0, 0, 0, 0.5)",
+  // backgroundColor: "rgba(0, 0, 0, 0.5)",
   color: "white",
   fontSize: "24px",
   zIndex: 2,
@@ -81,10 +81,8 @@ const Slider = () => {
     setIsOpen1(false);
   }
   return (
-    <>
-      <Carousel interval={1000} showIndicators={false}>
-        <div style={{ position: "relative", height: "600px" }}>
-          <div style={overlayStyle}>
+    <div style={{position: "relative"}}>
+      <div style={overlayStyle}>
             <div
               id="box"
               className="text-left p-5 sm:p-8 md:p-10 lg:p-12 xl:p-16 mt-10 rounded-lg"
@@ -148,11 +146,11 @@ const Slider = () => {
                     <Rent className="z-100" />
                   </div>
                 </Modal>
-
-                
               </div>
             </div>
           </div>
+      <Carousel interval={1000} showIndicators={false}>
+        <div style={{ height: "600px", background: "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 100%)", }}>
           <img src={slider1} style={imageStyle} alt="Slider 1" />
         </div>
         <div style={{ position: "relative", height: "600px" }}>
@@ -168,7 +166,7 @@ const Slider = () => {
           <img src={slider5} style={imageStyle} alt="Slider 5" />
         </div>
       </Carousel>
-    </>
+    </div>
   );
 };
 
