@@ -7,7 +7,7 @@ import { ColorRing } from "react-loader-spinner";
 
 const Deals = ({ allProducts }) => {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 3000 },
@@ -28,11 +28,9 @@ const Deals = ({ allProducts }) => {
   };
 
   useEffect(() => {
-    console.log("in the use effect hook");
-    if (allProducts && allProducts.length > 0) {
-      console.log("getting all products ");
+    if (allProducts && allProducts.length  > 0) {
       setProducts(allProducts);
-      setLoading(false);
+      setLoading(true);
     }
   }, [allProducts]);
 
@@ -41,8 +39,8 @@ const Deals = ({ allProducts }) => {
       <div className="text-center text-primary text-4xl font-bold my-10">
         Steal Deals on Rental Items
       </div>
-      <div >
-        {loading ? (
+      <div className="mb-8">
+        {!loading ? (
           <div className="loader-container w-[10%] mx-auto flex items-center justify-center">
             <ColorRing
               visible={true}

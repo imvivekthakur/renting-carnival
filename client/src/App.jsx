@@ -34,6 +34,8 @@ import ShowPackages from "./admin/ShowPackage";
 import ProductForm from "./component/CreateProduct/ProductForm";
 import { Toaster } from "react-hot-toast";
 import Vehicle from "./component/Vehicle";
+import Combos from "./component/Combos";
+import RentalSubscription from "./component/RentalSubscription";
 // import ProductForm from "./component/ProductForm";
 
 function App() {
@@ -81,6 +83,7 @@ function App() {
           <Route path="/otp-verify" element={<OTPVerification />} />
           <Route path="/allProducts" element={<DynamicProducts />} />
           <Route path="/admin/allProducts" element={<AllProductsAdmin />} />
+          <Route path="/combos" element={<Combos allProducts={allProducts}/>}/>
 
           <Route path="/review" element={<Review />} />
           <Route path="/wishlist" element={<Wishlist />} />
@@ -89,6 +92,7 @@ function App() {
           <Route path="/orders" element={<AllOrders />} />
           <Route path="/user/package" element={<ShowPackages />} />
           <Route path="/vehicle" element={<Vehicle/>}/>
+          <Route path="/rentalsubscription" element={<RentalSubscription/>}/> 
 
           {/* <Route path="/furniture" element={<Furniture filteredProduct={allProducts}/>} /> */}
           <Route
