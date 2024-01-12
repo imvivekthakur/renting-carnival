@@ -152,7 +152,7 @@ const DefaultNavbar = () => {
                   Blog
                 </NavLink>
               </li>
-              <li className="mb-2 md:mb-0">
+              <li className="mb-2 md:mb-0 w-52">
                 <NavLink
                   to="/contact"
                   className="nav-link"
