@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import DefaultNavbar from './Default_Navbar'
 import Footer from './Footer'
 import Trend from './Trend'

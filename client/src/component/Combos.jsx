@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Deals from "./Deals";
 import DefaultNavbar from "./Default_Navbar";
 import Footer from "./Footer";
