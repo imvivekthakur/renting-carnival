@@ -6,6 +6,13 @@ import Working from './Working'
 import RentalSubscription from './RentalSubscription'
 
 const Vehicle = () => {
+  useEffect(() => {
+    // Scroll to the top when the component mounts
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
   return (
     <>
         <DefaultNavbar/>

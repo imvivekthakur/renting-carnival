@@ -100,7 +100,6 @@ const TogglePack = () => {
           {
             headers: {
               "Content-type": "application/json",
-              Authorization: `Bearer ${user.accessToken}`,
             },
           }
         );

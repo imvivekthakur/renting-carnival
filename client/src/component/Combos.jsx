@@ -4,7 +4,13 @@ import DefaultNavbar from "./Default_Navbar";
 import Footer from "./Footer";
 
 const Combos = ({allProducts}) => {
-    
+  useEffect(() => {
+    // Scroll to the top when the component mounts
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
   return (
     <>
       <DefaultNavbar />

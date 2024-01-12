@@ -83,10 +83,10 @@ const Shop = ({ allProducts }) => {
           </span>
         </h1>
       </div>
-      <div className="text-sm w-[90%] mx-auto my-8">
+      <div className="text-sm w-[90%] mx-auto mt-8">
         <div>
           <button
-            className={`mr-4 border-2 border-primary px-4 py-2 rounded-full ${
+            className={`mr-4 mt-4 border-2 border-primary px-4 py-2 rounded-full ${
               selectedCategory === "popular" ? "bg-primary text-white" : ""
             }`}
             onClick={() => setSelectedCategory("popular")}
@@ -94,7 +94,7 @@ const Shop = ({ allProducts }) => {
             Popular
           </button>
           <button
-            className={`mr-4 border-2 border-primary px-4 py-2 rounded-full ${
+            className={`mr-4 mt-4 border-2 border-primary px-4 py-2 rounded-full ${
               selectedCategory === "Furniture" ? "bg-primary text-white" : ""
             }`}
             onClick={() => setSelectedCategory("Furniture")}
@@ -102,7 +102,7 @@ const Shop = ({ allProducts }) => {
             Furniture
           </button>
           <button
-            className={`mr-4 border-2 border-primary px-4 py-2 rounded-full ${
+            className={`mr-4 mt-4 border-2 border-primary px-4 py-2 rounded-full ${
               selectedCategory === "Decorative Items"
                 ? "bg-primary text-white"
                 : ""
@@ -112,7 +112,7 @@ const Shop = ({ allProducts }) => {
             Decorative Items
           </button>
           <button
-            className={`mr-4 border-2 border-primary px-4 py-2 rounded-full ${
+            className={`mr-4 mt-4 border-2 border-primary px-4 py-2 rounded-full ${
               selectedCategory === "Vehicles" ? "bg-primary text-white" : ""
             }`}
             onClick={() => setSelectedCategory("Vehicles")}
@@ -122,11 +122,11 @@ const Shop = ({ allProducts }) => {
         </div>
         <br />
         <div>
-          <button className="mr-4 border-2 border-primary px-4 py-2 rounded-full">
+          <button className="mr-4 mt-4 border-2 border-primary px-4 py-2 rounded-full">
             Sort by :
           </button>
           <button
-            className={`mr-4 border-2 border-primary px-4 py-2 rounded-full ${
+            className={`mr-4 mt-4 border-2 border-primary px-4 py-2 rounded-full ${
               display == 1 ? "bg-primary text-white" : ""
             }`}
             onClick={() => setDisplay(1)}
@@ -134,7 +134,7 @@ const Shop = ({ allProducts }) => {
             Low to High
           </button>
           <button
-            className={`mr-4 border-2 border-primary px-4 py-2 rounded-full ${
+            className={`mr-4 mt-4 border-2 border-primary px-4 py-2 rounded-full ${
               display == 2 ? "bg-primary text-white" : ""
             }`}
             onClick={() => setDisplay(2)}
