@@ -8,11 +8,17 @@ const handleStripeWebhook = async (req, res, next) => {
   let event;
 
   try {
+    const rawBody = JSON.stringify(req.body); // Convert the body to a string
     event = stripe.webhooks.constructEvent(
-      req.rawBody,
+      rawBody,
       sig,
       "whsec_OTZZVRTAmLbZHiwGrNTVgwHgGeKPrwxF"
     );
+    console.log(event);
+
+    console.log("Raw Body:", req.rawBody); // Check if rawBody contains the expected payload
+    console.log("Signature:", sig); // Verify signature
+    console.log("Expected Secret:", "whsec_OTZZVRTAmLbZHiwGrNTVgwHgGeKPrwxF");
   } catch (err) {
     console.error(err);
     return res.status(400).send(`Webhook Error: ${err.message}`);

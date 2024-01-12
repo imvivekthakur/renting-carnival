@@ -59,16 +59,28 @@ const paymentMethodPackage = async (req, res, next) => {
       next(new ErrorHandler(400, "package not found"));
     }
 
-    const lineItems = selectedPackage.durations.map((duration) => ({
-      price_data: {
-        currency: "inr",
-        product_data: {
-          name: `${selectedPackage.name} - ${duration.durationType} (${duration.price} INR)`,
+    // const lineItems = selectedPackage.durations.map((duration) => ({
+    //   price_data: {
+    //     currency: "inr",
+    //     product_data: {
+    //       name: ${selectedPackage.name} - ${duration.durationType} (${duration.price} INR),
+    //     },
+    //     unit_amount: Math.round(duration.price * 100),
+    //   },
+    //   quantity: 1,
+    // }));
+    const lineItems = [
+      {
+        price_data: {
+          currency: "inr",
+          product_data: {
+            name: `${selectedPackage.name}`,
+          },
+          unit_amount: Math.round(selectedPackage.price * 100),
         },
-        unit_amount: Math.round(duration.price * 100),
+        quantity: 1,
       },
-      quantity: 1,
-    }));
+    ];
 
     console.log("line items ", lineItems);
 

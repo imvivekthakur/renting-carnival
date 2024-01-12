@@ -43,9 +43,10 @@ const addToCart = async (req, res, next) => {
     if (!cart) {
       cart = await Cart.create({ user: userId, items: [] });
     }
-    const cartItem = cart.items.find((item) => item.product && item.product.equals(product._id));
-    console.log("items ", cartItem)
-
+    const cartItem = cart?.items.find(
+      (item) => item.product && item.product.equals(product._id)
+    );
+    console.log("items ", cartItem);
 
     console.log(cartItem);
 
@@ -60,36 +61,35 @@ const addToCart = async (req, res, next) => {
 
     console.log(cartItem, "cartitem");
 
-    if (user.boughtPackages.length === 0) {
-      return next(new ErrorHandler(400, "User has not bought any package"));
-    }
+    if (user.boughtPackages.length > 0) {
+      const userPackage = await Package.find({
+        _id: { $in: user.boughtPackages },
+      });
+      const maxItemsAllowed = userPackage.numberOfProducts;
+      const maxPriceLimit = userPackage?.price;
 
-    const userPackage = await Package.findById(user.boughtPackages[0]);
+      console.log(maxItemsAllowed, "maxItemsAllowed");
 
-    const maxItemsAllowed = userPackage.numberOfProducts;
-    const maxPriceLimit = userPackage.durations[0].price;
+      // Check if adding this product exceeds the maximum number of items allowed
+      if (cart.items.length >= maxItemsAllowed) {
+        return next(
+          new ErrorHandler(400, "Exceeded maximum number of items allowed")
+        );
+      }
 
-    console.log(maxItemsAllowed, "maxItemsAllowed");
-
-    // Check if adding this product exceeds the maximum number of items allowed
-    if (cart.items.length >= maxItemsAllowed) {
-      return next(
-        new ErrorHandler(400, "Exceeded maximum number of items allowed")
+      // Calculate the total price in the cart
+      const totalPriceInCart = cart.items.reduce(
+        (total, item) => total + item.product.price * item.quantity,
+        0
       );
-    }
 
-    // Calculate the total price in the cart
-    const totalPriceInCart = cart.items.reduce(
-      (total, item) => total + item.product.price * item.quantity,
-      0
-    );
+      const productPrice = product.price;
 
-    const productPrice = product.price;
-
-    if (totalPriceInCart + productPrice > maxPriceLimit) {
-      return next(
-        new ErrorHandler(400, "Adding this product exceeds price limit")
-      );
+      if (totalPriceInCart + productPrice > maxPriceLimit) {
+        return next(
+          new ErrorHandler(400, "Adding this product exceeds price limit")
+        );
+      }
     }
     await cart.save();
 
@@ -185,10 +185,8 @@ const getAllProducts = async (req, res, next) => {
       user: userId,
     }).populate({
       path: "items.product",
-      populate: {
-        path: "owner",
-        select: "name",
-      },
+      model: "Product",
+      select: "name price owner category productImages",
     });
     if (!cart) {
       return res.status(200).json({
@@ -198,6 +196,7 @@ const getAllProducts = async (req, res, next) => {
         msg: "Cart is empty",
       });
     }
+    console.log(cart);
 
     const detailedCartItems = [];
 
@@ -225,6 +224,7 @@ const getAllProducts = async (req, res, next) => {
       success: true,
       cart: cart.items,
       total: total,
+      cartId: cart._id,
       msg: "Products in the cart",
       detailedCartItems: detailedCartItems,
     });
@@ -282,9 +282,31 @@ const deleteProduct = async (req, res, next) => {
   }
 };
 
+const deleteCart = async (req, res, next) => {
+  try {
+    const cartId = req.params.cartId;
+
+    const cart = await Cart.findById(cartId);
+    if (!cart) {
+      next(new ErrorHandler(404, "Cart not found"));
+    }
+
+    await Cart.findByIdAndDelete(cartId);
+
+    return res.status(200).json({
+      success: true,
+      msg: "Cart deleted",
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
 module.exports = {
   addToCart,
   removeFromCart,
   getAllProducts,
   deleteProduct,
+  deleteCart,
 };

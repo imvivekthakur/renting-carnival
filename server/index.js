@@ -4,15 +4,11 @@ const cors = require("cors");
 const connectDB = require("./connectDB");
 const app = express();
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
-const path = require("path")
+const bodyParser = require("body-parser");
 
 const cloudinary = require("cloudinary").v2;
 const fileUpload = require("express-fileupload");
 const tmp = require("tmp");
-
-const _dirname = path.dirname(""); 
-const buildpath = path.join(__dirname, "../client/dist");
-app.use(express.static(buildpath));
 
 const PORT = process.env.PORT || 5000;
 
@@ -51,6 +47,7 @@ cloudinary.config({
 
 app.use(express.static(__dirname + "/public"));
 app.use("/uploads", express.static("uploads"));
+app.use(bodyParser.raw({ type: "application/json" }));
 
 // Start the server
 app.listen(PORT, () => {
@@ -75,8 +72,8 @@ app.use("/package", packageRoutes, errorMiddleware);
 app.use("/admin", adminRoutes, errorMiddleware);
 app.use("/payment", paymentRoutes, errorMiddleware);
 
-app.use("/order", orderRoutes, errorMiddleware)
-app.use("/stripe", stripeRoutes, errorMiddleware)
+app.use("/order", orderRoutes, errorMiddleware);
+app.use("/stripe", stripeRoutes, errorMiddleware);
 
 app.use("/order", orderRoutes, errorMiddleware);
 
