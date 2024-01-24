@@ -36,6 +36,7 @@ import { Toaster } from "react-hot-toast";
 import Vehicle from "./component/Vehicle";
 import Combos from "./component/Combos";
 import RentalSubscription from "./component/RentalSubscription";
+import BlogForm from "./component/CreateBlog/BlogForm";
 // import ProductForm from "./component/ProductForm";
 
 function App() {
@@ -83,7 +84,7 @@ function App() {
           <Route path="/otp-verify" element={<OTPVerification />} />
           <Route path="/allProducts" element={<DynamicProducts />} />
           <Route path="/admin/allProducts" element={<AllProductsAdmin />} />
-          <Route path="/combos" element={<Combos allProducts={allProducts}/>}/>
+          <Route path="/combos" element={<Combos allProducts={allProducts} />} />
 
           <Route path="/review" element={<Review />} />
           <Route path="/wishlist" element={<Wishlist />} />
@@ -91,8 +92,8 @@ function App() {
           <Route path="/failure" element={<Failure />} />
           <Route path="/orders" element={<AllOrders />} />
           <Route path="/user/package" element={<ShowPackages />} />
-          <Route path="/vehicle" element={<Vehicle/>}/>
-          <Route path="/rentalsubscription" element={<RentalSubscription/>}/> 
+          <Route path="/vehicle" element={<Vehicle />} />
+          <Route path="/rentalsubscription" element={<RentalSubscription />} />
 
           {/* <Route path="/furniture" element={<Furniture filteredProduct={allProducts}/>} /> */}
           <Route
@@ -124,6 +125,8 @@ function App() {
           <Route path="/allUsers" element={<AllUsers />} />
 
           <Route path="/product/create" element={<ProductForm />} />
+          <Route path="/blog/create" element={<BlogForm />} />
+
         </Routes>
         <Toaster />
       </BrowserRouter>

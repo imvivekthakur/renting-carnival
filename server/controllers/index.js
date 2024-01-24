@@ -11,3 +11,4 @@ module.exports.adminController = require("./adminController");
 module.exports.paymentController = require("./paymentController");
 module.exports.orderController = require("./orderController");
 module.exports.stripeWebhookController = require("./stripeWebhookController")
+module.exports.blogController = require("./blogController")
