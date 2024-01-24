@@ -9,6 +9,7 @@ import contactReducer from "./contactSlice";
 import productReducer from "./productSlice";
 import cartReducer from "./cartSlice";
 import wishlistReducer from "./wishlistSlice";
+import blogReducer from "./blogSlice"
 
 // Configure Redux Persist
 const persistConfig = {
@@ -22,6 +23,7 @@ const persistedContactReducer = persistReducer(persistConfig, contactReducer);
 const persistedProductReducer = persistReducer(persistConfig, productReducer);
 const persistedCartReducer = persistReducer(persistConfig, cartReducer);
 const persistedWishlistReducer = persistReducer(persistConfig, wishlistReducer);
+const persistedBlogReducer = persistReducer(persistConfig, blogReducer)
 
 // Create the store
 const store = configureStore({
@@ -31,6 +33,7 @@ const store = configureStore({
     product: persistedProductReducer,
     cart: persistedCartReducer,
     wishlist: persistedWishlistReducer,
+    blog: persistedBlogReducer
   },
 });
 

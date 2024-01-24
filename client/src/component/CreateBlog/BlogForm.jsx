@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import DefaultNavbar from "../Default_Navbar";
 import Footer from "../Footer";
 import { useDispatch } from "react-redux";
-import { createProductThunk } from "../../redux/productSlice";
 import FormData from "form-data";
 import { ToastContainer, toast } from "react-toastify";
 import { creatBlogThunk } from "../../redux/blogSlice";
@@ -60,17 +59,24 @@ const BlogForm = () => {
     }
 
     const fd = new FormData();
-    fd.append("title", title);
+    console.log("before append", fd);
 
-    fd.append("description", description);
-    fd.append("date", date)
+
+    // fd.append("title", title);
+    // fd.append("description", description);
+    // fd.append("date", date)
+
+    fd.title = title
+    fd.description = description
+    fd.date = date
 
     sendImages.forEach((image, index) => {
       if (image) {
-        fd.append("blogImages", image);
+        // fd.append("blogImages", image);
+        fd.blogImages = image
       }
     });
-    console.log(fd);
+    console.log("after append", fd);
 
     dispatch(creatBlogThunk(fd))
       .then((res) => {

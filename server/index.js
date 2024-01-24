@@ -10,7 +10,7 @@ const cloudinary = require("cloudinary").v2;
 const fileUpload = require("express-fileupload");
 const tmp = require("tmp");
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 4000;
 
 const authRoutes = require("./routes/authRoutes");
 const contactRoutes = require("./routes/contactRoutes");

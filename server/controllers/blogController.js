@@ -3,6 +3,7 @@ const cloudinary = require("cloudinary").v2;
 const { ErrorHandler } = require("../middleware/errorHandler");
 
 const insertNewBlog = async (req, res, next) => {
+  console.log("just entered")
 
   // req.body
   const {
@@ -10,6 +11,8 @@ const insertNewBlog = async (req, res, next) => {
     date,
     description,
   } = req.body;
+
+  console.log("reqboyd", req.body)
 
   //     console.log(req.user);
   owner = req.user._id;
@@ -20,11 +23,16 @@ const insertNewBlog = async (req, res, next) => {
 
   if (files) {
     for (const file of files) {
-      const result = await cloudinary.uploader.upload(file.tempFilePath, {
-        public_id: `${Date.now()}`,
-        resource_type: "auto",
-        folder: "images",
-      });
+      try {
+        const result = await cloudinary.uploader.upload(file.tempFilePath, {
+          public_id: `${Date.now()}`,
+          resource_type: "auto",
+          folder: "images",
+        });
+
+      } catch (error) {
+        console.log("error : ", error)
+      }
 
       console.log("result ", result);
 
