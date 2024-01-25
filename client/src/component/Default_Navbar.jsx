@@ -145,7 +145,7 @@ const DefaultNavbar = () => {
               </li>
               <li className="mb-2 md:mb-0">
                 <NavLink
-                  to="/blog"
+                  to="/allBlogs"
                   className="nav-link"
                   activeClassName="active-link"
                 >

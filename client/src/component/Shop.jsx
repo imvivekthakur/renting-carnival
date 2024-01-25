@@ -86,35 +86,31 @@ const Shop = ({ allProducts }) => {
       <div className="text-sm w-[90%] mx-auto mt-8">
         <div>
           <button
-            className={`mr-4 mt-4 border-2 border-primary px-4 py-2 rounded-full ${
-              selectedCategory === "popular" ? "bg-primary text-white" : ""
-            }`}
+            className={`mr-4 mt-4 border-2 border-primary px-4 py-2 rounded-full ${selectedCategory === "popular" ? "bg-primary text-white" : ""
+              }`}
             onClick={() => setSelectedCategory("popular")}
           >
             Popular
           </button>
           <button
-            className={`mr-4 mt-4 border-2 border-primary px-4 py-2 rounded-full ${
-              selectedCategory === "Furniture" ? "bg-primary text-white" : ""
-            }`}
+            className={`mr-4 mt-4 border-2 border-primary px-4 py-2 rounded-full ${selectedCategory === "Furniture" ? "bg-primary text-white" : ""
+              }`}
             onClick={() => setSelectedCategory("Furniture")}
           >
             Furniture
           </button>
           <button
-            className={`mr-4 mt-4 border-2 border-primary px-4 py-2 rounded-full ${
-              selectedCategory === "Decorative Items"
+            className={`mr-4 mt-4 border-2 border-primary px-4 py-2 rounded-full ${selectedCategory === "Decorative Items"
                 ? "bg-primary text-white"
                 : ""
-            }`}
+              }`}
             onClick={() => setSelectedCategory("Decorative Items")}
           >
             Decorative Items
           </button>
           <button
-            className={`mr-4 mt-4 border-2 border-primary px-4 py-2 rounded-full ${
-              selectedCategory === "Vehicles" ? "bg-primary text-white" : ""
-            }`}
+            className={`mr-4 mt-4 border-2 border-primary px-4 py-2 rounded-full ${selectedCategory === "Vehicles" ? "bg-primary text-white" : ""
+              }`}
             onClick={() => setSelectedCategory("Vehicles")}
           >
             Vehicles
@@ -126,17 +122,15 @@ const Shop = ({ allProducts }) => {
             Sort by :
           </button>
           <button
-            className={`mr-4 mt-4 border-2 border-primary px-4 py-2 rounded-full ${
-              display == 1 ? "bg-primary text-white" : ""
-            }`}
+            className={`mr-4 mt-4 border-2 border-primary px-4 py-2 rounded-full ${display == 1 ? "bg-primary text-white" : ""
+              }`}
             onClick={() => setDisplay(1)}
           >
             Low to High
           </button>
           <button
-            className={`mr-4 mt-4 border-2 border-primary px-4 py-2 rounded-full ${
-              display == 2 ? "bg-primary text-white" : ""
-            }`}
+            className={`mr-4 mt-4 border-2 border-primary px-4 py-2 rounded-full ${display == 2 ? "bg-primary text-white" : ""
+              }`}
             onClick={() => setDisplay(2)}
           >
             High to Low

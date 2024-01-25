@@ -23,16 +23,11 @@ const insertNewBlog = async (req, res, next) => {
 
   if (files) {
     for (const file of files) {
-      try {
-        const result = await cloudinary.uploader.upload(file.tempFilePath, {
-          public_id: `${Date.now()}`,
-          resource_type: "auto",
-          folder: "images",
-        });
-
-      } catch (error) {
-        console.log("error : ", error)
-      }
+      const result = await cloudinary.uploader.upload(file.tempFilePath, {
+        public_id: `${Date.now()}`,
+        resource_type: "auto",
+        folder: "images",
+      });
 
       console.log("result ", result);
 
@@ -64,7 +59,40 @@ const insertNewBlog = async (req, res, next) => {
     .json({ success: true, message: "Blog Created successfully.", blog });
 };
 
+const getAllBlogs = async (req, res, next) => {
+  try {
+    const blogs = await Blog.find({});
+    res.status(200).json({
+      success: true,
+      msg: "All Blogs retrieved successfully",
+      blogs,
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
+const getSingleBlog = async (req, res, next) => {
+  const { dbId } = req.query;
+  console.log("dbId",dbId)
+  try {
+    const blogs = await Blog.findById({_id : dbId});
+    console.log("blogs",blogs)
+    res.status(200).json({
+      success: true,
+      msg: "Single Blogs retrieved successfully",
+      blogs,
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
 
 module.exports = {
-  insertNewBlog
+  insertNewBlog,
+  getAllBlogs,
+  getSingleBlog
 };

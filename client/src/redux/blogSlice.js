@@ -28,6 +28,43 @@ export const creatBlogThunk = createAsyncThunk(
   }
 );
 
+export const getAllBlogThunk = createAsyncThunk(
+  "blog/getAll",
+  async (data) => {
+    const config = {
+      headers: {
+        "Content-type": "multipart/form-data",
+      },
+    };
+    return await Api.get(`blog/getAll/`, config)
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        return err.response;
+      });
+  }
+);
+
+export const getSingleBlogThunk = createAsyncThunk(
+  "blog/getSingle",
+  async (data) => {
+    const config = {
+      headers: {
+        "Content-type": "multipart/form-data",
+      },
+    };
+    const id = data.dbId;
+    return await Api.get(`blog/getSingle/?dbId=${id}`, config)
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        return err.response;
+      });
+  }
+);
+
 export const blogSlice = createSlice({
   name: "blog",
   initialState: initialState,
@@ -53,6 +90,7 @@ export const blogSlice = createSlice({
       });
   },
 });
+
 
 
 

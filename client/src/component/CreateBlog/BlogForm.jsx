@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 import FormData from "form-data";
 import { ToastContainer, toast } from "react-toastify";
 import { creatBlogThunk } from "../../redux/blogSlice";
+import JoditEditor from 'jodit-react';
+import { useRef } from 'react';
 
 const BlogForm = () => {
   const dispatch = useDispatch();
@@ -22,6 +24,7 @@ const BlogForm = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("")
   const [date, setDate] = useState("")
+  const editor = useRef(null);
 
   const handleSendImage = (e, index) => {
     const newSendImages = [...sendImages];
@@ -62,18 +65,18 @@ const BlogForm = () => {
     console.log("before append", fd);
 
 
-    // fd.append("title", title);
-    // fd.append("description", description);
-    // fd.append("date", date)
+    fd.append("title", title);
+    fd.append("description", description);
+    fd.append("date", date)
 
-    fd.title = title
-    fd.description = description
-    fd.date = date
+    // fd.title = title
+    // fd.description = description
+    // fd.date = date
 
     sendImages.forEach((image, index) => {
       if (image) {
-        // fd.append("blogImages", image);
-        fd.blogImages = image
+        fd.append("blogImages", image);
+        // fd.blogImages = image
       }
     });
     console.log("after append", fd);
@@ -81,7 +84,7 @@ const BlogForm = () => {
     dispatch(creatBlogThunk(fd))
       .then((res) => {
         if (res.payload.data.success) {
-          toast.success(`${res.payload.data.msg}`, {
+          toast.success(`${res.payload.data.message}`, {
             position: "top-right",
             autoClose: 3000,
             hideProgressBar: false,
@@ -96,7 +99,7 @@ const BlogForm = () => {
           setDescription("");
           setSendImages("");
         } else {
-          toast.error(`${res.payload.data.msg}`, {
+          toast.error(`${res.payload.data.message}`, {
             position: "top-right",
             autoClose: 3000,
             hideProgressBar: false,
@@ -144,13 +147,12 @@ const BlogForm = () => {
               >
                 Description:
               </label>
-              <textarea
-                id="description"
-                name="description"
+              <JoditEditor
+                ref={editor}
                 value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                className="form-textarea mt-1 block w-full"
-                required
+                tabIndex={1}
+                onChange={newContent => setDescription(newContent)}
+                onBlur={newContent => setDescription(newContent)}
               />
             </div>
 

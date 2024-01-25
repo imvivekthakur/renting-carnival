@@ -37,18 +37,33 @@ import Vehicle from "./component/Vehicle";
 import Combos from "./component/Combos";
 import RentalSubscription from "./component/RentalSubscription";
 import BlogForm from "./component/CreateBlog/BlogForm";
+import AllBlog from "./component/AllBlog";
+import { getAllBlogThunk } from "./redux/blogSlice";
 // import ProductForm from "./component/ProductForm";
 
 function App() {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const [allProducts, setAllProducts] = useState([]);
+  const [allBlogs, setAllBlogs] = useState([]);
 
   useEffect(() => {
     dispatch(getAllProductThunk())
       .then((res) => {
         if (res.payload.data.success) {
           setAllProducts(res.payload.data.products);
+          setLoading(false);
+        }
+        return res;
+      })
+      .catch((err) => {
+        return err.response;
+      });
+
+    dispatch(getAllBlogThunk())
+      .then((res) => {
+        if (res.payload.data.success) {
+          setAllBlogs(res.payload.data.blogs);
           setLoading(false);
         }
         return res;
@@ -67,7 +82,9 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/shop" element={<Shop allProducts={allProducts} />} />
-          <Route path="/blog" element={<Blog />} />
+          <Route path="/allBlogs" element={<AllBlog allBlogs={allBlogs} />} />
+
+          <Route path="/blog/:dbId" element={<Blog />} />
           {/* <Route path="/blog" element={<Blog />} /> */}
           <Route
             path="/product/:productId"
