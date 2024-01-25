@@ -1,15 +1,11 @@
+import React, { useEffect, useState } from 'react'
+import DefaultNavbar from '../component/Default_Navbar';
+import ReactPaginate from 'react-paginate';
+import Footer from '../component/Footer';
+import { ColorRing } from 'react-loader-spinner';
+import BlogCardAdmin from './BlogCardAdmin';
 
-import React, { useState, useEffect } from "react";
-import DefaultNavbar from "./Default_Navbar";
-import ReactPaginate from "react-paginate";
-import Card from "./Card";
-import Footer from "./Footer";
-import ProductCard from "./DynamicProducts/ProductCard";
-import { ColorRing } from "react-loader-spinner";
-import BlogCard from "./CreateBlog/BlogCard";
-
-const AllBlog = ({ allBlogs }) => {
-
+const AllBlogsAdmin = ({ allBlogs }) => {
     console.log("All Blogs", allBlogs)
 
     const [selectedCategory, setSelectedCategory] = useState("popular");
@@ -55,11 +51,11 @@ const AllBlog = ({ allBlogs }) => {
                 {allBlogs.length > 0 ? (
                     allBlogs.map((card, index) => (
                         <div className="mt-20" key={card._id}>
-                            <BlogCard
+                            <BlogCardAdmin
                                 img={card?.blogImages}
                                 title={card?.title}
                                 description={card?.description}
-                                shortDescription = {card?.shortDescription}
+                                shortDescription={card?.shortDescription}
                                 blogId={card?._id}
                             />
                         </div>
@@ -103,6 +99,6 @@ const AllBlog = ({ allBlogs }) => {
             <Footer />
         </>
     );
-};
+}
 
-export default AllBlog;
+export default AllBlogsAdmin

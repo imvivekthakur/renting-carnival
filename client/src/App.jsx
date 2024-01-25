@@ -39,6 +39,7 @@ import RentalSubscription from "./component/RentalSubscription";
 import BlogForm from "./component/CreateBlog/BlogForm";
 import AllBlog from "./component/AllBlog";
 import { getAllBlogThunk } from "./redux/blogSlice";
+import AllBlogsAdmin from "./admin/AllBlogsAdmin";
 // import ProductForm from "./component/ProductForm";
 
 function App() {
@@ -83,6 +84,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/shop" element={<Shop allProducts={allProducts} />} />
           <Route path="/allBlogs" element={<AllBlog allBlogs={allBlogs} />} />
+          <Route path="/admin/allBlogs" element={<AllBlogsAdmin allBlogs={allBlogs} />} />
 
           <Route path="/blog/:dbId" element={<Blog />} />
           {/* <Route path="/blog" element={<Blog />} /> */}

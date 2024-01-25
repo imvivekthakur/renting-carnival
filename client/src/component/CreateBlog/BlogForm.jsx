@@ -23,6 +23,7 @@ const BlogForm = () => {
   const [imagePreviews, setImagePreviews] = useState(Array(2).fill(null));
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("")
+  const [shortDescription, setShortDescription] = useState("")
   const [date, setDate] = useState("")
   const editor = useRef(null);
 
@@ -67,6 +68,7 @@ const BlogForm = () => {
 
     fd.append("title", title);
     fd.append("description", description);
+    fd.append("shortDescription", shortDescription);
     fd.append("date", date)
 
     // fd.title = title
@@ -98,6 +100,7 @@ const BlogForm = () => {
           setDate("")
           setDescription("");
           setSendImages("");
+          setShortDescription("");
         } else {
           toast.error(`${res.payload.data.message}`, {
             position: "top-right",
@@ -135,6 +138,23 @@ const BlogForm = () => {
                 name="title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
+                className="form-input mt-1 block w-full"
+                required
+              />
+            </div>
+            <div className=" mb-3">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-600"
+              >
+                Short Description:
+              </label>
+              <input
+                type="text"
+                id="shortDescription"
+                name="shortDescription"
+                value={shortDescription}
+                onChange={(e) => setShortDescription(e.target.value)}
                 className="form-input mt-1 block w-full"
                 required
               />

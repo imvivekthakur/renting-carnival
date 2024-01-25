@@ -46,10 +46,10 @@ const DefaultNavbar = () => {
       console.log("user photo ", userPhoto.photo);
       setUsers(
         userPhoto?.photo ||
-          "https://img.freepik.com/free-photo/3d-portrait-people_23-2150793895.jpg?t=st=1704347606~exp=1704351206~hmac=7bba358415593ecddcb20f57f8216d864fa66bc65b652121ab1e5362d8b5b168&w=740"
+        "https://img.freepik.com/free-photo/3d-portrait-people_23-2150793895.jpg?t=st=1704347606~exp=1704351206~hmac=7bba358415593ecddcb20f57f8216d864fa66bc65b652121ab1e5362d8b5b168&w=740"
       );
       console.log(users);
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -100,9 +100,8 @@ const DefaultNavbar = () => {
             </button>
           </div>
           <div
-            className={`items-center justify-between w-full md:flex md:w-auto md:order-1 ${
-              isMenuOpen ? "block" : "hidden"
-            }`}
+            className={`items-center justify-between w-full md:flex md:w-auto md:order-1 ${isMenuOpen ? "block" : "hidden"
+              }`}
             id="navbar-sticky"
           >
             <ul className="flex flex-col md:flex-row md:space-x-8 rtl:space-x-reverse items-center md:space-y-4">
@@ -208,7 +207,7 @@ const DefaultNavbar = () => {
                       >
                         <div
                           className="flex items-center"
-                          // onClick={handleProfile}
+                        // onClick={handleProfile}
                         >
                           <img
                             src={profile && profile.photo}

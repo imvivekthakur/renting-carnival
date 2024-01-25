@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { addToCartThunk, removeFromCartThunk } from "../../redux/cartSlice";
-import {
-    addToWishlistThunk,
-    getWishlistThunk,
-} from "../../redux/wishlistSlice";
 import { NavLink } from "react-router-dom";
-import toast from "react-hot-toast";
 import { ColorRing } from "react-loader-spinner";
-import "../../App.css";
+import { deleteBlogThunk } from "../redux/blogSlice";
+import { toast } from "react-hot-toast"
 
-const BlogCard = ({
+const BlogCardAdmin = ({
     img,
     description,
     shortDescription,
@@ -27,10 +22,31 @@ const BlogCard = ({
     const [loading, setLoading] = useState(false);
     const [loading2, setLoading2] = useState(false);
 
+    const handleDelete = async () => {
+        try {
+            dispatch(deleteBlogThunk({ dbId }))
+                .then((res) => {
+                    if (res.payload.data.success) {
+                        setLoading(false);
+                        toast.success(res?.payload?.data?.success)
+
+                    }
+                    return res;
+                })
+                .catch((err) => {
+                    toast.error(err)
+                    return err.response;
+                });
+        } catch (error) {
+            console.error("Error deleting blog:", error);
+            // Handle error, notify user, etc.
+        }
+    };
+
     // console.log("images ", img);
     return (
         <div className="product-card-link">
-            <div className="rounded-lg overflow-hidden bg-gray-100 product-card h-[34rem]">
+            <div className="rounded-lg overflow-hidden bg-gray-100 product-card h-fit min-h-[400px]">
                 <div className="hover-button">
                     {(loading || loading2) && (
                         <div className="loader-container hover-button ">
@@ -62,9 +78,12 @@ const BlogCard = ({
                     <h1 className="text-lg font-bold p-1">{title}</h1>
                     <p className="text-sm p-1">{shortDescription}</p>
                 </div>
+                <button className="bg-red-600 p-3 rounded-lg hover:bg-primary hover:text-white hover:no-underline text-white text-center m-4" onClick={handleDelete}>
+                    Delete
+                </button>
             </div>
         </div>
     );
 };
 
-export default BlogCard;
+export default BlogCardAdmin;

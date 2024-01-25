@@ -10,6 +10,7 @@ const insertNewBlog = async (req, res, next) => {
     title,
     date,
     description,
+    shortDescription,
   } = req.body;
 
   console.log("reqboyd", req.body)
@@ -49,6 +50,7 @@ const insertNewBlog = async (req, res, next) => {
     title: title,
     date: date,
     description: description,
+    shortDescription: shortDescription,
   });
 
   console.log("blog", blog)
@@ -75,10 +77,10 @@ const getAllBlogs = async (req, res, next) => {
 
 const getSingleBlog = async (req, res, next) => {
   const { dbId } = req.query;
-  console.log("dbId",dbId)
+  console.log("dbId", dbId)
   try {
-    const blogs = await Blog.findById({_id : dbId});
-    console.log("blogs",blogs)
+    const blogs = await Blog.findById({ _id: dbId });
+    console.log("blogs", blogs)
     res.status(200).json({
       success: true,
       msg: "Single Blogs retrieved successfully",
@@ -90,9 +92,34 @@ const getSingleBlog = async (req, res, next) => {
   }
 };
 
+const deleteBlog = async (req, res, next) => {
+  try {
+    const blogId = req.params.id;
+    console.log(blogId);
+    // Check if the product exists
+    const blog = await Blog.findById(blogId);
+    if (!blog) {
+      throw new ErrorHandler(404, "Product not found");
+    }
+
+    console.log(blog);
+    // Delete the product
+    await Blog.findByIdAndDelete(blogId);
+
+    res.status(200).json({
+      success: true,
+      msg: "Product deleted successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(new ErrorHandler(500, "Error while deleting blog"));
+  }
+};
+
 
 module.exports = {
   insertNewBlog,
   getAllBlogs,
-  getSingleBlog
+  getSingleBlog,
+  deleteBlog
 };

@@ -8,6 +8,7 @@ const { authVerifyToken } = require("../middleware/authVerifyToken");
 router.post("/create", authVerifyToken, blogController.insertNewBlog);
 router.get("/getAll", blogController.getAllBlogs)
 router.get("/getSingle", blogController.getSingleBlog)
+router.delete("/delete/:id", blogController.deleteBlog)
 
 
 module.exports = router;

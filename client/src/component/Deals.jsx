@@ -4,6 +4,7 @@ import ProductCard from "./DynamicProducts/ProductCard";
 import "react-multi-carousel/lib/styles.css";
 import "../App.css";
 import { ColorRing } from "react-loader-spinner";
+import { Link } from "react-router-dom";
 
 const Deals = ({ allProducts }) => {
   const [products, setProducts] = useState([]);
@@ -28,7 +29,7 @@ const Deals = ({ allProducts }) => {
   };
 
   useEffect(() => {
-    if (allProducts && allProducts.length  > 0) {
+    if (allProducts && allProducts.length > 0) {
       setProducts(allProducts);
       setLoading(true);
     }
@@ -78,6 +79,9 @@ const Deals = ({ allProducts }) => {
           </Carousel>
         )}
       </div>
+      <Link to={'/allProducts'}>
+        <p className="text-center w-fit mx-auto flex bg-gray-600 text-white py-2 px-4 rounded-lg hover:scale-[1.05] duration-200 transition-all">Show More</p>
+      </Link>
     </>
   );
 };

@@ -42,7 +42,7 @@ const UserProfile = () => {
     try {
       const response = await axios.get("https://dummyjson.com/users/1");
       setUsers(response.data);
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const handleEditProfile = () => {
@@ -114,7 +114,7 @@ const UserProfile = () => {
       }
 
       setIsEditMode(false);
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const validateEmail = (email) => {
@@ -333,6 +333,20 @@ const UserProfile = () => {
           {profile && profile.role === "Admin" && (
             <button className="bg-primary p-3 rounded-lg hover:bg-gray-500 hover:text-white hover:no-underline text-white text-center m-2">
               All orders
+            </button>
+          )}
+        </Link>
+        <Link to="/blog/create">
+          {profile && profile.role === "Admin" && (
+            <button className="bg-primary p-3 rounded-lg hover:bg-gray-500 hover:text-white hover:no-underline text-white text-center m-2">
+              Create Blog
+            </button>
+          )}
+        </Link>
+        <Link to="/admin/allBlogs">
+          {profile && profile.role === "Admin" && (
+            <button className="bg-primary p-3 rounded-lg hover:bg-gray-500 hover:text-white hover:no-underline text-white text-center m-2">
+              Show Blog
             </button>
           )}
         </Link>

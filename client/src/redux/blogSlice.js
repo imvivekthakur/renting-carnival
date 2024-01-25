@@ -64,6 +64,24 @@ export const getSingleBlogThunk = createAsyncThunk(
       });
   }
 );
+export const deleteBlogThunk = createAsyncThunk(
+  "blog/delete/:id",
+  async (data) => {
+    const config = {
+      headers: {
+        "Content-type": "multipart/form-data",
+      },
+    };
+    const id = data.dbId;
+    return await Api.delete(`blog/delete/${id}`, config)
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        return err.response;
+      });
+  }
+);
 
 export const blogSlice = createSlice({
   name: "blog",
