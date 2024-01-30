@@ -40,6 +40,7 @@ import BlogForm from "./component/CreateBlog/BlogForm";
 import AllBlog from "./component/AllBlog";
 import { getAllBlogThunk } from "./redux/blogSlice";
 import AllBlogsAdmin from "./admin/AllBlogsAdmin";
+import CategoryForm from "./component/CreateCategory/CategoryForm";
 // import ProductForm from "./component/ProductForm";
 
 function App() {
@@ -141,10 +142,15 @@ function App() {
             path="/popular"
             element={<Category category="popular" allProducts={allProducts} />}
           />
+          <Route
+            path="/category/:categoryName"
+            element={<Category category="popular" allProducts={allProducts} />}
+          />
           <Route path="/allUsers" element={<AllUsers />} />
 
           <Route path="/product/create" element={<ProductForm />} />
           <Route path="/blog/create" element={<BlogForm />} />
+          <Route path="/category/create" element={<CategoryForm />} />
 
         </Routes>
         <Toaster />

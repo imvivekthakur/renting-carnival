@@ -2,10 +2,15 @@ import React, { useEffect, useState } from "react";
 import DefaultNavbar from "./Default_Navbar";
 import Footer from "./Footer";
 import ProductCard from "./DynamicProducts/ProductCard";
+import { useParams } from "react-router-dom";
 
-const Category = ({ category, allProducts }) => {
+const Category = ({ allProducts }) => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [display, setDisplay] = useState(1);
+
+  let { categoryName } = useParams()
+  console.log("categoryName", categoryName)
+
   useEffect(() => {
     // Scroll to the top when the component mounts
     window.scrollTo({
@@ -22,25 +27,25 @@ const Category = ({ category, allProducts }) => {
     }
   }, [display]);
 
-  // Filter products based on the category
+  // Filter products based on the categoryName
   useEffect(() => {
     console.log("filtered products ", filteredProducts);
-    if (category.toLowerCase() === "popular") {
-      // Display all products for "Popular" category
+    if (categoryName.toLowerCase() === "popular") {
+      // Display all products for "Popular" categoryName
       setFilteredProducts(allProducts);
     } else {
-      // Filter products based on the specified category
+      // Filter products based on the specified categoryName
       const filtered = allProducts.filter(
-        (product) => product.category.toLowerCase() === category.toLowerCase()
+        (product) => product.categoryName.toLowerCase() === categoryName.toLowerCase()
       );
       setFilteredProducts(filtered);
     }
-  }, [category, allProducts]);
+  }, [categoryName, allProducts]);
 
   return (
     <>
       <DefaultNavbar />
-      {/* Replace category name in the title */}
+      {/* Replace categoryName name in the title */}
       <div className="relative">
         <img
           src="https://images.unsplash.com/photo-1524634126442-357e0eac3c14?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTZ8fHN0b3JlfGVufDB8fDB8fHww"
@@ -49,7 +54,7 @@ const Category = ({ category, allProducts }) => {
         />
         <h1 className="absolute top-2/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 bg-opacity-70 p-4">
           <span className="text-white drop-shadow text-4xl font-bold">
-            {category}
+            {categoryName}
           </span>
         </h1>
       </div>
@@ -58,17 +63,15 @@ const Category = ({ category, allProducts }) => {
           Sort by :
         </button>
         <button
-          className={`mr-4 border-2 border-primary px-4 py-2 rounded-full ${
-            display == 1 ? "bg-primary text-white" : ""
-          }`}
+          className={`mr-4 border-2 border-primary px-4 py-2 rounded-full ${display == 1 ? "bg-primary text-white" : ""
+            }`}
           onClick={() => setDisplay(1)}
         >
           Low to High
         </button>
         <button
-          className={`mr-4 border-2 border-primary px-4 py-2 rounded-full ${
-            display == 2 ? "bg-primary text-white" : ""
-          }`}
+          className={`mr-4 border-2 border-primary px-4 py-2 rounded-full ${display == 2 ? "bg-primary text-white" : ""
+            }`}
           onClick={() => setDisplay(2)}
         >
           High to Low
@@ -84,7 +87,7 @@ const Category = ({ category, allProducts }) => {
             desc={product.description}
             price={product.price}
             stock={product.stock}
-            category={product.category}
+            categoryName={product.categoryName}
             seller={product.owner.name}
             productId={product._id}
           />

@@ -69,7 +69,7 @@ const Checkout = () => {
 
   const placeOrder = async () => {
     let accessToken = await JSON.parse(localStorage.getItem("userInfo"))
-        .accessToken;
+      .accessToken;
     try {
       const productsForOrder = cart2.map((item) => ({
         _id: item.product._id,
@@ -91,14 +91,14 @@ const Checkout = () => {
       });
 
       const data = await response.json();
-      if(!data) {
+      if (!data) {
         console.log("error in placing order ");
         toast.error(data)
-        return ;
+        return;
       }
       console.log("Order placed:", data);
       toast.success("Order placed successfully!!")
-      
+
       const cartToDelete = cartId;
       deleteCart(cartToDelete)
       setFormData({
@@ -111,7 +111,7 @@ const Checkout = () => {
         city: "",
         pinCode: "",
       });
-      
+
       // Handle success/failure or redirect after order placement
     } catch (error) {
       console.error("Error placing order:", error);
@@ -124,7 +124,7 @@ const Checkout = () => {
     try {
       let accessToken = await JSON.parse(localStorage.getItem("userInfo"))
         .accessToken;
-  
+
       const response = await fetch(
         `https://renting-carnival.onrender.com/cart/delete/${cartId}`,
         {
@@ -135,14 +135,14 @@ const Checkout = () => {
           },
         }
       );
-  
+
       const data = await response.json();
       if (!data.success) {
         console.log("Error deleting cart");
         toast.error("Error deleting cart");
         return;
       }
-  
+
       console.log("Cart deleted successfully");
       // Optionally handle success state or UI changes after cart deletion
     } catch (error) {
@@ -151,7 +151,7 @@ const Checkout = () => {
       // Handle error state
     }
   };
-  
+
 
   const makePayment = async () => {
     const stripe = await loadStripe(
@@ -212,123 +212,123 @@ const Checkout = () => {
           </span>
         </h1>
       </div>
-      
+
       <div className="w-[90%] mx-auto flex flex-wrap my-10">
-          <div className="w-full md:w-7/12">
-            <h1 className="text-2xl font-bold text-center my-4">
-              Billing details
-            </h1>
-            <div className="flex flex-wrap justify-between">
-              <div className="text-primary">
-                <div className="text-xs py-2">First Name</div>
-                <input
-                  className="outline-none border-primary w-64 rounded-lg"
-                  type="text"
-                  name="firstName"
-                  value={formData.firstName}
-                  onChange={handleInputChange}
-                  placeholder="First Name"
-                />
-              </div>
-              <div className="text-primary">
-                <div className="text-xs py-2">Last Name</div>
-                <input
-                  className="outline-none border-primary w-64 rounded-lg"
-                  type="text"
-                  name="lastName"
-                  value={formData.lastName}
-                  onChange={handleInputChange}
-                  placeholder="Last Name"
-                />
-              </div>
+        <div className="w-full md:w-7/12">
+          <h1 className="text-2xl font-bold text-center my-4">
+            Billing details
+          </h1>
+          <div className="flex flex-wrap justify-between">
+            <div className="text-primary">
+              <div className="text-xs py-2">First Name</div>
+              <input
+                className="outline-none border-primary w-64 rounded-lg"
+                type="text"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleInputChange}
+                placeholder="First Name"
+              />
             </div>
-            <div className="flex flex-wrap justify-between">
-              <div className="text-primary">
-                <div className="text-xs py-2">Email</div>
-                <input
-                  className="outline-none border-primary w-64 rounded-lg"
-                  type="text"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  placeholder="Email"
-                />
-              </div>
-              <div className="text-primary">
-                <div className="text-xs py-2">Phone</div>
-                <input
-                  className="outline-none border-primary w-64 rounded-lg"
-                  type="text"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  placeholder="Phone"
-                />
-              </div>
+            <div className="text-primary">
+              <div className="text-xs py-2">Last Name</div>
+              <input
+                className="outline-none border-primary w-64 rounded-lg"
+                type="text"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleInputChange}
+                placeholder="Last Name"
+              />
             </div>
-            <div>
-              <div className="text-primary">
-                <div className="text-xs py-2 ">Country</div>
-                <input
-                  className="w-full outline-none border-primary rounded-lg"
-                  type="text"
-                  name="country"
-                  value={formData.country}
-                  onChange={handleInputChange}
-                  placeholder="Country"
-                />
-              </div>
+          </div>
+          <div className="flex flex-wrap justify-between">
+            <div className="text-primary">
+              <div className="text-xs py-2">Email</div>
+              <input
+                className="outline-none border-primary w-64 rounded-lg"
+                type="text"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                placeholder="Email"
+              />
             </div>
-            <div>
-              <div className="text-primary">
-                <div className="text-xs py-2 ">Street Address</div>
-                <input
-                  className="w-full outline-none border-primary rounded-lg"
-                  type="text"
-                  name="address"
-                  value={formData.address}
-                  onChange={handleInputChange}
-                  placeholder="Address"
-                />
-              </div>
+            <div className="text-primary">
+              <div className="text-xs py-2">Phone</div>
+              <input
+                className="outline-none border-primary w-64 rounded-lg"
+                type="text"
+                name="phone"
+                value={formData.phone}
+                onChange={handleInputChange}
+                placeholder="Phone"
+              />
             </div>
-            <div>
-              <div className="text-primary">
-                <div className="text-xs py-2 ">City</div>
-                <input
-                  className="w-full outline-none border-primary rounded-lg"
-                  type="text"
-                  name="city"
-                  value={formData.city}
-                  onChange={handleInputChange}
-                  placeholder="City"
-                />
-              </div>
+          </div>
+          <div>
+            <div className="text-primary">
+              <div className="text-xs py-2 ">Country</div>
+              <input
+                className="w-full outline-none border-primary rounded-lg"
+                type="text"
+                name="country"
+                value={formData.country}
+                onChange={handleInputChange}
+                placeholder="Country"
+              />
             </div>
-            <div>
-              <div className="text-primary">
-                <div className="text-xs py-2 ">Pin Code</div>
-                <input
-                  className="w-full outline-none border-primary rounded-lg"
-                  type="text"
-                  name="pinCode"
-                  value={formData.pinCode}
-                  onChange={handleInputChange}
-                  placeholder="Pin Code"
-                />
-              </div>
+          </div>
+          <div>
+            <div className="text-primary">
+              <div className="text-xs py-2 ">Street Address</div>
+              <input
+                className="w-full outline-none border-primary rounded-lg"
+                type="text"
+                name="address"
+                value={formData.address}
+                onChange={handleInputChange}
+                placeholder="Address"
+              />
             </div>
+          </div>
+          <div>
+            <div className="text-primary">
+              <div className="text-xs py-2 ">City</div>
+              <input
+                className="w-full outline-none border-primary rounded-lg"
+                type="text"
+                name="city"
+                value={formData.city}
+                onChange={handleInputChange}
+                placeholder="City"
+              />
+            </div>
+          </div>
+          <div>
+            <div className="text-primary">
+              <div className="text-xs py-2 ">Pin Code</div>
+              <input
+                className="w-full outline-none border-primary rounded-lg"
+                type="text"
+                name="pinCode"
+                value={formData.pinCode}
+                onChange={handleInputChange}
+                placeholder="Pin Code"
+              />
+            </div>
+          </div>
         </div>
         <div className="bg-primary rounded-lg md:my-0 my-8 mx-auto w-full md:w-4/12 h-max text-white">
           <div className="text-2xl font-bold text-center p-4">Cart Total</div>
           <div className="w-[90%] mx-auto font-bold max-w-xs">
             {cart2 &&
-            cart2.map((card, index) => (
-              <div className="flex justify-between max-w-[200px] mx-auto">
-                <span>{card.product.name}</span>
-                <span>{card.product.price}</span>
-              </div>
-            ))}
+              cart2.map((card, index) => (
+                <div className="flex justify-between max-w-[200px] mx-auto">
+                  <span>{card.product.name}</span>
+                  <span>{card.product.price}</span>
+                </div>
+              ))}
           </div>
           <div className="text-center mt-4 font-bold max-w-xs">
             Total : {overallTotal}
@@ -343,8 +343,8 @@ const Checkout = () => {
           </div>
         </div>
       </div>
-      <ToastContainer/>
-      <Footer/>
+      <ToastContainer />
+      <Footer />
     </>
   );
 };

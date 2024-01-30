@@ -59,7 +59,7 @@ const AllBlog = ({ allBlogs }) => {
                                 img={card?.blogImages}
                                 title={card?.title}
                                 description={card?.description}
-                                shortDescription = {card?.shortDescription}
+                                shortDescription={card?.shortDescription}
                                 blogId={card?._id}
                             />
                         </div>
