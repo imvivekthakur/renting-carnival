@@ -172,9 +172,9 @@ const CityPreference = () => {
     setSidebarOpen(false);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     setCity(localStorage.getItem('cityName'))
-  },[city])
+  }, [city])
 
   return (
     <div className="flex justify-between">
