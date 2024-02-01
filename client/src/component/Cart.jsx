@@ -105,7 +105,7 @@ const Cart = () => {
             </div>
 
             <hr className="border-t-2 border-white my-5 w-full" />
-            
+
             <Link to="/checkout">
               <button
                 className="btn bg-white text-primary text-center hover:scale-110 duration-300 hover:shadow-2xl p-2 rounded-md cursor-pointer mb-5"

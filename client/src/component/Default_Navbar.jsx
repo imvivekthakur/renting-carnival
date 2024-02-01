@@ -10,6 +10,7 @@ import axios from "axios";
 import { Modal } from "antd";
 import { useDispatch } from "react-redux";
 import { profileThunk } from "../redux/authSlice";
+import { getCartThunk } from "../redux/cartSlice";
 
 const DefaultNavbar = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ const DefaultNavbar = () => {
   const navigate = useNavigate();
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [profile, setProfile] = useState();
+  const [allCart, setAllCart] = useState([]);
 
   const userData = JSON.parse(localStorage.getItem("userInfo"));
   const userAvailable = localStorage.getItem("userInfo") ? true : false;
@@ -38,6 +40,29 @@ const DefaultNavbar = () => {
       .catch((err) => {
         return err.response;
       });
+  }, []);
+
+  const getCartItems = () => {
+    dispatch(getCartThunk())
+      .then((res) => {
+        setAllCart(res.payload.data.cart);
+
+        const total = res.payload.data.detailedCartItems.reduce(
+          (acc, item) => acc + item.itemTotal,
+          0
+        );
+        setOverallTotal(total);
+
+        return res;
+      })
+      .catch((err) => {
+        console.log(err);
+        return err.response;
+      });
+  };
+
+  useEffect(() => {
+    getCartItems();
   }, []);
 
   const showUsers = async () => {
@@ -250,13 +275,14 @@ const DefaultNavbar = () => {
                 </button>
               </NavLink>
               <NavLink to="/cart">
-                <button className="ml-4">
+                <button className="ml-4 relative group">
                   <img
                     src={Cart}
-                    alt="Heart Image"
-                    className="w-6 h-6 hover:scale-125 min-w-[24px] min-h-[24px] sm:mx-auto mt-5"
+                    alt="Cart Image"
+                    className="w-6 h-6 group-hover:scale-125 min-w-[24px] min-h-[24px] sm:mx-auto mt-5"
                     id="img2"
                   />
+                  <p className="bg-black absolute top-1 -right-2 rounded-full text-white px-2 py-1 text-xs group-hover:scale-125 transition-all duration-200">{allCart?.length}</p>
                 </button>
               </NavLink>
             </div>
