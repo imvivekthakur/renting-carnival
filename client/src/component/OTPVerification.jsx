@@ -8,10 +8,12 @@ import toast from "react-hot-toast";
 const OTPVerification = () => {
   const [otp, setOTP] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [email, setEmail] = useState("");
+  // const [email, setEmail] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+
+  let email = localStorage.getItem('userEmail')
 
   const data = {
     email,
@@ -32,7 +34,6 @@ const OTPVerification = () => {
         if (res.payload.data.success) {
           toast.success(`${res.payload.data.msg}`);
           setLoading(false);
-          setEmail("");
           setOTP("");
 
           localStorage.setItem("userInfo", JSON.stringify(res.payload.data));
@@ -61,17 +62,6 @@ const OTPVerification = () => {
           </p>
         ) : (
           <form onSubmit={handleSubmit}>
-            <div className="mb-4">
-              <label className="block text-sm font-medium">Enter Email:</label>
-              <input
-                type="text"
-                id="otp"
-                className="mt-1 p-2 w-full rounded-md border border-gray-300 bg-white"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
             <div className="mb-4">
               <label className="block text-sm font-medium">Enter OTP:</label>
               <input

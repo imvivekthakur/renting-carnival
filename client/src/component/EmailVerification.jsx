@@ -22,6 +22,8 @@ const EmailVerification = () => {
       return;
     }
 
+    localStorage.setItem("userEmail" , data.email)
+
     setLoading(true);
 
     dispatch(emailThunk(data))
