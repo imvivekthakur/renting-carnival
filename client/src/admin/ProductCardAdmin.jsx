@@ -4,6 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
+import { ProductAPI } from "../redux/API";
 
 const ProductCardAdmin = ({
   img,
@@ -40,14 +41,23 @@ const ProductCardAdmin = ({
 
   const handleEdit = async () => {
     try {
+      // const response = await axios.put(
+      //   `https://renting-carnival-api.onrender.com/admin/edit/${productId}`,
+
+      //   editedData,
+      //   {
+      //     headers: headers,
+      //   }
+      // );
       const response = await axios.put(
-        `https://renting-carnival-api.onrender.com/admin/edit/${productId}`,
+        `${ProductAPI.editProduct}/${productId}`,
 
         editedData,
         {
           headers: headers,
         }
       );
+      // console.log("edit response , ", response)
 
       if (response.data.success) {
         toast.success(response.data.msg);
@@ -56,7 +66,7 @@ const ProductCardAdmin = ({
           `https://renting-carnival-api.onrender.com/product/get/${productId}`
         );
 
-        console.log(updatedProductResponse);
+        // console.log("updatedProductResponse", updatedProductResponse);
 
         if (updatedProductResponse.data.success) {
           const updatedProduct = updatedProductResponse.data.product;
@@ -116,6 +126,7 @@ const ProductCardAdmin = ({
       ...prevData,
       [name]: value,
     }));
+    console.log("value changes", name, value)
   };
 
   return (
@@ -207,12 +218,6 @@ const ProductCardAdmin = ({
           <p className="font-md p-1">
             <span>Featured : </span>
             {isEditing ? (
-              // <input
-              //   type="text"
-              //   name="stealDeal"
-              //   value={editedData.stealDeal}
-              //   onChange={handleInputChange}
-              // />
               // <input
               //   type="text"
               //   name="stealDeal"
