@@ -14,6 +14,7 @@ const ProductCardAdmin = ({
   seller,
   category,
   productId,
+  stealDeal
 }) => {
   const dispatch = useDispatch();
   const [isEditing, setIsEditing] = useState(false);
@@ -25,6 +26,7 @@ const ProductCardAdmin = ({
     stock: stock,
     category: category,
     seller: seller,
+    stealDeal: stealDeal,
   });
 
   const [saveButtonText, setSaveButtonText] = useState("Edit");
@@ -39,7 +41,7 @@ const ProductCardAdmin = ({
   const handleEdit = async () => {
     try {
       const response = await axios.put(
-        `https://renting-carnival.onrender.com/admin/edit/${productId}`,
+        `https://renting-carnival-api.onrender.com/admin/edit/${productId}`,
 
         editedData,
         {
@@ -51,7 +53,7 @@ const ProductCardAdmin = ({
         toast.success(response.data.msg);
 
         const updatedProductResponse = await axios.get(
-          `https://renting-carnival.onrender.com/product/get/${productId}`
+          `https://renting-carnival-api.onrender.com/product/get/${productId}`
         );
 
         console.log(updatedProductResponse);
@@ -66,6 +68,7 @@ const ProductCardAdmin = ({
             price: updatedProduct.price || prevData.price,
             stock: updatedProduct.stock || prevData.stock,
             category: updatedProduct.category || prevData.category,
+            stealDeal: updatedProduct.stealDeal || prevData.stealDeal,
             seller: updatedProduct.owner
               ? updatedProduct.owner.name || prevData.seller
               : prevData.seller,
@@ -88,7 +91,7 @@ const ProductCardAdmin = ({
   const handleDelete = async () => {
     try {
       const response = await axios.delete(
-        `https://renting-carnival.onrender.com/admin/delete/${productId}`,
+        `https://renting-carnival-api.onrender.com/admin/delete/${productId}`,
         { headers: headers }
       );
 
@@ -199,6 +202,29 @@ const ProductCardAdmin = ({
               />
             ) : (
               stock
+            )}
+          </p>
+          <p className="font-md p-1">
+            <span>Featured : </span>
+            {isEditing ? (
+              // <input
+              //   type="text"
+              //   name="stealDeal"
+              //   value={editedData.stealDeal}
+              //   onChange={handleInputChange}
+              // />
+              // <input
+              //   type="text"
+              //   name="stealDeal"
+              //   value={editedData.stealDeal}
+              //   onChange={handleInputChange}
+              // />
+              <select value={editedData.stealDeal} name="stealDeal" onChange={handleInputChange}>
+                <option value={"Yes"}>Yes</option>
+                <option value={"No"}>No</option>
+              </select>
+            ) : (
+              stealDeal
             )}
           </p>
 

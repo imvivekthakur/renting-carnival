@@ -25,6 +25,7 @@ const ProductForm = () => {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [stock, setStock] = useState("");
+  const [stealDeal, setStealDeal] = useState("");
   const [category, setCategory] = useState("");
 
   const handleSendImage = (e, index) => {
@@ -90,6 +91,7 @@ const ProductForm = () => {
     fd.append("price", price);
     fd.append("stock", stock);
     fd.append("description", description);
+    fd.append("stealDeal", stealDeal);
 
     sendImages.forEach((image, index) => {
       if (image) {
@@ -265,6 +267,29 @@ const ProductForm = () => {
                 className="form-input mt-1 block w-full"
                 required
               />
+            </div>
+            <div className=" mb-3">
+              <label
+                htmlFor="stock"
+                className="block text-sm font-medium text-gray-600"
+              >
+                Featured for Steal Deal ?
+              </label>
+              {/* <input
+                type="text"
+                id="stealDeal"
+                name="stealDeal"
+                value={stealDeal}
+                onChange={(e) => setStealDeal(e.target.value)}
+                className="form-input mt-1 block w-full"
+                required
+              /> */}
+              <select onChange={(e) => setStealDeal(e.target.value)} className="form-input mt-1 block w-[50%]" id="stealDeal" name="stealDeal" value={stealDeal} required>
+                <option value={""}>Select Option</option>
+                <option value={"Yes"}>Yes</option>
+                <option value={"No"}>No</option>
+              </select>
+
             </div>
           </div>
 

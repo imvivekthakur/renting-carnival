@@ -64,6 +64,7 @@ const AllProductsAdmin = () => {
                 category={card.category}
                 seller={card.owner.name}
                 productId={card._id}
+                stealDeal = {card.stealDeal}
               />
             ))}
           </div>

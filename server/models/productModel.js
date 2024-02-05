@@ -41,6 +41,10 @@ const productSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
+  stealDeal: {
+    type: String,
+    default : "No"
+  }
 });
 
 const Product = mongoose.model("Product", productSchema);
