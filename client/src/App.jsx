@@ -117,34 +117,8 @@ function App() {
 
           {/* <Route path="/furniture" element={<Furniture filteredProduct={allProducts}/>} /> */}
           <Route
-            path="/furniture"
-            element={
-              <Category category="Furniture" allProducts={allProducts} />
-            }
-          />
-          <Route
-            path="/decorative-items"
-            element={
-              <Category category="Decorative Items" allProducts={allProducts} />
-            }
-          />
-          <Route
-            path="/vehicles"
-            element={<Category category="Vehicles" allProducts={allProducts} />}
-          />
-          <Route
-            path="/home-appliance"
-            element={
-              <Category category="Home Appliance" allProducts={allProducts} />
-            }
-          />
-          <Route
-            path="/popular"
-            element={<Category category="popular" allProducts={allProducts} />}
-          />
-          <Route
             path="/category/:categoryName"
-            element={<Category category="popular" allProducts={allProducts} />}
+            element={<Category  allProducts={allProducts} />}
           />
           <Route path="/allUsers" element={<AllUsers />} />
 

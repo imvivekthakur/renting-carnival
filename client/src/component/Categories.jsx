@@ -34,9 +34,11 @@ const Categories = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {
           allCategories?.map((category, index) => {
+            let categoryName = category.name
+            categoryName = categoryName.replace(" " , "-")
             return (
               <div>
-                <Link to={`/category/${category?.name}`} key={index}>
+                <Link to={`/category/${categoryName}`} key={index}>
                   <img
                     className="w-full h-64 object-cover rounded-lg cursor-pointer hover:scale-105 duration-200"
                     src={category?.categoryImages[0]}

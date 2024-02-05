@@ -9,7 +9,7 @@ const Category = ({ allProducts }) => {
   const [display, setDisplay] = useState(1);
 
   let { categoryName } = useParams()
-  console.log("categoryName", categoryName)
+  categoryName = categoryName.replace("-", " ")
 
   useEffect(() => {
     // Scroll to the top when the component mounts
@@ -29,18 +29,18 @@ const Category = ({ allProducts }) => {
 
   // Filter products based on the categoryName
   useEffect(() => {
-    console.log("filtered products ", filteredProducts);
-    if (categoryName.toLowerCase() === "popular") {
-      // Display all products for "Popular" categoryName
-      setFilteredProducts(allProducts);
-    } else {
-      // Filter products based on the specified categoryName
-      const filtered = allProducts.filter(
-        (product) => product.categoryName.toLowerCase() === categoryName.toLowerCase()
-      );
-      setFilteredProducts(filtered);
+    // Filter products based on the specified categoryName
+    if (allProducts && allProducts.length > 0) {
+      let filteredArray = []
+      allProducts.map((product, index) => {
+        if (product.category.toLowerCase() === categoryName.toLowerCase()) {
+          filteredArray.push(product)
+        } else { }
+      })
+      setFilteredProducts(filteredArray);
+      console.log("filteredProducts", filteredArray)
     }
-  }, [categoryName, allProducts]);
+  }, [allProducts]);
 
   return (
     <>
@@ -79,7 +79,7 @@ const Category = ({ allProducts }) => {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 w-[90%] mx-auto my-10">
         {/* Map filtered products to ProductCard */}
-        {filteredProducts.map((product) => (
+        {filteredProducts?.map((product) => (
           <ProductCard
             key={product._id}
             img={product.productImages}
@@ -87,7 +87,7 @@ const Category = ({ allProducts }) => {
             desc={product.description}
             price={product.price}
             stock={product.stock}
-            categoryName={product.categoryName}
+            category={product.category}
             seller={product.owner.name}
             productId={product._id}
           />
