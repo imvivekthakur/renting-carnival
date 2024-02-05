@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { createProductThunk } from "../../redux/productSlice";
 import FormData from "form-data";
 import { ToastContainer, toast } from "react-toastify";
+import { getAllCategoryThunk } from "../../redux/categorySlice";
 
 const ProductForm = () => {
   const dispatch = useDispatch();
@@ -54,6 +55,30 @@ const ProductForm = () => {
     newRentArray[index] = e.target.value
     setRent(newRentArray)
   }
+
+  // Fetching Categories
+  const [allCategories, setAllCategories] = useState([]);
+
+  useEffect(() => {
+    dispatch(getAllCategoryThunk())
+      .then((res) => {
+        if (res.payload.data.success) {
+          let filteredArray = []
+          res.payload.data.allCategories.map((category, index) => {
+            filteredArray.push(category.name)
+          })
+          setAllCategories(filteredArray);
+          setLoading(false);
+        }
+        return res;
+      })
+      .catch((err) => {
+        return err.response;
+      });
+
+  }, []);
+
+  console.log("allCategoirs", allCategories)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -237,15 +262,14 @@ const ProductForm = () => {
               >
                 Category:
               </label>
-              <input
-                type="text"
-                id="category"
-                name="category"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                className="form-input mt-1 block w-full"
-                required
-              />
+              <select type="text" id="category" name="category" value={category} className="form-input mt-1 block w-full" required onChange={(e) => setCategory(e.target.value)}>
+                <option value={""}>Select Option</option>
+                {
+                  allCategories.map((category, index) => (
+                    <option key={index} value={category}>{category}</option>
+                  ))
+                }
+              </select>
             </div>
 
             <div className=" mb-3">
@@ -287,7 +311,7 @@ const ProductForm = () => {
                       required
                     />
                   </div>
-              ))}
+                ))}
             </div>
 
             <div className=" mb-3">
