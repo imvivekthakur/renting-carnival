@@ -89,13 +89,14 @@ const Product = ({ allProducts }) => {
     const fetchProductDetails = async () => {
       try {
         const res = await fetch(
-          `https://renting-carnival.onrender.com/product/get/${productId}`
+          `https://renting-carnival-api.onrender.com/product/get/${productId}`
         );
         const data = await res.json();
         if (!data) {
           console.log("product details could not pe loaded");
         } else {
           setProduct(data.product);
+
         }
       } catch (error) {
         console.log(error);
@@ -150,11 +151,8 @@ const Product = ({ allProducts }) => {
                 </div>
               </div>
               <div className="lg:w-1/2">
-                <div className="md:w-[90%] mx-auto my-4 md:mx-10">
+                <div className="md:w-[90%] mx-auto my-4 md:mx-10 space-y-2">
                   <h1 className="text-xl font-bold">{product.name}</h1>
-                  <div className="text-sm text-gray-500">
-                    Rs {product.price}
-                  </div>
                   <div>
                     <Rate
                       value={product.rating || 4}
@@ -163,6 +161,22 @@ const Product = ({ allProducts }) => {
                     />
                   </div>
                   <p className="text-sm">{product.description}</p>
+                  <div className="text-md text-gray-500">
+                    Buy At Rs : <span className="font-bold">{product.price}</span>
+                  </div>
+                  <div className="text-md text-gray-500">
+                    <p>Rent At : </p>
+                    <select className="ml-3">
+                      <option value={""}>Select Rent Option</option>
+                      {
+                        product.rent.map((rent, index) => {
+                          return (
+                            <option className="w-full px-8 font-bold" value={rent}>Rs {rent}/- For {index === 0 ? (1) : (index === 1 ? (6) : (12))} Month </option>
+                          )
+                        })
+                      }
+                    </select>
+                  </div>
 
                   <div className="flex mt-4">
                     <div>
@@ -209,41 +223,26 @@ const Product = ({ allProducts }) => {
               </h1>
             </div>
             <div
-              className={`m-4 text-center ${
-                isActive == 2 ? "font-bold" : ""
-              } cursor-pointer`}
+              className={`m-4 text-center ${isActive == 2 ? "font-bold" : ""
+                } cursor-pointer`}
               onClick={() => handleClick(2)}
             >
               Review
             </div>
           </div>
           <p
-            className={`text-sm text-gray-700 mb-4 ${
-              isActive == 2 ? "hidden" : ""
-            }`}
+            className={`text-sm text-gray-700 mb-4 ${isActive == 2 ? "hidden" : ""
+              }`}
           >
             <div className=" text-sm text-gray-500">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Assumenda tempora vel iste corrupti voluptates amet et dolorum
-              provident, aspernatur nihil incidunt dolorem repudiandae eius,
-              dolore voluptatum eos quam delectus possimus.
-              <br />
-              <br />
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Esse
-              quod unde dolores placeat non impedit iure praesentium similique
-              iste et.
+              {product.description}
             </div>
             <div className="flex gap-6">
-              <img
-                className="w-1/2 h-56 my-6 rounded-2xl object-cover"
-                src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGJlZHJvb218ZW58MHx8MHx8fDA%3D"
-                alt="similar bedrooms"
-              />
-              <img
-                className="w-1/2 h-56 my-6 rounded-2xl object-cover"
-                src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGJlZHJvb218ZW58MHx8MHx8fDA%3D"
-                alt="similar bedrooms"
-              />
+              {
+                product?.productImagesDesc?.map((image, index) => (
+                  <img src={image} className="w-1/2 h-56 my-6 rounded-2xl object-cover" alt={product.name} />
+                ))
+              }
             </div>
           </p>
           <div className={`${isActive == 1 ? "hidden" : ""}`}>
@@ -260,7 +259,7 @@ const Product = ({ allProducts }) => {
                 <img src={empty} alt="no similar products found" />
               </div>
               <div className="text-center mb-10">
-              <Link to="/shop" className="bg-primary p-3 rounded-lg hover:bg-gray-500 hover:text-white hover:no-underline text-white text-center m-4 px-6">Shop</Link>
+                <Link to="/shop" className="bg-primary p-3 rounded-lg hover:bg-gray-500 hover:text-white hover:no-underline text-white text-center m-4 px-6">Shop</Link>
               </div>
             </>
           ) : (
