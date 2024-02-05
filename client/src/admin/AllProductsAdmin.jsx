@@ -65,6 +65,7 @@ const AllProductsAdmin = () => {
                 seller={card.owner.name}
                 productId={card._id}
                 stealDeal = {card.stealDeal}
+                rent = {card.rent}
               />
             ))}
           </div>

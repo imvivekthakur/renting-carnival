@@ -30,7 +30,13 @@ const Deals = ({ allProducts }) => {
 
   useEffect(() => {
     if (allProducts && allProducts.length > 0) {
-      setProducts(allProducts);
+      let filteredArray = []
+      allProducts.map((product, index) => {
+        if (product.stealDeal === "Yes") {
+          filteredArray.push(product)
+        } else { }
+      })
+      setProducts(filteredArray);
       setLoading(true);
     }
   }, [allProducts]);

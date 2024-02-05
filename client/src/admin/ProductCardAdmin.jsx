@@ -15,7 +15,8 @@ const ProductCardAdmin = ({
   seller,
   category,
   productId,
-  stealDeal
+  stealDeal,
+  rent
 }) => {
   const dispatch = useDispatch();
   const [isEditing, setIsEditing] = useState(false);
@@ -190,7 +191,7 @@ const ProductCardAdmin = ({
           </p>
 
           <p className="font-bold p-1">
-            Rs:
+            Rs : 
             {isEditing ? (
               <input
                 type="text"
@@ -199,9 +200,27 @@ const ProductCardAdmin = ({
                 onChange={handleInputChange}
               />
             ) : (
-              price
+               price
             )}
           </p>
+          <div className="font-bold p-1">
+            <p>Rent : </p>
+            <div className="ml-4 text-sm">
+              <div className="flex gap-2 items-center">
+                <p>For 1 Month : </p>
+                <p>Rs {rent[0]}</p>
+              </div>
+              <div  className="flex gap-2 items-center">
+                <p>For 6 Month</p>
+                <p>Rs {rent[1]}</p>
+              </div>
+              <div  className="flex gap-2 items-center">
+                <p>For 12 Month</p>
+                <p>Rs {rent[2]}</p>
+              </div>
+            </div>
+          </div>
+
           <p className="font-md p-1">
             <span>Stocks Left: </span>
             {isEditing ? (

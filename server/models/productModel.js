@@ -29,6 +29,12 @@ const productSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  rent:[
+    {
+      type : Number,
+      default : 0
+    },
+  ],
   stock: {
     type: Number,
     default: 0,

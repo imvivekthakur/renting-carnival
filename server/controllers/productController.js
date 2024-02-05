@@ -5,7 +5,7 @@ const cloudinary = require("cloudinary").v2;
 
 const createProduct = async (req, res, next) => {
   try {
-    const { name, description, price, stock, category, stealDeal } = req.body;
+    const { name, description, price, stock, category, stealDeal , rent } = req.body;
     // console.log("Request Body:", req.body);
 
     // console.log("Entire Request Object:", req);
@@ -92,6 +92,7 @@ const createProduct = async (req, res, next) => {
       stealDeal,
       productImages,
       productImagesDesc,
+      rent,
     });
 
     console.log("product ", product);

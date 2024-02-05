@@ -23,6 +23,7 @@ const ProductForm = () => {
   const [imagePreviewsDesc, setImagePreviewsDesc] = useState(Array(5).fill(null));
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
+  const [rent, setRent] = useState(Array(3).fill(null));
   const [description, setDescription] = useState("");
   const [stock, setStock] = useState("");
   const [stealDeal, setStealDeal] = useState("");
@@ -48,15 +49,11 @@ const ProductForm = () => {
     setImagePreviewsDesc(newImagePreviews);
   };
 
-  const handleRemoveImage = (index) => {
-    const newSendImages = [...sendImages];
-    newSendImages[index] = null;
-    setSendImages(newSendImages);
-
-    const newImagePreviews = [...imagePreviews];
-    newImagePreviews[index] = null;
-    setImagePreviews(newImagePreviews);
-  };
+  const handleRentChange = (e, index) => {
+    const newRentArray = [...rent]
+    newRentArray[index] = e.target.value
+    setRent(newRentArray)
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -75,6 +72,17 @@ const ProductForm = () => {
 
     if (sendImagesDesc.some((image) => image === null)) {
       toast.error("Please select all 2 images.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      return;
+    }
+    if (rent.some((image) => image === null)) {
+      toast.error("Please enter all months rent.", {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -103,6 +111,13 @@ const ProductForm = () => {
     sendImagesDesc.forEach((image, index) => {
       if (image) {
         fd.append("productImagesDesc", image);
+      }
+    });
+    console.log(fd);
+
+    rent.forEach((singleRent, index) => {
+      if (singleRent) {
+        fd.append("rent", singleRent);
       }
     });
     console.log(fd);
@@ -253,6 +268,30 @@ const ProductForm = () => {
 
             <div className=" mb-3">
               <label
+                htmlFor="rent"
+                className="text-sm font-medium text-gray-600"
+              >
+                Rent:
+              </label>
+              {rent &&
+                rent.map((rent, index) => (
+                  <div key={index} className="mb-3 inline">
+                    <label htmlFor="rent" className="mx-2 ml-4 text-sm font-medium text-gray-600">For {index == 0 ? ("1") : index == 1 ? ("6") : ("12")} Months :</label>
+                    <input
+                      type="number"
+                      id="rent"
+                      name="rent"
+                      value={rent}
+                      onChange={(e) => handleRentChange(e, index)}
+                      className="form-input mt-1 w-[10%]"
+                      required
+                    />
+                  </div>
+              ))}
+            </div>
+
+            <div className=" mb-3">
+              <label
                 htmlFor="stock"
                 className="block text-sm font-medium text-gray-600"
               >
@@ -275,15 +314,6 @@ const ProductForm = () => {
               >
                 Featured for Steal Deal ?
               </label>
-              {/* <input
-                type="text"
-                id="stealDeal"
-                name="stealDeal"
-                value={stealDeal}
-                onChange={(e) => setStealDeal(e.target.value)}
-                className="form-input mt-1 block w-full"
-                required
-              /> */}
               <select onChange={(e) => setStealDeal(e.target.value)} className="form-input mt-1 block w-[50%]" id="stealDeal" name="stealDeal" value={stealDeal} required>
                 <option value={""}>Select Option</option>
                 <option value={"Yes"}>Yes</option>
