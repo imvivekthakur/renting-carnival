@@ -35,6 +35,10 @@ const createProduct = async (req, res, next) => {
     console.log("files ", files);
     let productImages = [];
 
+    let files2 = req.files ? req.files.productImagesDesc : null;
+    console.log("productImagesDesc ", files2);
+    let productImagesDesc = [];
+
     if (files) {
       for (const file of files) {
         const result = await cloudinary.uploader.upload(file.tempFilePath, {
@@ -55,7 +59,28 @@ const createProduct = async (req, res, next) => {
       }
     }
 
+    if (files2) {
+      for (const file of files2) {
+        const result = await cloudinary.uploader.upload(file.tempFilePath, {
+          public_id: `${Date.now()}`,
+          resource_type: "auto",
+          folder: "images",
+        });
+
+        console.log("result ", result);
+
+        if (result && result.secure_url) {
+          productImagesDesc.push(result.secure_url);
+        } else {
+          return res
+            .status(500)
+            .json({ message: "Failed to upload one or more images" });
+        }
+      }
+    }
+
     console.log("product images ", productImages);
+    console.log("productImagesDesc ", productImagesDesc);
 
     const product = await Product.create({
       name,
@@ -65,6 +90,7 @@ const createProduct = async (req, res, next) => {
       category,
       owner,
       productImages,
+      productImagesDesc,
     });
 
     console.log("product ", product);

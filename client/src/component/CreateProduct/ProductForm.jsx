@@ -18,7 +18,9 @@ const ProductForm = () => {
   }, []);
 
   const [sendImages, setSendImages] = useState(Array(5).fill(null));
+  const [sendImagesDesc, setSendImagesDesc] = useState(Array(2).fill(null));
   const [imagePreviews, setImagePreviews] = useState(Array(5).fill(null));
+  const [imagePreviewsDesc, setImagePreviewsDesc] = useState(Array(5).fill(null));
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
@@ -33,6 +35,16 @@ const ProductForm = () => {
     const newImagePreviews = [...imagePreviews];
     newImagePreviews[index] = URL.createObjectURL(e.target.files[0]);
     setImagePreviews(newImagePreviews);
+  };
+
+  const handleSendImageDesc = (e, index) => {
+    const newSendImages = [...sendImagesDesc];
+    newSendImages[index] = e.target.files[0];
+    setSendImagesDesc(newSendImages);
+
+    const newImagePreviews = [...imagePreviewsDesc];
+    newImagePreviews[index] = URL.createObjectURL(e.target.files[0]);
+    setImagePreviewsDesc(newImagePreviews);
   };
 
   const handleRemoveImage = (index) => {
@@ -60,6 +72,18 @@ const ProductForm = () => {
       return;
     }
 
+    if (sendImagesDesc.some((image) => image === null)) {
+      toast.error("Please select all 2 images.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      return;
+    }
+
     const fd = new FormData();
     fd.append("name", name);
     fd.append("category", category);
@@ -70,6 +94,13 @@ const ProductForm = () => {
     sendImages.forEach((image, index) => {
       if (image) {
         fd.append("productImages", image);
+      }
+    });
+    console.log(fd);
+
+    sendImagesDesc.forEach((image, index) => {
+      if (image) {
+        fd.append("productImagesDesc", image);
       }
     });
     console.log(fd);
@@ -93,6 +124,7 @@ const ProductForm = () => {
           setPrice("");
           setDescription("");
           setSendImages("");
+          setSendImagesDesc("");
         } else {
           toast.error(`${res.payload.data.msg}`, {
             position: "top-right",
@@ -150,6 +182,35 @@ const ProductForm = () => {
                 className="form-textarea mt-1 block w-full"
                 required
               />
+            </div>
+            <div className="mb-3">
+              <label
+                htmlFor="photos"
+                className="block text-sm font-medium text-gray-600"
+              >
+                Upload Description Images of Product (2 images):
+              </label>
+
+              <div className="flex flex-wrap">
+                {sendImagesDesc &&
+                  sendImagesDesc.map((image, index) => (
+                    <div key={index} className="mb-3">
+                      {imagePreviewsDesc[index] && (
+                        <img
+                          src={imagePreviewsDesc[index]}
+                          alt={`Preview ${index}`}
+                          className="mb-2 w-60 h-60"
+                        />
+                      )}
+                      <input
+                        type="file"
+                        name={`file${index}`}
+                        accept="image/png, image/jpg, image/jpeg"
+                        onChange={(e) => handleSendImageDesc(e, index)}
+                      />
+                    </div>
+                  ))}
+              </div>
             </div>
 
             <div className=" mb-3">

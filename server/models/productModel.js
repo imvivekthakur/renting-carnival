@@ -20,6 +20,11 @@ const productSchema = new mongoose.Schema({
       type: String,
     },
   ],
+  productImagesDesc: [
+    {
+      type: String,
+    },
+  ],
   price: {
     type: Number,
     default: 0,
