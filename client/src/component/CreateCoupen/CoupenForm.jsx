@@ -23,6 +23,7 @@ const CoupenForm = () => {
     const [sendImages, setSendImages] = useState(Array(1).fill(null));
     const [imagePreviews, setImagePreviews] = useState(Array(1).fill(null));
     const [coupenCode, setCoupenCode] = useState("");
+    const [discount, setDiscount] = useState();
     const editor = useRef(null);
 
     const handleSendImage = (e, index) => {
@@ -53,6 +54,7 @@ const CoupenForm = () => {
         const fd = new FormData();
 
         fd.append("coupenCode", coupenCode);
+        fd.append("discount", discount);
 
         sendImages.forEach((image, index) => {
             if (image) {
@@ -76,6 +78,7 @@ const CoupenForm = () => {
 
                     // Reset form fields
                     setCoupenCode("");
+                    setDiscount();
                     setSendImages("");
                 } else {
                     toast.error(`${res.payload.data.message}`, {
@@ -115,6 +118,24 @@ const CoupenForm = () => {
                                 value={coupenCode}
                                 onChange={(e) => setCoupenCode(e.target.value)}
                                 className="form-input mt-1 block w-full"
+                                required
+                            />
+                        </div>
+                        <div className=" mb-3">
+                            <label
+                                htmlFor="coupenCode"
+                                className="block text-sm font-medium text-gray-600"
+                            >
+                                Discount in Percentage
+                            </label>
+                            <input
+                                type="number"
+                                id="discount"
+                                name="discount"
+                                value={discount}
+                                onChange={(e) => setDiscount(e.target.value)}
+                                className="form-input mt-1 block w-full"
+                                placeholder="Don't need to add % , just write number"
                                 required
                             />
                         </div>

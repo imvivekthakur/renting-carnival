@@ -6,6 +6,7 @@ import Footer from "../component/Footer";
 import { getAllCoupenThunk } from "../redux/coupenSlice";
 import { CouponAPI } from "../redux/API";
 import axios from "axios";
+import { toast } from "react-toastify";
 const AllCoupenAdmin = () => {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(true);
@@ -93,6 +94,11 @@ const AllCoupenAdmin = () => {
                                     <div className="p-4">
                                         <h1 className="text-sm font-bold p-1">
                                             Coupon Code : <span className="text-green-600 text-lg">{card.coupenCode}</span>
+                                        </h1>
+                                    </div>
+                                    <div className="p-4">
+                                        <h1 className="text-sm font-bold p-1">
+                                            Discount : <span className="text-green-600 text-lg">{card?.discount}%</span>
                                         </h1>
                                     </div>
                                     <div className="flex">
