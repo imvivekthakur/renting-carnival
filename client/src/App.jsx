@@ -41,6 +41,7 @@ import AllBlog from "./component/AllBlog";
 import { getAllBlogThunk } from "./redux/blogSlice";
 import AllBlogsAdmin from "./admin/AllBlogsAdmin";
 import CategoryForm from "./component/CreateCategory/CategoryForm";
+import AllComboProductsAdmin from "./admin/AllComboProductsAdmin";
 // import ProductForm from "./component/ProductForm";
 
 function App() {
@@ -104,6 +105,7 @@ function App() {
           <Route path="/otp-verify" element={<OTPVerification />} />
           <Route path="/allProducts" element={<DynamicProducts />} />
           <Route path="/admin/allProducts" element={<AllProductsAdmin />} />
+          <Route path="/admin/allComboProducts" element={<AllComboProductsAdmin />} />
           <Route path="/combos" element={<Combos allProducts={allProducts} />} />
 
           <Route path="/review" element={<Review />} />

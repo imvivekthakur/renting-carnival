@@ -28,6 +28,7 @@ const ProductForm = () => {
   const [description, setDescription] = useState("");
   const [stock, setStock] = useState("");
   const [stealDeal, setStealDeal] = useState("");
+  const [combo, setCombo] = useState("");
   const [category, setCategory] = useState("");
 
   const handleSendImage = (e, index) => {
@@ -125,6 +126,7 @@ const ProductForm = () => {
     fd.append("stock", stock);
     fd.append("description", description);
     fd.append("stealDeal", stealDeal);
+    fd.append("combo", combo);
 
     sendImages.forEach((image, index) => {
       if (image) {
@@ -167,6 +169,7 @@ const ProductForm = () => {
           setDescription("");
           setSendImages("");
           setSendImagesDesc("");
+          setCombo("")
         } else {
           toast.error(`${res.payload.data.msg}`, {
             position: "top-right",
@@ -339,6 +342,21 @@ const ProductForm = () => {
                 Featured for Steal Deal ?
               </label>
               <select onChange={(e) => setStealDeal(e.target.value)} className="form-input mt-1 block w-[50%]" id="stealDeal" name="stealDeal" value={stealDeal} required>
+                <option value={""}>Select Option</option>
+                <option value={"Yes"}>Yes</option>
+                <option value={"No"}>No</option>
+              </select>
+
+            </div>
+
+            <div className=" mb-3">
+              <label
+                htmlFor="combo"
+                className="block text-sm font-medium text-gray-600"
+              >
+                Is this a Combo Product?
+              </label>
+              <select onChange={(e) => setCombo(e.target.value)} className="form-input mt-1 block w-[50%]" id="combo" name="combo" value={combo} required>
                 <option value={""}>Select Option</option>
                 <option value={"Yes"}>Yes</option>
                 <option value={"No"}>No</option>

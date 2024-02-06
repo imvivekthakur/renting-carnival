@@ -2,8 +2,12 @@ import React, { useEffect, useState } from "react";
 import Deals from "./Deals";
 import DefaultNavbar from "./Default_Navbar";
 import Footer from "./Footer";
+import ProductCard from "./DynamicProducts/ProductCard";
+import { useDispatch } from "react-redux";
+import { getAllProductThunk } from "../redux/productSlice";
 
-const Combos = ({allProducts}) => {
+const Combos = () => {
+  const dispatch = useDispatch();
   useEffect(() => {
     // Scroll to the top when the component mounts
     window.scrollTo({
@@ -11,6 +15,30 @@ const Combos = ({allProducts}) => {
       behavior: "smooth",
     });
   }, []);
+  const [allProducts, setAllProducts] = useState([]);
+
+  useEffect(() => {
+    dispatch(getAllProductThunk())
+      .then((res) => {
+        if (res.payload.data.success) {
+          let array = res.payload.data.products;
+          let filteredArray = [];
+          array.map((product, index) => {
+            if (product.combo === "Yes") {
+              filteredArray.push(product)
+            }
+          })
+          setAllProducts(filteredArray);
+          setLoading(false);
+        }
+        return res;
+      })
+      .catch((err) => {
+        return err.response;
+      });
+  }, []);
+
+
   return (
     <>
       <DefaultNavbar />
@@ -26,7 +54,25 @@ const Combos = ({allProducts}) => {
           </span>
         </h1>
       </div>
-      <Deals allProducts={allProducts}/>
+      {/* <Deals allProducts={allProducts}/> */}
+
+      <div className="my-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 w-[90%] mx-auto">
+        {allProducts.map((card) => (
+          <div key={card._id}>
+            <ProductCard
+              img={card.productImages}
+              title={card.name}
+              desc={card.description}
+              price={card.price}
+              stock={card.stock}
+              category={card.category}
+              seller={card.owner.name}
+              productId={card._id}
+            />
+          </div>
+        ))}
+      </div>
+
       <Footer />
     </>
   );

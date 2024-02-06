@@ -50,6 +50,10 @@ const productSchema = new mongoose.Schema({
   stealDeal: {
     type: String,
     default : "No"
+  },
+  combo: {
+    type: String,
+    default : "No"
   }
 });
 

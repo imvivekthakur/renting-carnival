@@ -16,7 +16,8 @@ const ProductCardAdmin = ({
   category,
   productId,
   stealDeal,
-  rent
+  rent,
+  combo
 }) => {
   const dispatch = useDispatch();
   const [isEditing, setIsEditing] = useState(false);
@@ -250,6 +251,11 @@ const ProductCardAdmin = ({
             ) : (
               stealDeal
             )}
+          </p>
+
+          <p className="font-md p-1">
+            <span>Combo Product : </span>
+            {combo}
           </p>
 
           <div className="flex">
