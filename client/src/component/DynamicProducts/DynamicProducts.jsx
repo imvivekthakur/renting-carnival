@@ -44,7 +44,7 @@ const DynamicProducts = () => {
       ) : (
         <div>
           <DefaultNavbar />
-          <div className="relative">
+          {/* <div className="relative">
             <img
               src="https://images.unsplash.com/photo-1524634126442-357e0eac3c14?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTZ8fHN0b3JlfGVufDB8fDB8fHww"
               alt="shop"
@@ -55,7 +55,7 @@ const DynamicProducts = () => {
                 All Products
               </span>
             </h1>
-          </div>
+          </div> */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8 w-[90%] mx-auto mt-5 pt-5 mb-5 ">
             {allProducts.map((card, index) => (
               <ProductCard
