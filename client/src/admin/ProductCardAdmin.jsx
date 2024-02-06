@@ -65,7 +65,7 @@ const ProductCardAdmin = ({
         toast.success(response.data.msg);
 
         const updatedProductResponse = await axios.get(
-          `https://renting-carnival-api.onrender.com/product/get/${productId}`
+          `https://renting-carnival.onrender.com/product/get/${productId}`
         );
 
         // console.log("updatedProductResponse", updatedProductResponse);
@@ -103,7 +103,7 @@ const ProductCardAdmin = ({
   const handleDelete = async () => {
     try {
       const response = await axios.delete(
-        `https://renting-carnival-api.onrender.com/admin/delete/${productId}`,
+        `https://renting-carnival.onrender.com/admin/delete/${productId}`,
         { headers: headers }
       );
 
@@ -192,7 +192,7 @@ const ProductCardAdmin = ({
           </p>
 
           <p className="font-bold p-1">
-            Rs : 
+            Rs :
             {isEditing ? (
               <input
                 type="text"
@@ -201,7 +201,7 @@ const ProductCardAdmin = ({
                 onChange={handleInputChange}
               />
             ) : (
-               price
+              price
             )}
           </p>
           <div className="font-bold p-1">
@@ -211,11 +211,11 @@ const ProductCardAdmin = ({
                 <p>For 1 Month : </p>
                 <p>Rs {rent[0]}</p>
               </div>
-              <div  className="flex gap-2 items-center">
+              <div className="flex gap-2 items-center">
                 <p>For 6 Month</p>
                 <p>Rs {rent[1]}</p>
               </div>
-              <div  className="flex gap-2 items-center">
+              <div className="flex gap-2 items-center">
                 <p>For 12 Month</p>
                 <p>Rs {rent[2]}</p>
               </div>

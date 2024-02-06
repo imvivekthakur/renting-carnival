@@ -85,9 +85,9 @@ const Deals = ({ allProducts }) => {
           </Carousel>
         )}
       </div>
-      <Link to={'/allProducts'}>
+      {/* <Link to={'/allProducts'}>
         <p className="text-center w-fit mx-auto flex bg-gray-600 text-white py-2 px-4 rounded-lg hover:scale-[1.05] duration-200 transition-all">Show More</p>
-      </Link>
+      </Link> */}
     </>
   );
 };
