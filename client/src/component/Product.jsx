@@ -89,7 +89,7 @@ const Product = ({ allProducts }) => {
     const fetchProductDetails = async () => {
       try {
         const res = await fetch(
-          `https://renting-carnival-api.onrender.com/product/get/${productId}`
+          `https://renting-carnival.onrender.com/product/get/${productId}`
         );
         const data = await res.json();
         if (!data) {

@@ -101,8 +101,8 @@ const Shop = ({ allProducts }) => {
           </button>
           <button
             className={`mr-4 mt-4 border-2 border-primary px-4 py-2 rounded-full ${selectedCategory === "Decorative Items"
-                ? "bg-primary text-white"
-                : ""
+              ? "bg-primary text-white"
+              : ""
               }`}
             onClick={() => setSelectedCategory("Decorative Items")}
           >
