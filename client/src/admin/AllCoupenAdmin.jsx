@@ -48,7 +48,7 @@ const AllCoupenAdmin = () => {
                 { headers: headers }
             );
 
-            console.log("response " , response)
+            console.log("response ", response)
 
             if (response.data.success) {
                 toast.success(response.data.msg);
