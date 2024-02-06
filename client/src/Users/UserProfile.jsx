@@ -364,6 +364,20 @@ const UserProfile = () => {
             </button>
           )}
         </Link>
+        <Link to="/coupen/create">
+          {profile && profile.role === "Admin" && (
+            <button className="bg-primary p-3 rounded-lg hover:bg-gray-500 hover:text-white hover:no-underline text-white text-center m-2">
+              Create Coupon Code
+            </button>
+          )}
+        </Link>
+        <Link to="/admin/allCoupen">
+          {profile && profile.role === "Admin" && (
+            <button className="bg-primary p-3 rounded-lg hover:bg-gray-500 hover:text-white hover:no-underline text-white text-center m-2">
+              Show Coupon Code
+            </button>
+          )}
+        </Link>
       </div>
       <ToastContainer />
       <Footer />

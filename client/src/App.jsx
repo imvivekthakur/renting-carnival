@@ -42,6 +42,8 @@ import { getAllBlogThunk } from "./redux/blogSlice";
 import AllBlogsAdmin from "./admin/AllBlogsAdmin";
 import CategoryForm from "./component/CreateCategory/CategoryForm";
 import AllComboProductsAdmin from "./admin/AllComboProductsAdmin";
+import CoupenForm from "./component/CreateCoupen/CoupenForm";
+import AllCoupenAdmin from "./admin/AllCoupenAdmin";
 // import ProductForm from "./component/ProductForm";
 
 function App() {
@@ -106,6 +108,7 @@ function App() {
           <Route path="/allProducts" element={<DynamicProducts />} />
           <Route path="/admin/allProducts" element={<AllProductsAdmin />} />
           <Route path="/admin/allComboProducts" element={<AllComboProductsAdmin />} />
+          <Route path="/admin/allCoupen" element={<AllCoupenAdmin />} />
           <Route path="/combos" element={<Combos allProducts={allProducts} />} />
 
           <Route path="/review" element={<Review />} />
@@ -127,6 +130,7 @@ function App() {
           <Route path="/product/create" element={<ProductForm />} />
           <Route path="/blog/create" element={<BlogForm />} />
           <Route path="/category/create" element={<CategoryForm />} />
+          <Route path="/coupen/create" element={<CoupenForm />} />
 
         </Routes>
         <Toaster />

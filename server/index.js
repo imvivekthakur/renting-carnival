@@ -27,6 +27,7 @@ const orderRoutes = require("./routes/orderRoutes");
 const stripeRoutes = require("./routes/stripeWebhookRoutes.js");
 const blogRoutes = require("./routes/blogRoutes.js")
 const categoryRoutes = require("./routes/categoryRoutes.js")
+const coupenRoutes = require("./routes/coupenRoutes.js")
 
 const { errorMiddleware } = require("./middleware/errorHandler");
 
@@ -75,7 +76,8 @@ app.use("/package", packageRoutes, errorMiddleware);
 app.use("/admin", adminRoutes, errorMiddleware);
 app.use("/payment", paymentRoutes, errorMiddleware);
 app.use("/blog", blogRoutes, errorMiddleware)
-app.use("/category", categoryRoutes)
+app.use("/category", categoryRoutes, errorMiddleware)
+app.use("/coupen", coupenRoutes, errorMiddleware)
 
 app.use("/order", orderRoutes, errorMiddleware);
 app.use("/stripe", stripeRoutes, errorMiddleware);
