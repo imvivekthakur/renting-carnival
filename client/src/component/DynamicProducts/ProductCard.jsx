@@ -19,6 +19,7 @@ const ProductCard = ({
   seller,
   category,
   productId,
+  tag
 }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   useEffect(() => {
@@ -107,12 +108,15 @@ const ProductCard = ({
           )}
         </div>
         <NavLink to={`/product/${productId}`}>
-          <div className="gradient-container">
+          <div className="gradient-container relative">
             <img
               src={selectedImage}
               alt="Bikes"
               className="object-cover h-64 w-full"
             />
+            {
+              tag ? (<p className="absolute top-0 bg-black text-white p-2 text-xs rounded-lg">{tag}</p>) : ("")
+            }
           </div>
         </NavLink>
         <div className="p-4">

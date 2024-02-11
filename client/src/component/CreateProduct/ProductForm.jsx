@@ -30,6 +30,7 @@ const ProductForm = () => {
   const [stealDeal, setStealDeal] = useState("");
   const [combo, setCombo] = useState("");
   const [category, setCategory] = useState("");
+  const [tag, setTag] = useState("");
 
   const handleSendImage = (e, index) => {
     const newSendImages = [...sendImages];
@@ -127,6 +128,7 @@ const ProductForm = () => {
     fd.append("description", description);
     fd.append("stealDeal", stealDeal);
     fd.append("combo", combo);
+    fd.append("tag", tag);
 
     sendImages.forEach((image, index) => {
       if (image) {
@@ -170,6 +172,7 @@ const ProductForm = () => {
           setSendImages("");
           setSendImagesDesc("");
           setCombo("")
+          setTag("")
         } else {
           toast.error(`${res.payload.data.msg}`, {
             position: "top-right",
@@ -315,6 +318,23 @@ const ProductForm = () => {
                     />
                   </div>
                 ))}
+            </div>
+
+            <div className=" mb-3">
+              <label
+                htmlFor="tag"
+                className="block text-sm font-medium text-gray-600"
+              >
+                Tag :
+              </label>
+              <input
+                type="text"
+                id="tag"
+                name="tag"
+                value={tag}
+                onChange={(e) => setTag(e.target.value)}
+                className="form-input mt-1 block w-[40%]"
+              />
             </div>
 
             <div className=" mb-3">

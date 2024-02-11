@@ -83,6 +83,7 @@ const Deals = ({ allProducts }) => {
                   category={card.category}
                   seller={card.owner.name}
                   productId={card._id}
+                  tag = {card.tag}
                 />
               </div>
             ))}

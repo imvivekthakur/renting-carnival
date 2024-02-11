@@ -67,6 +67,7 @@ const AllProductsAdmin = () => {
                 stealDeal = {card.stealDeal}
                 combo = {card.combo}
                 rent = {card.rent}
+                tag = {card.tag}
               />
             ))}
           </div>

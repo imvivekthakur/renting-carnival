@@ -29,10 +29,10 @@ const productSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  rent:[
+  rent: [
     {
-      type : Number,
-      default : 0
+      type: Number,
+      default: 0
     },
   ],
   stock: {
@@ -43,17 +43,21 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  tag: {
+    type: String,
+    required: true,
+  },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
   stealDeal: {
     type: String,
-    default : "No"
+    default: "No"
   },
   combo: {
     type: String,
-    default : "No"
+    default: "No"
   }
 });
 

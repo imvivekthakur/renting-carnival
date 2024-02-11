@@ -5,7 +5,7 @@ const cloudinary = require("cloudinary").v2;
 
 const createProduct = async (req, res, next) => {
   try {
-    const { name, description, price, stock, category, stealDeal, rent  , combo} = req.body;
+    const { name, description, price, stock, category, stealDeal, rent  , combo , tag} = req.body;
     // console.log("Request Body:", req.body);
 
     // console.log("Entire Request Object:", req);
@@ -94,6 +94,7 @@ const createProduct = async (req, res, next) => {
       productImages,
       productImagesDesc,
       rent,
+      tag
     });
 
     console.log("product ", product);
@@ -188,7 +189,7 @@ const editProduct = async (req, res, next) => {
   const { id } = req.params
 
   //fetch data
-  const { name, description, price, stock, stealDeal, seller , combo } = req.body
+  const { name, description, price, stock, stealDeal, seller , combo , tag } = req.body
 
   try {
     const response = await Product.findByIdAndUpdate(id, req.body, { new: true })

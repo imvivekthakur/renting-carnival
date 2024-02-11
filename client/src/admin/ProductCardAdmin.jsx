@@ -17,7 +17,8 @@ const ProductCardAdmin = ({
   productId,
   stealDeal,
   rent,
-  combo
+  combo,
+  tag
 }) => {
   const dispatch = useDispatch();
   const [isEditing, setIsEditing] = useState(false);
@@ -30,6 +31,7 @@ const ProductCardAdmin = ({
     category: category,
     seller: seller,
     stealDeal: stealDeal,
+    tag : tag
   });
 
   const [saveButtonText, setSaveButtonText] = useState("Edit");
@@ -81,6 +83,7 @@ const ProductCardAdmin = ({
             stock: updatedProduct.stock || prevData.stock,
             category: updatedProduct.category || prevData.category,
             stealDeal: updatedProduct.stealDeal || prevData.stealDeal,
+            tag: updatedProduct.tag || prevData.tag,
             seller: updatedProduct.owner
               ? updatedProduct.owner.name || prevData.seller
               : prevData.seller,
@@ -235,6 +238,21 @@ const ProductCardAdmin = ({
               stock
             )}
           </p>
+
+          <p className="font-md p-1">
+            <span>Tag : </span>
+            {isEditing ? (
+              <input
+                type="text"
+                name="tag"
+                value={editedData.tag}
+                onChange={handleInputChange}
+              />
+            ) : (
+              <p className="inline text-green-600 font-bold">{tag}</p>
+            )}
+          </p>
+
           <p className="font-md p-1">
             <span>Featured : </span>
             {isEditing ? (
