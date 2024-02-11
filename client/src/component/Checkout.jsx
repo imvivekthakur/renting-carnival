@@ -8,12 +8,14 @@ import CartItems from "./CartItems";
 import { ToastContainer } from "react-toastify";
 import toast from "react-hot-toast";
 import { loadStripe } from "@stripe/stripe-js";
+import axios from "axios";
+import { CouponAPI } from "../redux/API";
 
 const Checkout = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const cart2 = cart.cart;
-  // console.log("cart2  ", cart2);
+  console.log("cart2  ", cart2);
   // console.log("cart ", cart);
   // console.log("cart ", cart._id);
 
@@ -197,6 +199,46 @@ const Checkout = () => {
     }
   };
 
+
+  const [coupenCode, setCoupenCode] = useState("")
+  const [displayStatus, setDisplayStatus] = useState("block")
+
+  const handleCoupenVerification = async (coupenCode) => {
+    console.log("entered coupen verification")
+    try {
+      const response = await axios.get(
+        `${CouponAPI.getSingleCoupen}/${coupenCode}`
+      );
+
+      console.log("response of coupen verification ", response)
+
+      if (response.data.success) {
+        toast.success("Coupen Verfication Successful");
+        // window.location.reload();
+        // dispatch(getAllProductThunk());
+
+        // Algorithm for appyling discount on price
+        let discount = response?.data?.coupen?.discount / 100 * overallTotal
+
+        let discountedPrice = overallTotal - discount
+        setOverallTotal(discountedPrice)
+        toast.success("Price Updated")
+
+        setCoupenCode("")
+        setDisplayStatus("hidden")
+
+      } else {
+        // Notify failure
+        toast.error(response.data.msg);
+      }
+    } catch (error) {
+      toast.error("Invalid or Expired Coupen")
+      console.error("Error fetching coupen details:", error);
+      // Handle error, notify user, etc.
+    }
+  };
+
+
   return (
     <>
       <DefaultNavbar />
@@ -228,6 +270,7 @@ const Checkout = () => {
                 value={formData.firstName}
                 onChange={handleInputChange}
                 placeholder="First Name"
+                required="true"
               />
             </div>
             <div className="text-primary">
@@ -239,6 +282,7 @@ const Checkout = () => {
                 value={formData.lastName}
                 onChange={handleInputChange}
                 placeholder="Last Name"
+                required="true"
               />
             </div>
           </div>
@@ -252,6 +296,7 @@ const Checkout = () => {
                 value={formData.email}
                 onChange={handleInputChange}
                 placeholder="Email"
+                required="true"
               />
             </div>
             <div className="text-primary">
@@ -263,6 +308,7 @@ const Checkout = () => {
                 value={formData.phone}
                 onChange={handleInputChange}
                 placeholder="Phone"
+                required="true"
               />
             </div>
           </div>
@@ -276,6 +322,7 @@ const Checkout = () => {
                 value={formData.country}
                 onChange={handleInputChange}
                 placeholder="Country"
+                required="true"
               />
             </div>
           </div>
@@ -289,6 +336,7 @@ const Checkout = () => {
                 value={formData.address}
                 onChange={handleInputChange}
                 placeholder="Address"
+                required="true"
               />
             </div>
           </div>
@@ -302,6 +350,7 @@ const Checkout = () => {
                 value={formData.city}
                 onChange={handleInputChange}
                 placeholder="City"
+                required="true"
               />
             </div>
           </div>
@@ -315,6 +364,7 @@ const Checkout = () => {
                 value={formData.pinCode}
                 onChange={handleInputChange}
                 placeholder="Pin Code"
+                required="true"
               />
             </div>
           </div>
@@ -333,6 +383,16 @@ const Checkout = () => {
           <div className="text-center mt-4 font-bold max-w-xs">
             Total : {overallTotal}
           </div>
+
+
+          <div className={`flex flex-col gap-4 items-center justify-center mt-6 w-full text-black ${displayStatus}`}>
+            <h2 className="text-sm">Do you have any Coupen Code ?</h2>
+            <input className="w-[45%] rounded-lg p-2" onChange={(e) => setCoupenCode(e.target.value)} value={coupenCode} name="coupenCode" id="coupenCode" />
+            <p className="text-xs bg-white p-2 rounded-lg cursor-pointer hover:scale-[1.06] transition-all duration-200 text-black" onClick={() => handleCoupenVerification(coupenCode)}>Apply</p>
+          </div>
+
+
+
           <div className="text-center">
             <button className="text-primary bg-white px-4 py-2 rounded-lg my-6 hover:scale-110 duration-200 block w-fit mx-auto" onClick={makePayment}>
               Online Payment

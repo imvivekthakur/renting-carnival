@@ -64,6 +64,10 @@ const Deals = ({ allProducts }) => {
           </div>
         ) : (
           <Carousel
+            autoPlay={true}
+            autoPlaySpeed={2000}
+            rewind={true}
+            rewindWithAnimation={true}
             responsive={responsive}
             containerClass="carousel-container"
             className="w-[90%] mx-auto"

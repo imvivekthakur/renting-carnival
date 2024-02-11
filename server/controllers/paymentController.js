@@ -69,6 +69,8 @@ const paymentMethodPackage = async (req, res, next) => {
     //   },
     //   quantity: 1,
     // }));
+
+
     const lineItems = [
       {
         price_data: {

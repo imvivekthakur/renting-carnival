@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import empty from "../assets/empty2.webp";
 import { ColorRing } from "react-loader-spinner";
+import { getAllCoupenThunk } from "../redux/coupenSlice";
 
 const Product = ({ allProducts }) => {
   useEffect(() => {
@@ -111,6 +112,33 @@ const Product = ({ allProducts }) => {
 
   console.log(isObjectEmpty(product));
 
+
+  // Coupon
+  const [allCoupens, setAllCoupens] = useState([]);
+
+  useEffect(() => {
+    dispatch(getAllCoupenThunk())
+      .then((res) => {
+        if (res.payload.data.success) {
+          setAllCoupens(res.payload.data.allCoupens);
+          setLoading(false);
+        }
+        return res;
+      })
+      .catch((err) => {
+        return err.response;
+      });
+  }, []);
+
+  const copyContent = async (text) => {
+    try {
+      await navigator.clipboard.writeText(text)
+      toast.success("Coupon Copied")
+    } catch (error) {
+      toast.error("Can't Copy the Copon")
+    }
+  }
+
   return (
     <>
       <DefaultNavbar />
@@ -187,6 +215,19 @@ const Product = ({ allProducts }) => {
                         Add To Cart
                       </button>
                     </div>
+                  </div>
+
+                  <p className="text-sm font-[Poppins]">All Coupons Available</p>
+                  <div className="flex gap-2 md:flex-row flex-col w-[60%] flex-wrap">
+                    {
+                      allCoupens?.map((coupen, index) => {
+                        return (
+                          <div key={index} className="border bg-black text-white px-4 py-2 rounded-2xl cursor-pointer hover:scale-[1.1] duration-200 transition-all" onClick={() => copyContent(coupen?.coupenCode)}>
+                            <p className="" id="myText">{coupen?.coupenCode}</p>
+                          </div>
+                        )
+                      })
+                    }
                   </div>
                 </div>
               </div>

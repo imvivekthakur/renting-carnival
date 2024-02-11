@@ -34,10 +34,17 @@ const Contact = () => {
 
   const submit = (e) => {
     e.preventDefault();
-    dispatch(contactFormThunk(data))
+    const fd = new FormData();
+
+    fd.append("name", name);
+    fd.append("email", email);
+    fd.append("message", message);
+
+
+    dispatch(contactFormThunk(fd))
       .then((res) => {
         if (res.payload.data.success) {
-          toast.success(`${res.payload.data.msg}`, {
+          toast.success(`Message Sent`, {
             position: "top-right",
             autoClose: 3000,
             hideProgressBar: false,
@@ -46,10 +53,19 @@ const Contact = () => {
             draggable: true,
           });
 
-          setEmail("");
+          // Reset form fields
           setName("");
-          setPhone("");
-          setMessage("");
+          setEmail("")
+          setMessage("")
+        } else {
+          toast.error(`Message Failed to Send`, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
         }
         return res;
       })
@@ -57,6 +73,7 @@ const Contact = () => {
         return err.response;
       });
   };
+
   return (
     <>
       <DefaultNavbar />

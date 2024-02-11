@@ -4,7 +4,7 @@ const cloudinary = require("cloudinary").v2;
 
 const createCoupen = async (req, res, next) => {
     try {
-        const { coupenCode , discount} = req.body;
+        const { coupenCode, discount } = req.body;
 
         if (!coupenCode) {
             next(new ErrorHandler(400, "coupenCode is required"));
@@ -72,6 +72,31 @@ const getAllCoupen = async (req, res, next) => {
     }
 };
 
+const getSingleCoupen = async (req, res, next) => {
+    try {
+        const coupenCode = req.params.coupenCode;
+        console.log("coupenCode", coupenCode)
+
+        const coupen = await Coupen.findOne({ coupenCode: coupenCode });
+        if (!coupen) {
+            throw new ErrorHandler(404, "Coupen Not Found. It can be expired or Incorrect")
+        }
+
+        console.log(coupen)
+
+        res.status(200).json({
+            success: true,
+            msg: "Coupen Fetched successfully",
+            coupen: coupen
+        })
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json(new ErrorHandler(500, "Error while deleting coupen"));
+
+    }
+}
+
 const deleteCoupen = async (req, res, next) => {
     try {
         const coupenId = req.params.coupenId;
@@ -79,7 +104,7 @@ const deleteCoupen = async (req, res, next) => {
         // Check if the coupen exists
         const coupen = await Coupen.findById(coupenId);
         if (!coupen) {
-            throw new ErrorHandler(404, "Coupen not found");
+            throw new ErrorHandler(404, "Coupen not found.");
         }
 
         console.log(coupen);
@@ -99,5 +124,7 @@ const deleteCoupen = async (req, res, next) => {
 module.exports = {
     createCoupen,
     getAllCoupen,
+    getSingleCoupen,
     deleteCoupen
+
 }

@@ -44,6 +44,7 @@ import CategoryForm from "./component/CreateCategory/CategoryForm";
 import AllComboProductsAdmin from "./admin/AllComboProductsAdmin";
 import CoupenForm from "./component/CreateCoupen/CoupenForm";
 import AllCoupenAdmin from "./admin/AllCoupenAdmin";
+import AllContactAdmin from "./admin/AllContactAdmin";
 // import ProductForm from "./component/ProductForm";
 
 function App() {
@@ -109,6 +110,7 @@ function App() {
           <Route path="/admin/allProducts" element={<AllProductsAdmin />} />
           <Route path="/admin/allComboProducts" element={<AllComboProductsAdmin />} />
           <Route path="/admin/allCoupen" element={<AllCoupenAdmin />} />
+          <Route path="/admin/allContact" element={<AllContactAdmin />} />
           <Route path="/combos" element={<Combos allProducts={allProducts} />} />
 
           <Route path="/review" element={<Review />} />

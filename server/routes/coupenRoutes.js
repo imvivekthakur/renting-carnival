@@ -6,6 +6,7 @@ const { authVerifyToken } = require("../middleware/authVerifyToken");
 
 router.post("/create", authVerifyToken, coupenController.createCoupen);
 router.get("/getAll", coupenController.getAllCoupen);
+router.get("/getSingle/:coupenCode", coupenController.getSingleCoupen)
 router.post("/delete/:coupenId", coupenController.deleteCoupen);
 
 module.exports = router;

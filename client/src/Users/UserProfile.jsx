@@ -378,6 +378,13 @@ const UserProfile = () => {
             </button>
           )}
         </Link>
+        <Link to="/admin/allContact">
+          {profile && profile.role === "Admin" && (
+            <button className="bg-primary p-3 rounded-lg hover:bg-gray-500 hover:text-white hover:no-underline text-white text-center m-2">
+              Show All Contact
+            </button>
+          )}
+        </Link>
       </div>
       <ToastContainer />
       <Footer />

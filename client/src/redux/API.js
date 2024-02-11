@@ -1,6 +1,7 @@
 import axios from "axios";
 
 // const BASE_URL =  "https://renting-carnival.onrender.com/"
+
 const BASE_URL = "https://renting-carnival-api.onrender.com"
 
 // const BASE_URL = "http://localhost:4000"
@@ -15,5 +16,10 @@ export const ProductAPI = {
 }
 
 export const CouponAPI = {
-  deleteCoupen : BASE_URL + "/coupen/delete"
+  deleteCoupen: BASE_URL + "/coupen/delete",
+  getSingleCoupen: BASE_URL + "/coupen/getSingle"
+}
+
+export const ContactAPI = {
+  deleteContact : BASE_URL + "/contact/delete"
 }

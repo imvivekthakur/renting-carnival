@@ -8,6 +8,9 @@ import { getCartThunk } from "../redux/cartSlice";
 import { loadStripe } from "@stripe/stripe-js";
 import { Link } from "react-router-dom";
 import empty from "../assets/empty2.webp";
+import { CouponAPI } from "../redux/API";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -45,6 +48,47 @@ const Cart = () => {
         return err.response;
       });
   };
+
+
+
+  // const [coupenCode, setCoupenCode] = useState("")
+  // const [displayStatus, setDisplayStatus] = useState("block")
+
+  // const handleCoupenVerification = async (coupenCode) => {
+  //   console.log("entered coupen verification")
+  //   try {
+  //     const response = await axios.get(
+  //       `${CouponAPI.getSingleCoupen}/${coupenCode}`
+  //     );
+
+  //     console.log("response of coupen verification ", response)
+
+  //     if (response.data.success) {
+  //       toast.success("Coupen Verfication Successful");
+  //       // window.location.reload();
+  //       // dispatch(getAllProductThunk());
+
+  //       // Algorithm for appyling discount on price
+  //       let discount = response?.data?.coupen?.discount / 100 * overallTotal
+
+  //       let discountedPrice = overallTotal - discount
+  //       setOverallTotal(discountedPrice)
+  //       toast.success("Price Updated")
+
+  //       setCoupenCode("")
+  //       setDisplayStatus("hidden")
+
+  //     } else {
+  //       // Notify failure
+  //       toast.error(response.data.msg);
+  //     }
+  //   } catch (error) {
+  //     toast.error("Invalid or Expired Coupen")
+  //     console.error("Error fetching coupen details:", error);
+  //     // Handle error, notify user, etc.
+  //   }
+  // };
+
 
   useEffect(() => {
     getCartItems();
@@ -104,7 +148,13 @@ const Cart = () => {
               Total: Rs {overallTotal}
             </div>
 
-            <hr className="border-t-2 border-white my-5 w-full" />
+            <hr className="border-t-2 border-white my-2 w-full" />
+
+            {/* <div className={`flex flex-col gap-4 items-center justify-center mb-4 mt-2 w-full ${displayStatus}`}>
+              <h2 className="text-sm">Do you have any Coupen Code ?</h2>
+              <input className="w-[45%] rounded-lg p-2" onChange={(e) => setCoupenCode(e.target.value)} value={coupenCode} name="coupenCode" id="coupenCode" />
+              <p className="text-xs bg-white p-2 rounded-lg cursor-pointer hover:scale-[1.06] transition-all duration-200" onClick={() => handleCoupenVerification(coupenCode)}>Apply</p>
+            </div> */}
 
             <Link to="/checkout">
               <button
