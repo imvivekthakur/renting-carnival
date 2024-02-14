@@ -21,5 +21,5 @@ export const CouponAPI = {
 }
 
 export const ContactAPI = {
-  deleteContact : BASE_URL + "/contact/delete"
+  deleteContact: BASE_URL + "/contact/delete"
 }
