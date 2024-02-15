@@ -197,7 +197,7 @@ const Product = ({ allProducts }) => {
                     <select className="ml-3">
                       <option value={""}>Select Rent Option</option>
                       {
-                        product.rent.map((rent, index) => {
+                        product?.rent?.map((rent, index) => {
                           return (
                             <option className="w-full px-8 font-bold" value={rent}>Rs {rent}/- For {index === 0 ? (1) : (index === 1 ? (6) : (12))} Month </option>
                           )
