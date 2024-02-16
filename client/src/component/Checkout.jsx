@@ -9,7 +9,7 @@ import { ToastContainer } from "react-toastify";
 import toast from "react-hot-toast";
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
-import { CouponAPI } from "../redux/API";
+import { BASE_URL, CouponAPI } from "../redux/API";
 
 const Checkout = () => {
   const dispatch = useDispatch();
@@ -171,6 +171,7 @@ const Checkout = () => {
           country: "IN",
         },
       },
+      totalPrice: overallTotal
     };
 
     const user = JSON.parse(localStorage.getItem("userInfo"));
@@ -181,7 +182,7 @@ const Checkout = () => {
     };
 
     const res = await fetch(
-      "https://renting-carnival-api.onrender.com/payment/checkout",
+      `${BASE_URL}/payment/checkout`,
       {
         method: "POST",
         headers: headers,

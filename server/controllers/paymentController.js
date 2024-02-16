@@ -5,20 +5,36 @@ const Package = require("../models/packageModel");
 const User = require("../models/userModel");
 
 const paymentMethod = async (req, res, next) => {
-  const { products, customer } = req.body;
+  console.log("Inside paymetn Method")
+  const { products, customer, totalPrice } = req.body;
+
+  console.log("porducts body", products)
 
   const userId = req.user._id;
 
-  const lineItems = products.map((product) => ({
-    price_data: {
-      currency: "inr",
-      product_data: {
-        name: product.product.name,
+  // const lineItems = products.map((product) => ({
+  //   price_data: {
+  //     currency: "inr",
+  //     product_data: {
+  //       name: product.product.name,
+  //     },
+  //     unit_amount: Math.round(product.product.price * 100),
+  //   },
+  //   quantity: product.quantity,
+  // }));
+
+  const lineItems = [
+    {
+      price_data: {
+        currency: "inr",
+        product_data: {
+          name: "Product Name"
+        },
+        unit_amount: Math.round(totalPrice * 100),
       },
-      unit_amount: Math.round(product.product.price * 100),
-    },
-    quantity: product.quantity,
-  }));
+      quantity: 1
+    }
+  ]
 
   console.log("line items ", lineItems);
 
