@@ -63,6 +63,17 @@ const OTPVerification = () => {
         ) : (
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
+              <label className="block text-sm font-medium">Enter Email:</label>
+              <input
+                type="text"
+                id="otp"
+                className="mt-1 p-2 w-full rounded-md border border-gray-300 bg-white"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className="mb-4">
               <label className="block text-sm font-medium">Enter OTP:</label>
               <input
                 type="text"
