@@ -30,8 +30,8 @@ const paymentMethod = async (req, res, next) => {
     shipping_address_collection: {
       allowed_countries: ["IN"],
     },
-    success_url: "https://renting-carnival.netlify.app",
-    cancel_url: "https://renting-carnival.netlify.app",
+    success_url: "https://main.dsct631z4l0hh.amplifyapp.com/",
+    cancel_url: "https://main.dsct631z4l0hh.amplifyapp.com/",
   });
 
   let cart = await Cart.findOne({ user: userId });
@@ -94,8 +94,8 @@ const paymentMethodPackage = async (req, res, next) => {
       shipping_address_collection: {
         allowed_countries: ["IN"],
       },
-      success_url: "https://renting-carnival.netlify.app",
-      cancel_url: "https://renting-carnival.netlify.app",
+      success_url: "https://main.dsct631z4l0hh.amplifyapp.com/",
+      cancel_url: "https://main.dsct631z4l0hh.amplifyapp.com/",
     });
 
     console.log("session ", session.id);

@@ -128,7 +128,7 @@ const Checkout = () => {
         .accessToken;
 
       const response = await fetch(
-        `https://renting-carnival.onrender.com/cart/delete/${cartId}`,
+        `https://renting-carnival-api.onrender.com/cart/delete/${cartId}`,
         {
           method: "DELETE",
           headers: {
@@ -181,7 +181,7 @@ const Checkout = () => {
     };
 
     const res = await fetch(
-      "https://renting-carnival.onrender.com/payment/checkout",
+      "https://renting-carnival-api.onrender.com/payment/checkout",
       {
         method: "POST",
         headers: headers,
