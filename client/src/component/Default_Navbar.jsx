@@ -10,6 +10,7 @@ import axios from "axios";
 import { Modal } from "antd";
 import { useDispatch } from "react-redux";
 import { profileThunk } from "../redux/authSlice";
+import { getCartThunk } from "../redux/cartSlice";
 
 const DefaultNavbar = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ const DefaultNavbar = () => {
   const navigate = useNavigate();
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [profile, setProfile] = useState();
+  const [allCart, setAllCart] = useState([]);
 
   const userData = JSON.parse(localStorage.getItem("userInfo"));
   const userAvailable = localStorage.getItem("userInfo") ? true : false;
@@ -40,16 +42,39 @@ const DefaultNavbar = () => {
       });
   }, []);
 
+  const getCartItems = () => {
+    dispatch(getCartThunk())
+      .then((res) => {
+        setAllCart(res.payload.data.cart);
+
+        const total = res.payload.data.detailedCartItems.reduce(
+          (acc, item) => acc + item.itemTotal,
+          0
+        );
+        setOverallTotal(total);
+
+        return res;
+      })
+      .catch((err) => {
+        console.log(err);
+        return err.response;
+      });
+  };
+
+  useEffect(() => {
+    getCartItems();
+  }, []);
+
   const showUsers = async () => {
     try {
       const userPhoto = await JSON.parse(localStorage.getItem("userInfo")).user;
       console.log("user photo ", userPhoto.photo);
       setUsers(
         userPhoto?.photo ||
-          "https://img.freepik.com/free-photo/3d-portrait-people_23-2150793895.jpg?t=st=1704347606~exp=1704351206~hmac=7bba358415593ecddcb20f57f8216d864fa66bc65b652121ab1e5362d8b5b168&w=740"
+        "https://img.freepik.com/free-photo/3d-portrait-people_23-2150793895.jpg?t=st=1704347606~exp=1704351206~hmac=7bba358415593ecddcb20f57f8216d864fa66bc65b652121ab1e5362d8b5b168&w=740"
       );
       console.log(users);
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -100,9 +125,8 @@ const DefaultNavbar = () => {
             </button>
           </div>
           <div
-            className={`items-center justify-between w-full md:flex md:w-auto md:order-1 ${
-              isMenuOpen ? "block" : "hidden"
-            }`}
+            className={`items-center justify-between w-full md:flex md:w-auto md:order-1 ${isMenuOpen ? "block" : "hidden"
+              }`}
             id="navbar-sticky"
           >
             <ul className="flex flex-col md:flex-row md:space-x-8 rtl:space-x-reverse items-center md:space-y-4">
@@ -127,20 +151,29 @@ const DefaultNavbar = () => {
               </li>
               <li className="mb-2 md:mb-0">
                 <NavLink
-                  to="/about"
+                  to="/combos"
                   className="nav-link"
                   activeClassName="active-link"
                 >
-                  About
+                  Combos
                 </NavLink>
               </li>
               <li className="mb-2 md:mb-0">
+                <NavLink
+                  to="/allBlogs"
+                  className="nav-link"
+                  activeClassName="active-link"
+                >
+                  Blog
+                </NavLink>
+              </li>
+              <li className="mb-2 md:mb-0 w-52">
                 <NavLink
                   to="/contact"
                   className="nav-link"
                   activeClassName="active-link"
                 >
-                  Contact
+                  Make an appointment
                 </NavLink>
               </li>
               <li className="flex items-center mt-5">
@@ -190,7 +223,7 @@ const DefaultNavbar = () => {
                       >
                         <div
                           className="flex items-center"
-                          // onClick={handleProfile}
+                        // onClick={handleProfile}
                         >
                           <img
                             src={profile && profile.photo}
@@ -233,13 +266,14 @@ const DefaultNavbar = () => {
                 </button>
               </NavLink>
               <NavLink to="/cart">
-                <button className="ml-4">
+                <button className="ml-4 relative group">
                   <img
                     src={Cart}
-                    alt="Heart Image"
-                    className="w-6 h-6 hover:scale-125 min-w-[24px] min-h-[24px] sm:mx-auto mt-5"
+                    alt="Cart Image"
+                    className="w-6 h-6 group-hover:scale-125 min-w-[24px] min-h-[24px] sm:mx-auto mt-5"
                     id="img2"
                   />
+                  <p className="bg-black absolute top-1 -right-2 rounded-full text-white px-2 py-1 text-xs group-hover:scale-125 transition-all duration-200">{allCart?.length}</p>
                 </button>
               </NavLink>
             </div>

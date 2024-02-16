@@ -32,18 +32,44 @@ import AllProductsAdmin from "./admin/AllProductsAdmin";
 import AllOrders from "./admin/AllOrders";
 import ShowPackages from "./admin/ShowPackage";
 import ProductForm from "./component/CreateProduct/ProductForm";
+import { Toaster } from "react-hot-toast";
+import Vehicle from "./component/Vehicle";
+import Combos from "./component/Combos";
+import RentalSubscription from "./component/RentalSubscription";
+import BlogForm from "./component/CreateBlog/BlogForm";
+import AllBlog from "./component/AllBlog";
+import { getAllBlogThunk } from "./redux/blogSlice";
+import AllBlogsAdmin from "./admin/AllBlogsAdmin";
+import CategoryForm from "./component/CreateCategory/CategoryForm";
+import AllComboProductsAdmin from "./admin/AllComboProductsAdmin";
+import CoupenForm from "./component/CreateCoupen/CoupenForm";
+import AllCoupenAdmin from "./admin/AllCoupenAdmin";
+import AllContactAdmin from "./admin/AllContactAdmin";
 // import ProductForm from "./component/ProductForm";
 
 function App() {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const [allProducts, setAllProducts] = useState([]);
+  const [allBlogs, setAllBlogs] = useState([]);
 
   useEffect(() => {
     dispatch(getAllProductThunk())
       .then((res) => {
         if (res.payload.data.success) {
           setAllProducts(res.payload.data.products);
+          setLoading(false);
+        }
+        return res;
+      })
+      .catch((err) => {
+        return err.response;
+      });
+
+    dispatch(getAllBlogThunk())
+      .then((res) => {
+        if (res.payload.data.success) {
+          setAllBlogs(res.payload.data.blogs);
           setLoading(false);
         }
         return res;
@@ -62,7 +88,10 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/shop" element={<Shop allProducts={allProducts} />} />
-          <Route path="/about" element={<Blog />} />
+          <Route path="/allBlogs" element={<AllBlog allBlogs={allBlogs} />} />
+          <Route path="/admin/allBlogs" element={<AllBlogsAdmin allBlogs={allBlogs} />} />
+
+          <Route path="/blog/:dbId" element={<Blog />} />
           {/* <Route path="/blog" element={<Blog />} /> */}
           <Route
             path="/product/:productId"
@@ -79,6 +108,10 @@ function App() {
           <Route path="/otp-verify" element={<OTPVerification />} />
           <Route path="/allProducts" element={<DynamicProducts />} />
           <Route path="/admin/allProducts" element={<AllProductsAdmin />} />
+          <Route path="/admin/allComboProducts" element={<AllComboProductsAdmin />} />
+          <Route path="/admin/allCoupen" element={<AllCoupenAdmin />} />
+          <Route path="/admin/allContact" element={<AllContactAdmin />} />
+          <Route path="/combos" element={<Combos allProducts={allProducts} />} />
 
           <Route path="/review" element={<Review />} />
           <Route path="/wishlist" element={<Wishlist />} />
@@ -86,38 +119,23 @@ function App() {
           <Route path="/failure" element={<Failure />} />
           <Route path="/orders" element={<AllOrders />} />
           <Route path="/user/package" element={<ShowPackages />} />
+          <Route path="/vehicle" element={<Vehicle />} />
+          <Route path="/rentalsubscription" element={<RentalSubscription />} />
 
           {/* <Route path="/furniture" element={<Furniture filteredProduct={allProducts}/>} /> */}
           <Route
-            path="/furniture"
-            element={
-              <Category category="Furniture" allProducts={allProducts} />
-            }
-          />
-          <Route
-            path="/decorative-items"
-            element={
-              <Category category="Decorative Items" allProducts={allProducts} />
-            }
-          />
-          <Route
-            path="/vehicles"
-            element={<Category category="Vehicles" allProducts={allProducts} />}
-          />
-          <Route
-            path="/home-appliance"
-            element={
-              <Category category="Home Appliance" allProducts={allProducts} />
-            }
-          />
-          <Route
-            path="/popular"
-            element={<Category category="popular" allProducts={allProducts} />}
+            path="/category/:categoryName"
+            element={<Category  allProducts={allProducts} />}
           />
           <Route path="/allUsers" element={<AllUsers />} />
 
           <Route path="/product/create" element={<ProductForm />} />
+          <Route path="/blog/create" element={<BlogForm />} />
+          <Route path="/category/create" element={<CategoryForm />} />
+          <Route path="/coupen/create" element={<CoupenForm />} />
+
         </Routes>
+        <Toaster />
       </BrowserRouter>
     </>
   );

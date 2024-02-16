@@ -110,6 +110,7 @@ const Items = ({ allProducts }) => {
               seller={card.owner.name}
               name={card.name}
               category={card.category}
+              tag={card.tag}
             />
           ))}
       </div>

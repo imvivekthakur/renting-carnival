@@ -5,7 +5,7 @@ const cloudinary = require("cloudinary").v2;
 
 const createProduct = async (req, res, next) => {
   try {
-    const { name, description, price, stock, category } = req.body;
+    const { name, description, price, stock, category, stealDeal, rent  , combo , tag} = req.body;
     // console.log("Request Body:", req.body);
 
     // console.log("Entire Request Object:", req);
@@ -35,6 +35,10 @@ const createProduct = async (req, res, next) => {
     console.log("files ", files);
     let productImages = [];
 
+    let files2 = req.files ? req.files.productImagesDesc : null;
+    console.log("productImagesDesc ", files2);
+    let productImagesDesc = [];
+
     if (files) {
       for (const file of files) {
         const result = await cloudinary.uploader.upload(file.tempFilePath, {
@@ -55,7 +59,28 @@ const createProduct = async (req, res, next) => {
       }
     }
 
+    if (files2) {
+      for (const file of files2) {
+        const result = await cloudinary.uploader.upload(file.tempFilePath, {
+          public_id: `${Date.now()}`,
+          resource_type: "auto",
+          folder: "images",
+        });
+
+        console.log("result ", result);
+
+        if (result && result.secure_url) {
+          productImagesDesc.push(result.secure_url);
+        } else {
+          return res
+            .status(500)
+            .json({ message: "Failed to upload one or more images" });
+        }
+      }
+    }
+
     console.log("product images ", productImages);
+    console.log("productImagesDesc ", productImagesDesc);
 
     const product = await Product.create({
       name,
@@ -64,7 +89,12 @@ const createProduct = async (req, res, next) => {
       stock,
       category,
       owner,
+      stealDeal,
+      combo,
       productImages,
+      productImagesDesc,
+      rent,
+      tag
     });
 
     console.log("product ", product);
@@ -155,10 +185,26 @@ const getSingleProduct = async (req, res, next) => {
   }
 };
 
+const editProduct = async (req, res, next) => {
+  const { id } = req.params
+
+  //fetch data
+  const { name, description, price, stock, stealDeal, seller , combo , tag } = req.body
+
+  try {
+    const response = await Product.findByIdAndUpdate(id, req.body, { new: true })
+
+    return res.status(200).json({ success: true, response: response })
+  } catch (error) {
+    res.status(500).json({ error: 'Error updating document' });
+  }
+}
+
 module.exports = {
   createProduct,
   getAllProducts,
   getUserProducts,
   deleteProduct,
   getSingleProduct,
+  editProduct
 };

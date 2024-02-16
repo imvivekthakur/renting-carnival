@@ -4,6 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
+import { ProductAPI } from "../redux/API";
 
 const ProductCardAdmin = ({
   img,
@@ -14,6 +15,10 @@ const ProductCardAdmin = ({
   seller,
   category,
   productId,
+  stealDeal,
+  rent,
+  combo,
+  tag
 }) => {
   const dispatch = useDispatch();
   const [isEditing, setIsEditing] = useState(false);
@@ -25,6 +30,8 @@ const ProductCardAdmin = ({
     stock: stock,
     category: category,
     seller: seller,
+    stealDeal: stealDeal,
+    tag : tag
   });
 
   const [saveButtonText, setSaveButtonText] = useState("Edit");
@@ -38,14 +45,23 @@ const ProductCardAdmin = ({
 
   const handleEdit = async () => {
     try {
+      // const response = await axios.put(
+      //   `https://renting-carnival-api.onrender.com/admin/edit/${productId}`,
+
+      //   editedData,
+      //   {
+      //     headers: headers,
+      //   }
+      // );
       const response = await axios.put(
-        `https://renting-carnival.onrender.com/admin/edit/${productId}`,
+        `${ProductAPI.editProduct}/${productId}`,
 
         editedData,
         {
           headers: headers,
         }
       );
+      // console.log("edit response , ", response)
 
       if (response.data.success) {
         toast.success(response.data.msg);
@@ -54,7 +70,7 @@ const ProductCardAdmin = ({
           `https://renting-carnival.onrender.com/product/get/${productId}`
         );
 
-        console.log(updatedProductResponse);
+        // console.log("updatedProductResponse", updatedProductResponse);
 
         if (updatedProductResponse.data.success) {
           const updatedProduct = updatedProductResponse.data.product;
@@ -66,6 +82,8 @@ const ProductCardAdmin = ({
             price: updatedProduct.price || prevData.price,
             stock: updatedProduct.stock || prevData.stock,
             category: updatedProduct.category || prevData.category,
+            stealDeal: updatedProduct.stealDeal || prevData.stealDeal,
+            tag: updatedProduct.tag || prevData.tag,
             seller: updatedProduct.owner
               ? updatedProduct.owner.name || prevData.seller
               : prevData.seller,
@@ -113,13 +131,14 @@ const ProductCardAdmin = ({
       ...prevData,
       [name]: value,
     }));
+    console.log("value changes", name, value)
   };
 
   return (
     <div className="product-card-link">
       <div className="rounded-lg overflow-hidden bg-gray-100 product-card">
         <NavLink to={`/product/${productId}`}>
-          <img src={img} alt="Bikes" className="object-cover h-64 w-full" />
+          <img src={img[0]} alt="Bikes" className="object-cover h-64 w-full" />
         </NavLink>
         <div className="p-4">
           <h1 className="text-lg font-bold p-1">
@@ -176,7 +195,7 @@ const ProductCardAdmin = ({
           </p>
 
           <p className="font-bold p-1">
-            Rs:
+            Rs :
             {isEditing ? (
               <input
                 type="text"
@@ -188,6 +207,24 @@ const ProductCardAdmin = ({
               price
             )}
           </p>
+          <div className="font-bold p-1">
+            <p>Rent : </p>
+            <div className="ml-4 text-sm">
+              <div className="flex gap-2 items-center">
+                <p>For 1 Month : </p>
+                <p>Rs {rent[0]}</p>
+              </div>
+              <div className="flex gap-2 items-center">
+                <p>For 6 Month</p>
+                <p>Rs {rent[1]}</p>
+              </div>
+              <div className="flex gap-2 items-center">
+                <p>For 12 Month</p>
+                <p>Rs {rent[2]}</p>
+              </div>
+            </div>
+          </div>
+
           <p className="font-md p-1">
             <span>Stocks Left: </span>
             {isEditing ? (
@@ -200,6 +237,43 @@ const ProductCardAdmin = ({
             ) : (
               stock
             )}
+          </p>
+
+          <p className="font-md p-1">
+            <span>Tag : </span>
+            {isEditing ? (
+              <input
+                type="text"
+                name="tag"
+                value={editedData.tag}
+                onChange={handleInputChange}
+              />
+            ) : (
+              <p className="inline text-green-600 font-bold">{tag}</p>
+            )}
+          </p>
+
+          <p className="font-md p-1">
+            <span>Featured : </span>
+            {isEditing ? (
+              // <input
+              //   type="text"
+              //   name="stealDeal"
+              //   value={editedData.stealDeal}
+              //   onChange={handleInputChange}
+              // />
+              <select value={editedData.stealDeal} name="stealDeal" onChange={handleInputChange}>
+                <option value={"Yes"}>Yes</option>
+                <option value={"No"}>No</option>
+              </select>
+            ) : (
+              stealDeal
+            )}
+          </p>
+
+          <p className="font-md p-1">
+            <span>Combo Product : </span>
+            {combo}
           </p>
 
           <div className="flex">

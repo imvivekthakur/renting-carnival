@@ -24,7 +24,7 @@ const CityPreference = () => {
   const [pinCode, setPinCode] = useState("");
 
   useEffect(() => {
-    setSidebarOpen(true);
+    // setSidebarOpen(true);
   }, []);
   // Function to toggle sidebar visibility
   const toggleSidebar = () => {
@@ -79,6 +79,7 @@ const CityPreference = () => {
 
           if (foundCity) {
             setCity(cityName);
+            localStorage.setItem('cityName', cityName);
             setLocation({
               latitude: cityData[i].lat,
               longitude: cityData[i].lng,
@@ -132,6 +133,7 @@ const CityPreference = () => {
             const data = await response.json();
             const cityName = data.address?.city_district;
             setCity(cityName);
+            localStorage.setItem('cityName', cityName);
             setLocation({ latitude, longitude });
           } catch (error) {
             console.error("Error fetching city:", error);
@@ -166,8 +168,13 @@ const CityPreference = () => {
 
   const handleCitySelection = (selectedCity) => {
     setCity(selectedCity);
+    localStorage.setItem('cityName', selectedCity);
     setSidebarOpen(false);
   };
+
+  useEffect(() => {
+    setCity(localStorage.getItem('cityName'))
+  }, [city])
 
   return (
     <div className="flex justify-between">
@@ -177,14 +184,14 @@ const CityPreference = () => {
         onClick={toggleSidebar}
       >
         <RiMapPin2Fill style={{ fontSize: "20px", marginRight: "10px" }} />
+
         {city ? `Delivery to: ${city}` : "Delivery to"}
       </button>
 
       {/* Sidebar */}
       <div
-        className={`fixed z-60 top-0 left-0 h-full bg-white overflow-x-hidden transition-transform transform ${
-          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } w-90 p-4 shadow z-0`}
+        className={`fixed z-60 top-0 left-0 h-full bg-white overflow-x-hidden transition-transform transform ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+          } w-90 p-4 shadow z-0`}
         style={{ zIndex: 60 }}
       >
         {/* Close button */}

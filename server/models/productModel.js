@@ -20,10 +20,21 @@ const productSchema = new mongoose.Schema({
       type: String,
     },
   ],
+  productImagesDesc: [
+    {
+      type: String,
+    },
+  ],
   price: {
     type: Number,
     default: 0,
   },
+  rent: [
+    {
+      type: Number,
+      default: 0
+    },
+  ],
   stock: {
     type: Number,
     default: 0,
@@ -32,10 +43,22 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  tag: {
+    type: String,
+    required: true,
+  },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
+  stealDeal: {
+    type: String,
+    default: "No"
+  },
+  combo: {
+    type: String,
+    default: "No"
+  }
 });
 
 const Product = mongoose.model("Product", productSchema);

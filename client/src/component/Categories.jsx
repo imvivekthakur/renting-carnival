@@ -1,13 +1,57 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { getAllCategoryThunk } from "../redux/categorySlice";
+import { useDispatch } from "react-redux";
 
 const Categories = () => {
+  const [allCategories, setAllCategories] = useState([]);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllCategoryThunk())
+      .then((res) => {
+        if (res.payload.data.success) {
+          setAllCategories(res.payload.data.allCategories);
+          console.log("res.payload.data.allCategories", res.payload.data.allCategories)
+          setLoading(false);
+        }
+        return res;
+      })
+      .catch((err) => {
+        return err.response;
+      });
+
+  }, []);
+
+  console.log("allCategoirs", allCategories)
+
   return (
     <div className="w-[90%] mx-auto">
       <h1 className="text-4xl text-[#CDA274] font-bold m-8 text-center">
         Browse The Categories
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {
+          allCategories?.map((category, index) => {
+            let categoryName = category.name
+            categoryName = categoryName.replace(" " , "-")
+            return (
+              <div>
+                <Link to={`/category/${categoryName}`} key={index}>
+                  <img
+                    className="w-full h-64 object-cover rounded-lg cursor-pointer hover:scale-105 duration-200"
+                    src={category?.categoryImages[0]}
+                    alt="Bedroom"
+                  />
+                </Link>
+                <div className="text-center m-4 font-bold text-xl">{category?.name}</div>
+              </div>
+            )
+          })
+        }
+      </div>
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <div>
           <NavLink to="/furniture">
             <img
@@ -60,7 +104,7 @@ const Categories = () => {
           </NavLink>
           <div className="text-center m-4 font-bold text-xl">Home Appliance</div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

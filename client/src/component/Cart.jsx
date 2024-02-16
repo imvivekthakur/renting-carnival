@@ -7,6 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCartThunk } from "../redux/cartSlice";
 import { loadStripe } from "@stripe/stripe-js";
 import { Link } from "react-router-dom";
+import empty from "../assets/empty2.webp";
+import { CouponAPI } from "../redux/API";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -43,7 +47,48 @@ const Cart = () => {
         console.log(err);
         return err.response;
       });
-  }
+  };
+
+
+
+  // const [coupenCode, setCoupenCode] = useState("")
+  // const [displayStatus, setDisplayStatus] = useState("block")
+
+  // const handleCoupenVerification = async (coupenCode) => {
+  //   console.log("entered coupen verification")
+  //   try {
+  //     const response = await axios.get(
+  //       `${CouponAPI.getSingleCoupen}/${coupenCode}`
+  //     );
+
+  //     console.log("response of coupen verification ", response)
+
+  //     if (response.data.success) {
+  //       toast.success("Coupen Verfication Successful");
+  //       // window.location.reload();
+  //       // dispatch(getAllProductThunk());
+
+  //       // Algorithm for appyling discount on price
+  //       let discount = response?.data?.coupen?.discount / 100 * overallTotal
+
+  //       let discountedPrice = overallTotal - discount
+  //       setOverallTotal(discountedPrice)
+  //       toast.success("Price Updated")
+
+  //       setCoupenCode("")
+  //       setDisplayStatus("hidden")
+
+  //     } else {
+  //       // Notify failure
+  //       toast.error(response.data.msg);
+  //     }
+  //   } catch (error) {
+  //     toast.error("Invalid or Expired Coupen")
+  //     console.error("Error fetching coupen details:", error);
+  //     // Handle error, notify user, etc.
+  //   }
+  // };
+
 
   useEffect(() => {
     getCartItems();
@@ -51,51 +96,8 @@ const Cart = () => {
 
   const refreshCart = () => {
     getCartItems();
-  }
-
-  const makePayment = async () => {
-    const stripe = await loadStripe(
-      "pk_test_51OUUpPSAXRW2sHukUtP8nHfxLnDC2pX0pgP0LdWW0BEUdWQh5txtBTux9yPvNiWGQYDyqYBqBOYhn4Ej1Con6LU300fMfqNxOi"
-    );
-    const body = {
-      products: cart2,
-      customer: {
-        name: "John Doe",
-        address: {
-          line1: "123 Main St",
-          city: "New Delhi",
-          state: "Delhi",
-          postal_code: "110043",
-          country: "IN",
-        },
-      },
-    };
-
-    const user = JSON.parse(localStorage.getItem("userInfo"));
-
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${user.accessToken}`,
-    };
-
-    const res = await fetch(
-      "https://renting-carnival.onrender.com/payment/checkout",
-      {
-        method: "POST",
-        headers: headers,
-        body: JSON.stringify(body),
-      }
-    );
-
-    const session = await res.json();
-    const result = stripe.redirectToCheckout({
-      sessionId: session.id,
-    });
-
-    if (result.error) {
-      console.log(result.error);
-    }
   };
+
   console.log(allCart);
   return (
     <>
@@ -146,23 +148,34 @@ const Cart = () => {
               Total: Rs {overallTotal}
             </div>
 
-            <hr className="border-t-2 border-white my-5 w-full" />
-            <button
-              className="btn bg-white text-primary text-center hover:scale-110 duration-300 hover:shadow-2xl p-2 rounded-md cursor-pointer mb-5"
-              onClick={makePayment}
-            >
-              Checkout
-            </button>
+            <hr className="border-t-2 border-white my-2 w-full" />
+
+            {/* <div className={`flex flex-col gap-4 items-center justify-center mb-4 mt-2 w-full ${displayStatus}`}>
+              <h2 className="text-sm">Do you have any Coupen Code ?</h2>
+              <input className="w-[45%] rounded-lg p-2" onChange={(e) => setCoupenCode(e.target.value)} value={coupenCode} name="coupenCode" id="coupenCode" />
+              <p className="text-xs bg-white p-2 rounded-lg cursor-pointer hover:scale-[1.06] transition-all duration-200" onClick={() => handleCoupenVerification(coupenCode)}>Apply</p>
+            </div> */}
+
             <Link to="/checkout">
-              <button className="btn bg-white text-primary text-center hover:scale-110 duration-300 hover:shadow-2xl p-2 rounded-md cursor-pointer mb-5">
-                Cash on Delivery
+              <button
+                className="btn bg-white text-primary text-center hover:scale-110 duration-300 hover:shadow-2xl p-2 rounded-md cursor-pointer mb-5"
+              >
+                Checkout
               </button>
             </Link>
           </div>
         </div>
       ) : (
-        <div>
-          <h1 className="text-4xl text-center my-10 text-gray-300 font-bold">Cart is Empty!!</h1>
+        <div className="flex flex-col items-center">
+          <h1 className="text-4xl text-center my-10 text-gray-300 font-bold">
+            Cart is Empty!!
+          </h1>
+          <img src={empty} alt="" />
+          <Link to="/shop">
+            <button className="bg-primary p-3 rounded-lg hover:bg-gray-500 hover:text-white hover:no-underline text-white text-center m-4">
+              Continue Shopping
+            </button>
+          </Link>
         </div>
       )}
       <Footer />

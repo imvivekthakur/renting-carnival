@@ -8,7 +8,7 @@ const initialState = {
 };
 
 export const contactFormThunk = createAsyncThunk(
-  "contact/submit",
+  "contact/create",
   async (data) => {
     const config = {
       headers: {
@@ -16,7 +16,7 @@ export const contactFormThunk = createAsyncThunk(
       },
     };
 
-    return await Api.post(`contact/`, data, config)
+    return await Api.post(`contact/create`, data, config)
       .then((res) => {
         return res;
       })
@@ -25,6 +25,26 @@ export const contactFormThunk = createAsyncThunk(
       });
   }
 );
+
+
+export const getAllContactThunk = createAsyncThunk(
+  "contact/getAll",
+  async (data) => {
+    const config = {
+      headers: {
+        "Content-type": "multipart/form-data",
+      },
+    };
+    return await Api.get(`contact/getAll/`, config)
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        return err.response;
+      });
+  }
+);
+
 
 export const contactSlice = createSlice({
   name: "contact",
