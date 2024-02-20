@@ -67,7 +67,7 @@ const ProductCardAdmin = ({
         toast.success(response.data.msg);
 
         const updatedProductResponse = await axios.get(
-          `https://renting-carnival.onrender.com/product/get/${productId}`
+          `https://renting-carnival-api.onrender.com/product/get/${productId}`
         );
 
         // console.log("updatedProductResponse", updatedProductResponse);
@@ -106,7 +106,7 @@ const ProductCardAdmin = ({
   const handleDelete = async () => {
     try {
       const response = await axios.delete(
-        `https://renting-carnival.onrender.com/admin/delete/${productId}`,
+        `https://renting-carnival-api.onrender.com/admin/delete/${productId}`,
         { headers: headers }
       );
 

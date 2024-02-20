@@ -12,6 +12,7 @@ import Footer from "./Footer";
 import { loadStripe } from "@stripe/stripe-js";
 import Working from "./Working";
 import { Link } from "react-router-dom";
+import { BASE_URL, PackageAPI } from "../redux/API";
 
 const TogglePack = () => {
   useEffect(() => {
@@ -96,7 +97,7 @@ const TogglePack = () => {
       try {
         const user = JSON.parse(localStorage.getItem("userInfo"));
         const response = await fetch(
-          "https://renting-carnival.onrender.com/package/all/",
+          `${BASE_URL}/package/getAll`,
           {
             headers: {
               "Content-type": "application/json",
@@ -124,7 +125,7 @@ const TogglePack = () => {
       const user = JSON.parse(localStorage.getItem("userInfo"));
 
       const response = await fetch(
-        `https://renting-carnival.onrender.com/package/${packageId}`,
+        `${PackageAPI.getSinglePackage}/${packageId}`,
         {
           method: "GET",
           headers: {
@@ -193,6 +194,24 @@ const TogglePack = () => {
     }
   };
 
+
+  // Handling the Price showcase halfYearly/yearly
+  const [pricingFormat, setPricingFormat] = useState("halfYearly")
+  function handlePricingFormat(value) {
+    setPricingFormat(value)
+  }
+
+  // Storing packageId in localStorage
+  function storePackageId(packageId){
+    localStorage.setItem("packageId" , packageId)
+  }
+
+  // Storing pricingFormat in localStorage
+  function storePricingFormat(format){
+    localStorage.setItem("pricingFormat" , format)
+  }
+
+
   // console.log(packages);
   return (
     <>
@@ -224,59 +243,75 @@ const TogglePack = () => {
             period.
           </p>
 
+          <div className="flex justify-between items-center gap-8 mt-6 mb-16">
+            <div onClick={() => handlePricingFormat("halfYearly")} className={`' border border-[#cca273] ${pricingFormat === "halfYearly" ? 'bg-[#cca273] text-white' : 'bg-white text-black'} px-4 py-2 text-xl rounded-lg hover:bg-[#cca273] hover:text-white duration-200 transition-all cursor-pointer '`}>
+              Half Yearly Plan
+            </div>
+            <div onClick={() => handlePricingFormat("yearly")} className={`" border border-[#cca273]  ${pricingFormat === "yearly" ? 'bg-[#cca273] text-white' : 'bg-white text-black'} px-4 py-2 text-xl rounded-lg hover:bg-[#cca273] hover:text-white duration-200 transition-all cursor-pointer "`}>
+              Yearly Plan
+            </div>
+          </div>
+
           <div className="flex flex-row justify-center">
             <div className="card-Annually">
               {!loading ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-                  {packages.map((pack, index) => (
-                    <div
-                      key={pack._id}
-                      className={`bg-white text-black border rounded-lg mx-auto relative group overflow-hidden transition-transform duration-300 transform scale-100 hover:scale-105 hover:border-primary ${
-                        selectedBox === index
+                  {packages?.map((pack, index) => {
+
+                    // storing packageId 
+                    storePackageId(pack?._id)
+
+                    // storing pricingFormat 
+                    storePricingFormat(pricingFormat)
+
+                    return (
+                      <div
+                        key={pack?._id}
+                        className={`bg-white text-black border rounded-lg mx-auto relative group overflow-hidden transition-transform duration-300 transform scale-100 hover:scale-105 hover:border-primary ${selectedBox === index
                           ? "outline-primary cursor-pointer"
                           : ""
-                      } flex flex-col items-center`}
-                      onClick={() => handleBoxClick(index)}
-                    >
-                      <img
-                        className="h-80 w-80 object-cover mx-auto"
-                        src={pack1}
-                        alt="random"
-                      />
-                      <div className="text-2xl text-center font-bold pt-2">
-                        {pack.name}
-                      </div>
-                      <div className="p-2 text-center">
-                        <p className="text-md">
-                          From{" "}
-                          <b className="text-4xl font-bold">₹{pack.price}</b>
-                          /month
-                        </p>
-                        <p>
-                          Access to {pack.numberOfProducts}
-                          <br /> products
-                        </p>
-                        <div className="my-5">
-                          <label className="cursor-pointer px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
+                          } flex flex-col items-center`}
+                        onClick={() => handleBoxClick(index)}>
+                        <img
+                          className="h-80 w-80 object-cover mx-auto"
+                          src={pack?.packageImage}
+                          alt="random"
+                        />
+                        <div className="text-2xl text-center font-bold pt-2">
+                          {pack.name}
+                        </div>
+                        <div className="p-2 text-center">
+                          <p className="text-md">
+                            From{" "}
+                            <b className="text-4xl font-bold">₹{pricingFormat === "halfYearly" ? pack?.packagePrice[0] : pack?.packagePrice[1]}</b>
+                            /month
+                          </p>
+                          <p>
+                            Access to {pack?.limitProduct}
+                            <br /> products
+                          </p>
+                          <div className="my-5">
+                            {/* <label className="cursor-pointer px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
                             <input
                               type="radio"
                               className="hidden"
                               onClick={() => makePayment(pack._id)}
                             />
                             Select Plan
-                          </label>
-                          <Link to="/shop">
-                            <button className="px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
-                              Browse Catalog
-                            </button>
-                          </Link>
+                          </label> */}
+                            <Link to="/browse/packageProducts">
+                              <button className="px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
+                                Browse Catalog
+                              </button>
+                            </Link>
+                          </div>
+                          <p className="text-xs text-gray-500">
+                            No booking or credit card fees!
+                          </p>
                         </div>
-                        <p className="text-xs text-gray-500">
-                          No booking or credit card fees!
-                        </p>
                       </div>
-                    </div>
-                  ))}
+                    )
+                  })}
                 </div>
               ) : (
                 <>

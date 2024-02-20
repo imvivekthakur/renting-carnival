@@ -64,10 +64,10 @@ const AllProductsAdmin = () => {
                 category={card.category}
                 seller={card.owner.name}
                 productId={card._id}
-                stealDeal = {card.stealDeal}
-                combo = {card.combo}
-                rent = {card.rent}
-                tag = {card.tag}
+                stealDeal={card.stealDeal}
+                combo={card.combo}
+                rent={card.rent}
+                tag={card.tag}
               />
             ))}
           </div>

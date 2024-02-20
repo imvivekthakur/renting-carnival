@@ -22,7 +22,7 @@ const EmailVerification = () => {
       return;
     }
 
-    localStorage.setItem("userEmail" , data.email)
+    localStorage.setItem("userEmail", data.email)
 
     setLoading(true);
 

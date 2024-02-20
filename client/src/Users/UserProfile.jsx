@@ -385,6 +385,20 @@ const UserProfile = () => {
             </button>
           )}
         </Link>
+        <Link to="/package/create">
+          {profile && profile.role === "Admin" && (
+            <button className="bg-primary p-3 rounded-lg hover:bg-gray-500 hover:text-white hover:no-underline text-white text-center m-2">
+              Create A Package
+            </button>
+          )}
+        </Link>
+        <Link to="/admin/allPackages">
+          {profile && profile.role === "Admin" && (
+            <button className="bg-primary p-3 rounded-lg hover:bg-gray-500 hover:text-white hover:no-underline text-white text-center m-2">
+              All Packages
+            </button>
+          )}
+        </Link>
       </div>
       <ToastContainer />
       <Footer />
