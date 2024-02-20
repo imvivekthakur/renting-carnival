@@ -283,7 +283,7 @@ const Checkout = () => {
                 value={formData.lastName}
                 onChange={handleInputChange}
                 placeholder="Last Name"
-                required="true"
+                required = "true"
               />
             </div>
           </div>

@@ -103,10 +103,18 @@ const addToCart = async (req, res, next) => {
                 );
             }
 
+            cart?.items?.map((item) => {
+                totalPriceInCart += item.product.price * item.quantity;
+            })
+            console.log("totalPriceInCart", totalPriceInCart)
+
             if (cart.items.length === 0 && product.price < maxPriceLimit) {
                 cart.items.push({ product: product._id, quantity: 1, price: product.price })
                 console.log("cart.item", cart.items)
                 // cart.item increases
+            } else if(product.price < maxPriceLimit && cart.items.length < maxItemsAllowed){
+                cart.items.push({ product: product._id, quantity: 1, price: product.price })
+                console.log("cart.item", cart.items)
             }
             else {
                 return next(
