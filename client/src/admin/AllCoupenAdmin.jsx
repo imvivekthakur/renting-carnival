@@ -91,12 +91,17 @@ const AllCoupenAdmin = () => {
                             <div className="product-card-link">
                                 <div className="rounded-lg overflow-hidden bg-gray-100 product-card">
                                     <img src={card.coupenImages[0]} alt="CoupenCode" className="object-cover h-64 w-full" />
-                                    <div className="p-4">
+                                    <div className="px-4 pt-2">
                                         <h1 className="text-sm font-bold p-1">
                                             Coupon Code : <span className="text-green-600 text-lg">{card.coupenCode}</span>
                                         </h1>
                                     </div>
-                                    <div className="p-4">
+                                    <div className="px-4">
+                                        <h1 className="text-sm font-bold p-1">
+                                            Description : <span className="text-green-600 text-lg">{card?.description}</span>
+                                        </h1>
+                                    </div>
+                                    <div className="px-4 pt-2">
                                         <h1 className="text-sm font-bold p-1">
                                             Discount : <span className="text-green-600 text-lg">{card?.discount}%</span>
                                         </h1>

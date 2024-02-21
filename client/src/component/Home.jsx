@@ -17,9 +17,10 @@ import Features from "./Features";
 import Trend from "./Trend";
 import DynamicProducts from "./DynamicProducts/DynamicProducts";
 import Deals from "./Deals";
+import AllCouponBanner from "./AllCouponBanner";
 
-const Home = ({allProducts}) => {
-  
+const Home = ({ allProducts }) => {
+
   useEffect(() => {
     // Scroll to the top when the component mounts
     window.scrollTo({
@@ -33,14 +34,15 @@ const Home = ({allProducts}) => {
       <Default_Navbar />
       <Slider />
       <City_Preference />
-      <Deals allProducts={allProducts}/>
+      <Deals allProducts={allProducts} />
+      <AllCouponBanner />
       {/* <Trend /> */}
       <Working />
       <Categories />
       <Rooms />
       <Setup />
       {/* <DynamicProducts /> */}
-      <Items allProducts={allProducts}/>
+      <Items allProducts={allProducts} />
       <Testimonials />
       <Features />
       <Footer />

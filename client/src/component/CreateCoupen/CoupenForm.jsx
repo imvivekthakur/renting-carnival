@@ -23,6 +23,7 @@ const CoupenForm = () => {
     const [sendImages, setSendImages] = useState(Array(1).fill(null));
     const [imagePreviews, setImagePreviews] = useState(Array(1).fill(null));
     const [coupenCode, setCoupenCode] = useState("");
+    const [description, setDescription] = useState("");
     const [discount, setDiscount] = useState();
     const editor = useRef(null);
 
@@ -54,6 +55,7 @@ const CoupenForm = () => {
         const fd = new FormData();
 
         fd.append("coupenCode", coupenCode);
+        fd.append("description", description);
         fd.append("discount", discount);
 
         sendImages.forEach((image, index) => {
@@ -78,6 +80,7 @@ const CoupenForm = () => {
 
                     // Reset form fields
                     setCoupenCode("");
+                    setDescription("");
                     setDiscount();
                     setSendImages("");
                 } else {
@@ -136,6 +139,24 @@ const CoupenForm = () => {
                                 onChange={(e) => setDiscount(e.target.value)}
                                 className="form-input mt-1 block w-full"
                                 placeholder="Don't need to add % , just write number"
+                                required
+                            />
+                        </div>
+                        <div className=" mb-3">
+                            <label
+                                htmlFor="coupenCode"
+                                className="block text-sm font-medium text-gray-600"
+                            >
+                                Coupon Description
+                            </label>
+                            <input
+                                type="text"
+                                id="description"
+                                name="description"
+                                value={description}
+                                onChange={(e) => setDescription(e.target.value)}
+                                className="form-input mt-1 block w-full"
+                                placeholder="Try to make it less than 15 words"
                                 required
                             />
                         </div>

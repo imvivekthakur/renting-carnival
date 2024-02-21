@@ -4,7 +4,7 @@ const cloudinary = require("cloudinary").v2;
 
 const createCoupen = async (req, res, next) => {
     try {
-        const { coupenCode, discount } = req.body;
+        const { coupenCode, discount , description } = req.body;
 
         if (!coupenCode) {
             next(new ErrorHandler(400, "coupenCode is required"));
@@ -37,7 +37,8 @@ const createCoupen = async (req, res, next) => {
         const coupen = await Coupen.create({
             coupenCode,
             coupenImages,
-            discount
+            discount,
+            description
         });
 
         console.log("Coupen ", coupen);

@@ -147,7 +147,7 @@ const Slider = () => {
           </div>
         </div>
       </div>
-      <Carousel interval={1000} showIndicators={false}>
+      <Carousel interval={1000} showIndicators={false} autoPlay infiniteLoop interval="4000">
         <div
           style={{
             height: "600px",

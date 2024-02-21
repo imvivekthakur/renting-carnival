@@ -25,7 +25,7 @@ export const ContactAPI = {
 }
 
 export const PackageAPI = {
-  deletePackage : BASE_URL + "/package/delete",
-  editPackage : BASE_URL + "/package/edit",
-  getSinglePackage : BASE_URL + "/package/get"
+  deletePackage: BASE_URL + "/package/delete",
+  editPackage: BASE_URL + "/package/edit",
+  getSinglePackage: BASE_URL + "/package/get"
 }
