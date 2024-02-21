@@ -19,7 +19,8 @@ const ProductCard = ({
   seller,
   category,
   productId,
-  tag
+  tag,
+  tagBgColor
 }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   useEffect(() => {
@@ -115,7 +116,7 @@ const ProductCard = ({
               className="object-cover h-64 w-full"
             />
             {
-              tag ? (<p className="absolute top-0 bg-black text-white p-2 text-xs rounded-lg">{tag}</p>) : ("")
+              tag ? (<p className={`absolute top-0 ${tagBgColor ? `bg-${tagBgColor}` : "bg-black"} text-white px-6 py-2 text-lg rounded-lg`}>{tag}</p>) : ("")
             }
           </div>
         </NavLink>

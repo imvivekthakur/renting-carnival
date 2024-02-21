@@ -31,6 +31,7 @@ const ProductForm = () => {
   const [combo, setCombo] = useState("");
   const [category, setCategory] = useState("");
   const [tag, setTag] = useState("");
+  const [tagBgColor, setTagBgColor] = useState("");
 
   const handleSendImage = (e, index) => {
     const newSendImages = [...sendImages];
@@ -129,6 +130,7 @@ const ProductForm = () => {
     fd.append("stealDeal", stealDeal);
     fd.append("combo", combo);
     fd.append("tag", tag);
+    fd.append("tagBgColor", tagBgColor);
 
     sendImages.forEach((image, index) => {
       if (image) {
@@ -173,6 +175,7 @@ const ProductForm = () => {
           setSendImagesDesc("");
           setCombo("")
           setTag("")
+          setTagBgColor("")
         } else {
           toast.error(`${res.payload.data.msg}`, {
             position: "top-right",
@@ -334,6 +337,23 @@ const ProductForm = () => {
                 value={tag}
                 onChange={(e) => setTag(e.target.value)}
                 className="form-input mt-1 block w-[40%]"
+              />
+            </div>
+            <div className=" mb-3">
+              <label
+                htmlFor="tag"
+                className="block text-sm font-medium text-gray-600"
+              >
+                Tag Background Color :
+              </label>
+              <input
+                type="text"
+                id="tagBgColor"
+                name="tagBgColor"
+                value={tagBgColor}
+                onChange={(e) => setTagBgColor(e.target.value)}
+                className="form-input mt-1 block w-[40%]"
+                placeholder="Enter the hex code . for ex- #000"
               />
             </div>
 

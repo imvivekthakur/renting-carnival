@@ -5,7 +5,7 @@ const cloudinary = require("cloudinary").v2;
 
 const createProduct = async (req, res, next) => {
   try {
-    const { name, description, price, stock, category, stealDeal, rent  , combo , tag} = req.body;
+    const { name, description, price, stock, category, stealDeal, rent  , combo , tag , tagBgColor} = req.body;
     // console.log("Request Body:", req.body);
 
     // console.log("Entire Request Object:", req);
@@ -29,6 +29,8 @@ const createProduct = async (req, res, next) => {
       next(new ErrorHandler(400, "Stock is required"));
     } else if (!category) {
       next(new ErrorHandler(400, "Category is required"));
+    } else if (!tagBgColor) {
+      next(new ErrorHandler(400, "tagBgColor is required"));
     }
 
     let files = req.files ? req.files.productImages : null;
@@ -94,7 +96,8 @@ const createProduct = async (req, res, next) => {
       productImages,
       productImagesDesc,
       rent,
-      tag
+      tag,
+      tagBgColor
     });
 
     console.log("product ", product);

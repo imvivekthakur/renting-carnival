@@ -58,6 +58,10 @@ const productSchema = new mongoose.Schema({
   combo: {
     type: String,
     default: "No"
+  },
+  tagBgColor : {
+    type : String,
+    default : "#000"
   }
 });
 

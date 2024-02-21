@@ -84,6 +84,7 @@ const Deals = ({ allProducts }) => {
                   seller={card.owner.name}
                   productId={card._id}
                   tag = {card.tag}
+                  tagBgColor = {card.tagBgColor}
                 />
               </div>
             ))}
