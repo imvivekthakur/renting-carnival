@@ -5,7 +5,7 @@ const cloudinary = require("cloudinary").v2;
 
 const createCategory = async (req, res, next) => {
     try {
-        const { name } = req.body;
+        const { name, featured } = req.body;
 
         if (!name) {
             next(new ErrorHandler(400, "Name is required"));
@@ -37,7 +37,8 @@ const createCategory = async (req, res, next) => {
 
         const category = await Category.create({
             name,
-            categoryImages
+            categoryImages,
+            featured
         });
 
         console.log("Category ", category);

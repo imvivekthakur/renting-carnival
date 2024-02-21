@@ -22,6 +22,7 @@ const CategoryForm = () => {
     const [sendImages, setSendImages] = useState(Array(1).fill(null));
     const [imagePreviews, setImagePreviews] = useState(Array(1).fill(null));
     const [name, setName] = useState("");
+    const [featured, setFeatured] = useState("");
     const editor = useRef(null);
 
     const handleSendImage = (e, index) => {
@@ -64,6 +65,7 @@ const CategoryForm = () => {
 
 
         fd.append("name", name);
+        fd.append("featured", featured);
 
         sendImages.forEach((image, index) => {
             if (image) {
@@ -88,6 +90,7 @@ const CategoryForm = () => {
                     // Reset form fields
                     setName("");
                     setSendImages("");
+                    setFeatured("")
                 } else {
                     toast.error(`${res.payload.data.message}`, {
                         position: "top-right",
@@ -128,6 +131,20 @@ const CategoryForm = () => {
                                 className="form-input mt-1 block w-full"
                                 required
                             />
+                        </div>
+                        <div className=" mb-3">
+                            <label
+                                htmlFor="stock"
+                                className="block text-sm font-medium text-gray-600"
+                            >
+                                Featured this category ?
+                            </label>
+                            <select onChange={(e) => setFeatured(e.target.value)} className="form-input mt-1 block w-[50%]" id="featured" name="featured" value={featured} required>
+                                <option value={""}>Select Option</option>
+                                <option value={"Yes"}>Yes</option>
+                                <option value={"No"}>No</option>
+                            </select>
+
                         </div>
                     </div>
 

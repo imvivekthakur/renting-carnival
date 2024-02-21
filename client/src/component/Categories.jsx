@@ -35,7 +35,7 @@ const Categories = () => {
         {
           allCategories?.map((category, index) => {
             let categoryName = category.name
-            categoryName = categoryName.replace(" " , "-")
+            categoryName = categoryName.replace(" ", "-")
             return (
               <div>
                 <Link to={`/category/${categoryName}`} key={index}>
