@@ -29,3 +29,11 @@ export const PackageAPI = {
   editPackage: BASE_URL + "/package/edit",
   getSinglePackage: BASE_URL + "/package/get"
 }
+
+export const RoomAPI = {
+  createRoom: BASE_URL + "/room/create",
+  getAllRoom: BASE_URL + "/room/getAll",
+  editRoom: BASE_URL + "/room/edit",
+  deleteRoom: BASE_URL + "/room/delete",
+  getSingleRoom: BASE_URL + "/room/getSingle"
+}

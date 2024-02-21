@@ -50,6 +50,9 @@ import AllPackageAdmin from "./admin/AllPackageAdmin";
 import AllProductPackage from "./component/PackagePage/AllProductPackage";
 import PackageCartView from "./component/PackagePage/PackageCartView";
 import PackageCartCheckout from "./component/PackagePage/PackageCartCheckout";
+import RoomForm from "./component/CreateRoom/RoomForm";
+import AllRoomAdmin from "./admin/AllRoomAdmin";
+import AllRooms from "./component/AllRooms";
 // import ProductForm from "./component/ProductForm";
 
 function App() {
@@ -94,6 +97,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/shop" element={<Shop allProducts={allProducts} />} />
           <Route path="/allBlogs" element={<AllBlog allBlogs={allBlogs} />} />
+          <Route path="/allRooms" element={<AllRooms />} />
           <Route path="/admin/allBlogs" element={<AllBlogsAdmin allBlogs={allBlogs} />} />
 
           <Route path="/blog/:dbId" element={<Blog />} />
@@ -121,6 +125,7 @@ function App() {
           <Route path="/admin/allPackages" element={<AllPackageAdmin />} />
           <Route path="/combos" element={<Combos allProducts={allProducts} />} />
           <Route path="/browse/packageProducts" element={<AllProductPackage />} />
+          <Route path="/admin/allRooms" element={<AllRoomAdmin />} />
 
           <Route path="/review" element={<Review />} />
           <Route path="/wishlist" element={<Wishlist />} />
@@ -143,6 +148,7 @@ function App() {
           <Route path="/category/create" element={<CategoryForm />} />
           <Route path="/coupen/create" element={<CoupenForm />} />
           <Route path="/package/create" element={<PackageForm />} />
+          <Route path="/room/create" element={<RoomForm />} />
 
         </Routes>
         <Toaster />
