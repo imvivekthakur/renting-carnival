@@ -40,5 +40,12 @@ export const RoomAPI = {
 
 
 export const TestimonialAPI = {
-  deleteTestimonial : BASE_URL + "/testimonial/delete"
+  deleteTestimonial: BASE_URL + "/testimonial/delete"
+}
+
+
+export const CategoryAPI = {
+  editCategory: BASE_URL + "/category/edit",
+  deleteCategory: BASE_URL + "/category/delete",
+  getSingleCategory : BASE_URL + "/category/getSingle"
 }

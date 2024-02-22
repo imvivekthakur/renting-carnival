@@ -55,6 +55,7 @@ import AllRoomAdmin from "./admin/AllRoomAdmin";
 import AllRooms from "./component/AllRooms";
 import TestimonialForm from "./component/CreateTestimonial/TestimonialForm";
 import AllTestimonialAdmin from "./admin/AllTestimonialAdmin";
+import AllCategoryAdmin from "./admin/AllCategoryAdmin";
 // import ProductForm from "./component/ProductForm";
 
 function App() {
@@ -129,6 +130,7 @@ function App() {
           <Route path="/browse/packageProducts" element={<AllProductPackage />} />
           <Route path="/admin/allRooms" element={<AllRoomAdmin />} />
           <Route path="/admin/allTestimonials" element={<AllTestimonialAdmin />} />
+          <Route path="/admin/allCategories" element={<AllCategoryAdmin />} />
 
           <Route path="/review" element={<Review />} />
           <Route path="/wishlist" element={<Wishlist />} />

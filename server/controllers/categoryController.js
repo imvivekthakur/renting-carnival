@@ -75,7 +75,68 @@ const getAllCategories = async (req, res, next) => {
 };
 
 
+const deleteCategory = async (req, res, next) => {
+    try {
+        const categoryId = req.params.categoryId;
+        console.log(categoryId);
+        // Check if the coupen exists
+        const coupen = await Category.findById(categoryId);
+        if (!coupen) {
+            throw new ErrorHandler(404, "Category not found.");
+        }
+
+        console.log(coupen);
+        // Delete the coupen
+        await Category.findByIdAndDelete(categoryId);
+
+        res.status(200).json({
+            success: true,
+            msg: "Category deleted successfully",
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json(new ErrorHandler(500, "Error while deleting Category"));
+    }
+};
+
+
+const editCategory = async (req, res, next) => {
+    const { id } = req.params
+
+    try {
+        const response = await Category.findByIdAndUpdate(id, req.body, { new: true })
+
+        return res.status(200).json({ success: true, response: response })
+    } catch (error) {
+        res.status(500).json({ error: 'Error updating document' });
+    }
+}
+
+
+const getSingleCategory = async (req, res, next) => {
+    try {
+        const categoryId = req.params.id;
+        const category = await Category.findById(categoryId);
+
+        if (!category) {
+            next(new ErrorHandler(400, "Category not found"));
+        }
+
+        return res.status(200).json({
+            success: true,
+            category,
+        });
+    } catch (error) {
+        console.log(error);
+        return error.response;
+    }
+};
+
+
 module.exports = {
     createCategory,
-    getAllCategories
+    getAllCategories,
+    deleteCategory,
+    editCategory,
+    getSingleCategory
 }
