@@ -4,6 +4,8 @@ import DynamicProducts from "./DynamicProducts/DynamicProducts";
 import Card from "./Card";
 import ProductCard from "./DynamicProducts/ProductCard";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { getAllCategoryThunk } from "../redux/categorySlice";
 
 const Items = ({ allProducts }) => {
   const [activeTab, setActiveTab] = useState(1);
@@ -30,20 +32,50 @@ const Items = ({ allProducts }) => {
     }
   };
 
+  const [allCategories, setAllCategories] = useState([]);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllCategoryThunk())
+      .then((res) => {
+        if (res.payload.data.success) {
+          setAllCategories(res.payload.data.allCategories);
+          setLoading(false);
+        }
+        return res;
+      })
+      .catch((err) => {
+        return err.response;
+      });
+
+  }, []);
+
   const getCategoryName = (index) => {
+    let featuredArray = [];
+    allCategories.map((category) => {
+      if (category?.featured === "Yes") {
+        featuredArray.push(category?.name)
+      } else { }
+    })
+
+    console.log("featuredArray", featuredArray)
+
     switch (index) {
       case 1:
         return "Popular";
       case 2:
-        return "Furniture";
+        return featuredArray[0];
       case 3:
-        return "Decorative Items";
+        return featuredArray[1];
       case 4:
-        return "Vehicles";
+        return featuredArray[2];
       default:
         return "";
     }
   };
+
+  let featuredArray = [];
 
   return (
     <>
@@ -55,45 +87,41 @@ const Items = ({ allProducts }) => {
       </div>
       <div className="flex flex-wrap w-[90%] mx-auto">
         <div
-          className={`text-center w-full lg:w-1/4 p-6 border-b-2 ${
-            activeTab === 1
+          className={`text-center w-full lg:w-1/4 p-6 border-b-2 ${activeTab === 1
               ? "text-primary border-primary font-bold cursor-pointer"
               : ""
-          }`}
+            }`}
           onClick={() => handleClick(1)}
         >
           Popular
         </div>
-        <div
-          className={`text-center w-full lg:w-1/4 p-6 border-b-2 ${
-            activeTab === 2
-              ? "text-primary border-primary font-bold cursor-pointer"
-              : ""
-          }`}
-          onClick={() => handleClick(2)}
-        >
-          Furniture
-        </div>
-        <div
-          className={`text-center w-full lg:w-1/4 p-6 border-b-2 ${
-            activeTab === 3
-              ? "text-primary border-primary font-bold cursor-pointer"
-              : ""
-          }`}
-          onClick={() => handleClick(3)}
-        >
-          Decorative Items
-        </div>
-        <div
-          className={`text-center w-full lg:w-1/4 p-6 border-b-2 ${
-            activeTab === 4
-              ? "text-primary border-primary font-bold cursor-pointer"
-              : ""
-          }`}
-          onClick={() => handleClick(4)}
-        >
-          Vehicle
-        </div>
+        {
+          allCategories.map((category) => {
+            if (category?.featured === "Yes") {
+              featuredArray.push(category?.name)
+            } else { }
+          })
+        }
+        {
+          featuredArray.length > 0 ? (
+            featuredArray.map((feature, index) => {
+              if (index < 3) {
+                return (
+                  <div
+                    className={`text-center w-full lg:w-1/4 p-6 border-b-2 ${activeTab === index + 2
+                      ? "text-primary border-primary font-bold cursor-pointer"
+                      : ""
+                      }`}
+                    onClick={() => handleClick(index + 2)}
+                  >
+                    {feature}
+                  </div>
+                )
+              } else {
+              }
+            })
+          ) : (<p className="text-black">No Data Found</p>)
+        }
       </div>
       {/* <Products/> */}
       {/* {console.log("filtered products ", filteredProducts)} */}

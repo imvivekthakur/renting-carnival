@@ -68,6 +68,8 @@ const Combos = () => {
               category={card.category}
               seller={card.owner.name}
               productId={card._id}
+              tag = {card?.tag}
+              tagBgColor={card?.tagBgColor}
             />
           </div>
         ))}

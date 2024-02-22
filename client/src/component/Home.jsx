@@ -42,7 +42,7 @@ const Home = ({ allProducts }) => {
       <Working />
       <Categories />
       <Rooms />
-      <FeaturedCategories />
+      {/* <FeaturedCategories /> */}
       <Setup />
       {/* <DynamicProducts /> */}
       <Items allProducts={allProducts} />
