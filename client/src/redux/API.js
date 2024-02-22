@@ -2,9 +2,9 @@ import axios from "axios";
 
 // export const BASE_URL =  "https://renting-carnival.onrender.com/"
 
-// export const BASE_URL = "https://renting-carnival-api.onrender.com"
+export const BASE_URL = "https://renting-carnival-api.onrender.com"
 
-export const BASE_URL = "http://localhost:4000"
+// export const BASE_URL = "http://localhost:4000"
 
 export default axios.create({
   baseURL: BASE_URL
