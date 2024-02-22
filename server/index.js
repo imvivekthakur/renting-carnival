@@ -31,6 +31,7 @@ const coupenRoutes = require("./routes/coupenRoutes.js")
 const packageCartRoutes = require('./routes/packageCartRoutes.js')
 const roomRoutes = require("./routes/roomRoutes.js")
 const testimonialRoutes = require("./routes/testimonialRoutes.js")
+const rentalRoutes = require("./routes/rentalRoutes.js")
 
 const { errorMiddleware } = require("./middleware/errorHandler");
 
@@ -84,6 +85,7 @@ app.use("/coupen", coupenRoutes, errorMiddleware)
 app.use("/packageCart", packageCartRoutes, errorMiddleware)
 app.use("/room", roomRoutes, errorMiddleware)
 app.use("/testimonial", testimonialRoutes, errorMiddleware)
+app.use("/rental", rentalRoutes, errorMiddleware)
 
 app.use("/order", orderRoutes, errorMiddleware);
 app.use("/stripe", stripeRoutes, errorMiddleware);

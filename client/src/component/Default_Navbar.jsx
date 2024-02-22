@@ -110,7 +110,7 @@ const DefaultNavbar = () => {
   return (
     <div>
       <nav className="fixed top-0 w-full bg-[#CDA274] dark:bg-gray-900 border-b border-gray-200 dark:border-gray-600 z-50">
-        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+        <div className="max-w-screen-[300px] flex flex-wrap items-center justify-between mx-auto p-4">
           <NavLink
             to="/"
             exact
@@ -189,13 +189,22 @@ const DefaultNavbar = () => {
                   Blog
                 </NavLink>
               </li>
-              <li className="mb-2 md:mb-0 w-52">
+              <li className="mb-2 md:mb-0 ">
                 <NavLink
                   to="/contact"
                   className="nav-link"
                   activeClassName="active-link"
                 >
                   Make an appointment
+                </NavLink>
+              </li>
+              <li className="mb-2 md:mb-0">
+                <NavLink
+                  to="/vehicle"
+                  className="nav-link"
+                  activeClassName="active-link"
+                >
+                  Vehicles
                 </NavLink>
               </li>
               <li className="flex items-center mt-5">
@@ -301,14 +310,8 @@ const DefaultNavbar = () => {
 
               <NavLink to="/package/cart">
                 <button className="ml-8 relative group">
-                  {/* <img
-                    src={Cart}
-                    alt="Cart Image"
-                    className="w-6 h-6 group-hover:scale-125 min-w-[24px] min-h-[24px] sm:mx-auto mt-5"
-                    id="img2"
-                  /> */}
-                  <p className="bg-[#cca273] text-white border border-white px-6 py-1 items-center">Cart</p>
-                  <p className="bg-black absolute -top-1 -right-2 rounded-full text-white px-2 py-1 text-xs group-hover:scale-125 transition-all duration-200">{allPackageCart?.length}</p>
+                  <p className="bg-[#cca273] text-white border border-white px-4 py-1 items-center">Cart</p>
+                  <p className="bg-black absolute -top-2 -right-2 rounded-full text-white text-xs px-2 py-1 group-hover:scale-125 transition-all duration-200">{allPackageCart?.length}</p>
                 </button>
               </NavLink>
             </div>

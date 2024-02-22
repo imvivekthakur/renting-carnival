@@ -46,7 +46,7 @@ const AllCategoryAdmin = () => {
         <>
             <DefaultNavbar />
             <div className="parent-container my-40">
-                <h2 className="w-full text-center py-4 text-2xl font-bold mt-4">All Coupon Code</h2>
+                <h2 className="w-full text-center py-4 text-2xl font-bold mt-4">All Categories</h2>
                 {loading ? (
                     <div className="loader-container w-[100%] mx-auto flex items-center justify-center">
                         <ColorRing

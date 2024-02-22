@@ -2,9 +2,9 @@ import axios from "axios";
 
 // export const BASE_URL =  "https://renting-carnival.onrender.com/"
 
-export const BASE_URL = "https://renting-carnival-api.onrender.com"
+// export const BASE_URL = "https://renting-carnival-api.onrender.com"
 
-// export const BASE_URL = "http://localhost:4000"
+export const BASE_URL = "http://localhost:4000"
 
 export default axios.create({
   baseURL: BASE_URL
@@ -47,5 +47,9 @@ export const TestimonialAPI = {
 export const CategoryAPI = {
   editCategory: BASE_URL + "/category/edit",
   deleteCategory: BASE_URL + "/category/delete",
-  getSingleCategory : BASE_URL + "/category/getSingle"
+  getSingleCategory: BASE_URL + "/category/getSingle"
+}
+
+export const RentalAPI = {
+  deleteRental: BASE_URL + "/rental/delete"
 }
