@@ -116,7 +116,7 @@ const ProductCard = ({
               className="object-cover h-64 w-full"
             />
             {
-              tag ? (<p className={`absolute top-0 ${tagBgColor ? `bg-${tagBgColor}` : "bg-black"} text-white px-6 py-2 text-lg rounded-lg`}>{tag}</p>) : ("")
+              tag ? (<p className={`absolute top-0 text-white px-6 py-2 text-lg rounded-lg`} style={{background : tagBgColor}}>{tag}</p>) : ("")
             }
           </div>
         </NavLink>
