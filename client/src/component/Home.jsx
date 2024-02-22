@@ -19,6 +19,7 @@ import DynamicProducts from "./DynamicProducts/DynamicProducts";
 import Deals from "./Deals";
 import AllCouponBanner from "./AllCouponBanner";
 import FeaturedCategories from "./FeaturedCategories";
+import Testimonial from "./Testimonial/Testimonial";
 
 const Home = ({ allProducts }) => {
 
@@ -45,7 +46,8 @@ const Home = ({ allProducts }) => {
       <Setup />
       {/* <DynamicProducts /> */}
       <Items allProducts={allProducts} />
-      <Testimonials />
+      {/* <Testimonials /> */}
+      <Testimonial />
       <Features />
       <Footer />
     </>

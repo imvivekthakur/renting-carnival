@@ -1,0 +1,17 @@
+.testimonial_bg {
+    position: relative;
+}
+
+.testimonial_bg::before {
+    content: "";
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    opacity: 0.4;
+    background: transparent;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.dev/svgjs' width='1440' height='560' preserveAspectRatio='none' viewBox='0 0 1440 560'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1033%26quot%3b)' fill='none'%3e%3cpath d='M -415.65787176425334%2c87 C -319.66%2c137 -127.66%2c322.8 64.34212823574666%2c337 C 256.34%2c351.2 352.34%2c147.8 544.3421282357467%2c158 C 736.34%2c168.2 832.34%2c375.6 1024.3421282357467%2c388 C 1216.34%2c400.4 1421.21%2c218.4 1504.3421282357467%2c220 C 1587.47%2c221.6 1452.87%2c360.8 1440%2c396' stroke='rgba(51%2c 121%2c 194%2c 0.58)' stroke-width='2'%3e%3c/path%3e%3cpath d='M -140.24738688253427%2c347 C -44.25%2c327.2 147.75%2c227.2 339.7526131174657%2c248 C 531.75%2c268.8 627.75%2c452 819.7526131174657%2c451 C 1011.75%2c450 1107.75%2c269 1299.7526131174657%2c243 C 1491.75%2c217 1751.7%2c337.8 1779.7526131174657%2c321 C 1807.8%2c304.2 1507.95%2c191.4 1440%2c159' stroke='rgba(51%2c 121%2c 194%2c 0.58)' stroke-width='2'%3e%3c/path%3e%3cpath d='M -836.4829889734565%2c220 C -740.48%2c266 -548.48%2c444.2 -356.48298897345643%2c450 C -164.48%2c455.8 -68.48%2c251 123.51701102654357%2c249 C 315.52%2c247 411.52%2c464.2 603.5170110265435%2c440 C 795.52%2c415.8 916.22%2c151.2 1083.5170110265435%2c128 C 1250.81%2c104.8 1368.7%2c284.8 1440%2c324' stroke='rgba(51%2c 121%2c 194%2c 0.58)' stroke-width='2'%3e%3c/path%3e%3cpath d='M -680.3192136127783%2c143 C -584.32%2c177.2 -392.32%2c290 -200.3192136127783%2c314 C -8.32%2c338 87.68%2c234.2 279.6807863872217%2c263 C 471.68%2c291.8 567.68%2c456.8 759.6807863872217%2c458 C 951.68%2c459.2 1103.62%2c293.4 1239.6807863872218%2c269 C 1375.74%2c244.6 1399.94%2c322.6 1440%2c336' stroke='rgba(51%2c 121%2c 194%2c 0.58)' stroke-width='2'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1033'%3e%3crect width='1440' height='560' fill='white'%3e%3c/rect%3e%3c/mask%3e%3c/defs%3e%3c/svg%3e");
+}

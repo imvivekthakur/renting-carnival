@@ -53,6 +53,8 @@ import PackageCartCheckout from "./component/PackagePage/PackageCartCheckout";
 import RoomForm from "./component/CreateRoom/RoomForm";
 import AllRoomAdmin from "./admin/AllRoomAdmin";
 import AllRooms from "./component/AllRooms";
+import TestimonialForm from "./component/CreateTestimonial/TestimonialForm";
+import AllTestimonialAdmin from "./admin/AllTestimonialAdmin";
 // import ProductForm from "./component/ProductForm";
 
 function App() {
@@ -126,6 +128,7 @@ function App() {
           <Route path="/combos" element={<Combos allProducts={allProducts} />} />
           <Route path="/browse/packageProducts" element={<AllProductPackage />} />
           <Route path="/admin/allRooms" element={<AllRoomAdmin />} />
+          <Route path="/admin/allTestimonials" element={<AllTestimonialAdmin />} />
 
           <Route path="/review" element={<Review />} />
           <Route path="/wishlist" element={<Wishlist />} />
@@ -149,6 +152,7 @@ function App() {
           <Route path="/coupen/create" element={<CoupenForm />} />
           <Route path="/package/create" element={<PackageForm />} />
           <Route path="/room/create" element={<RoomForm />} />
+          <Route path="/testimonial/create" element={<TestimonialForm />} />
 
         </Routes>
         <Toaster />
