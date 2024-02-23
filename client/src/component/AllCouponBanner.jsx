@@ -30,9 +30,9 @@ const AllCouponBanner = () => {
             });
     }, []);
     return (
-        <div className='mt-12 py-8 w-[92%] mx-auto h-[300px] flex flex-col gap-4'>
-            <h2 className='pl-6 text-2xl font-plus-jakarta-sans'>Offers and Discount</h2>
-            <div className='pl-6 flex flex-row  gap-6'>
+        <div className='my-12 py-8 w-[92%] mx-auto md:h-[300px] flex flex-col gap-4'>
+            <h2 className='pl-6 text-2xl font-plus-jakarta-sans '>Offers and Discount</h2>
+            <div className='pl-6 flex flex-col md:flex-row gap-6'>
 
                 {
                     allCoupens.map((coupen, index) => {
