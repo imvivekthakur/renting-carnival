@@ -11,7 +11,7 @@ import room5 from "../assets/Room5.svg";
 import Footer from "./Footer";
 import { loadStripe } from "@stripe/stripe-js";
 import Working from "./Working";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL, PackageAPI } from "../redux/API";
 
 const TogglePack = () => {
@@ -202,13 +202,20 @@ const TogglePack = () => {
   }
 
   // Storing packageId in localStorage
-  function storePackageId(packageId){
-    localStorage.setItem("packageId" , packageId)
+  function storePackageId(packageId) {
+    localStorage.setItem("packageId", packageId)
   }
 
   // Storing pricingFormat in localStorage
-  function storePricingFormat(format){
-    localStorage.setItem("pricingFormat" , format)
+  function storePricingFormat(format) {
+    localStorage.setItem("pricingFormat", format)
+  }
+
+  const navigate = useNavigate()
+
+  function navigateToPackageProduct(packageId){
+    localStorage.setItem("packageId", packageId)
+    navigate("/browse/packageProducts")
   }
 
 
@@ -259,7 +266,7 @@ const TogglePack = () => {
                   {packages?.map((pack, index) => {
 
                     // storing packageId 
-                    storePackageId(pack?._id)
+                    // storePackageId(pack?._id)
 
                     // storing pricingFormat 
                     storePricingFormat(pricingFormat)
@@ -299,11 +306,14 @@ const TogglePack = () => {
                             />
                             Select Plan
                           </label> */}
-                            <Link to="/browse/packageProducts">
+                            {/* <Link to="/browse/packageProducts">
                               <button className="px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
                                 Browse Catalog
                               </button>
-                            </Link>
+                            </Link> */}
+                            <button onClick={()=>navigateToPackageProduct(pack?._id)} className="px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
+                              Browse Catalog
+                            </button>
                           </div>
                           <p className="text-xs text-gray-500">
                             No booking or credit card fees!
