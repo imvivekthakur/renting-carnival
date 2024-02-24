@@ -11,6 +11,7 @@ import "./trend.css";
 import { createRentalThunk } from "../redux/rentalSubscriptionSlice";
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const RentalSubscription = () => {
 
@@ -80,6 +81,7 @@ const RentalSubscription = () => {
     setShowTimePicker2(!showTimePicker2);
   };
   const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -109,6 +111,8 @@ const RentalSubscription = () => {
             pauseOnHover: true,
             draggable: true,
           });
+
+          navigate('/category/Vehicles')
 
           setSelectedCity("")
           setSelectedCity2("")
