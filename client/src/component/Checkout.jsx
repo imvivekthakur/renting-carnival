@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
 import { BASE_URL, CouponAPI } from "../redux/API";
+import { getAllCoupenThunk } from "../redux/coupenSlice";
 
 const Checkout = () => {
   const dispatch = useDispatch();
@@ -240,6 +241,24 @@ const Checkout = () => {
   };
 
 
+  const [loading, setLoading] = useState(true);
+  const [allCoupens, setAllCoupens] = useState([]);
+
+  useEffect(() => {
+      dispatch(getAllCoupenThunk())
+          .then((res) => {
+              if (res.payload.data.success) {
+                  setAllCoupens(res.payload.data.allCoupens);
+                  setLoading(false);
+              }
+              return res;
+          })
+          .catch((err) => {
+              return err.response;
+          });
+  }, []);
+
+
   return (
     <>
       <DefaultNavbar />
@@ -283,7 +302,7 @@ const Checkout = () => {
                 value={formData.lastName}
                 onChange={handleInputChange}
                 placeholder="Last Name"
-                required = "true"
+                required="true"
               />
             </div>
           </div>
@@ -365,7 +384,7 @@ const Checkout = () => {
                 value={formData.pinCode}
                 onChange={handleInputChange}
                 placeholder="Pin Code"
-                required="true"
+                required = {true}
               />
             </div>
           </div>
@@ -386,11 +405,26 @@ const Checkout = () => {
           </div>
 
 
-          <div className={`flex flex-col gap-4 items-center justify-center mt-6 w-full text-black ${displayStatus}`}>
+          <div className={`flex flex-col gap-4 items-center justify-center mt-6 w-full text-black ${displayStatus} mb-8`}>
             <h2 className="text-sm">Do you have any Coupen Code ?</h2>
             <input className="w-[45%] rounded-lg p-2" onChange={(e) => setCoupenCode(e.target.value)} value={coupenCode} name="coupenCode" id="coupenCode" />
             <p className="text-xs bg-white p-2 rounded-lg cursor-pointer hover:scale-[1.06] transition-all duration-200 text-black" onClick={() => handleCoupenVerification(coupenCode)}>Apply</p>
           </div>
+
+
+          <div className={`pl-6 flex flex-col md:flex-row gap-6 mt-8 ${displayStatus} `}>
+
+            {
+              allCoupens.map((coupen, index) => {
+                return (
+                  <div key={index} className=' border px-4 py-2 flex flex-col gap-2 justify-center shadow-xl bg-[#cca273] rounded-lg hover:scale-[1.05] hover:shadow-sm duration-200 transition-all cursor-pointer'>
+                    <p className='font-bold'>{coupen?.coupenCode}</p>
+                  </div>
+                )
+              })
+            }
+          </div>
+
 
 
 
