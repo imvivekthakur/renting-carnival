@@ -169,10 +169,41 @@ const RentalSubscription = () => {
               </div>
               <p className="text-center my-3 text-gray-500">Bike Rental</p>
               <div className="">
-                <div className="border w-full rounded-lg hover:bg-primary text-black transition duration-[0.3s] hover:text-white">
-                  <button className="flex m-5 font-bold ">
+                <div className="flex flex-col md:flex-row justify-between items-center">
+                  {/* <button className="flex m-5 font-bold ">
                     <FiMapPin className="text-2xl mr-2" /> Location
-                  </button>
+                  </button> */}
+
+                  <div className="flex items-center gap-1">
+                    <input
+                      alt=""
+                      onClick={toggleCityDropdown}
+                      className="py-2 mt-2 px-2 border cursor-pointer"
+                    />
+                    <div className="dropdown-list">
+                      <select name="city" id="city" onChange={(e) => handleCitySelect(e.target.value)}>
+                        {cities.map((city) => (
+                          <option value={city} >{city}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <input
+                      alt=""
+                      onClick={toggleCityDropdown2}
+                      className="cursor-pointer border mt-2 py-2 px-2"
+                    />
+
+                    <div className="dropdown-list">
+                      <select name="city" id="city" onChange={(e) => handleCitySelect2(e.target.value)}>
+                        {cities.map((city) => (
+                          <option value={city} >{city}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
                 </div>
                 <div className="flex flex-col md:flex-row">
                   <div className="p-5 mt-2 w-full md:w-1/2 rounded-lg">
@@ -202,6 +233,32 @@ const RentalSubscription = () => {
                     />
                   </div>
                 </div>
+                <div className="flex flex-col md:flex-row justify-between items-center">
+                  <div className="">
+                    <h3 className="font-bold">Date</h3>
+                    <div className="">
+                      <DatePicker
+                        selected={selectedDate}
+                        className="w-[100%]"
+                        onChange={(date) => setSelectedDate(date)}
+                        dateFormat="yyyy-MM-dd"
+                        required={true}
+                      />
+                    </div>
+                  </div>
+                  <div className="">
+                    <h3 className="font-bold">Date</h3>
+                    <div className="">
+                      <DatePicker
+                        selected={selectedDate2}
+                        className="w-[100%]"
+                        onChange={(date) => setSelectedDate2(date)}
+                        dateFormat="yyyy-MM-dd"
+                        required={true}
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
               <button className="border w-full p-3 mt-2 rounded-full hover:bg-primary text-black transition duration-[0.3s] hover:text-white" type="submit">Search</button>
             </div>
@@ -209,7 +266,7 @@ const RentalSubscription = () => {
               <img src={bikerec} alt="" className="w-full rounded-lg" />
             </div>
           </div>
-          <div className="w-[80%] mx-auto m-8">
+          {/* <div className="w-[80%] mx-auto m-8">
             <div className="flex flex-wrap items-center">
               <div className="w-full lg:w-1/2 p-6 rounded-lg shadow-md">
                 <div className="flex items-center">
@@ -325,7 +382,7 @@ const RentalSubscription = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </form>
     </>

@@ -5,6 +5,8 @@ import Card from "./Card";
 import Footer from "./Footer";
 import ProductCard from "./DynamicProducts/ProductCard";
 import { ColorRing } from "react-loader-spinner";
+import { getAllCategoryThunk } from "../redux/categorySlice";
+import { useDispatch } from "react-redux";
 
 const Shop = ({ allProducts }) => {
   const [selectedCategory, setSelectedCategory] = useState("popular");
@@ -68,6 +70,30 @@ const Shop = ({ allProducts }) => {
   const currentProducts = filteredProduct.slice(startIndex, endIndex);
 
   console.log(currentProducts);
+
+
+
+  // category dynamic
+  const [allCategories, setAllCategories] = useState([]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllCategoryThunk())
+      .then((res) => {
+        if (res.payload.data.success) {
+          setAllCategories(res.payload.data.allCategories);
+          setLoading(false);
+        }
+        return res;
+      })
+      .catch((err) => {
+        return err.response;
+      });
+
+  }, []);
+
+
+
   return (
     <>
       <DefaultNavbar />
@@ -90,31 +116,22 @@ const Shop = ({ allProducts }) => {
               }`}
             onClick={() => setSelectedCategory("popular")}
           >
-            Popular
+            All
           </button>
-          <button
-            className={`mr-4 mt-4 border-2 border-primary px-4 py-2 rounded-full ${selectedCategory === "Furniture" ? "bg-primary text-white" : ""
-              }`}
-            onClick={() => setSelectedCategory("Furniture")}
-          >
-            Furniture
-          </button>
-          <button
-            className={`mr-4 mt-4 border-2 border-primary px-4 py-2 rounded-full ${selectedCategory === "Decorative Items"
-              ? "bg-primary text-white"
-              : ""
-              }`}
-            onClick={() => setSelectedCategory("Decorative Items")}
-          >
-            Decorative Items
-          </button>
-          <button
-            className={`mr-4 mt-4 border-2 border-primary px-4 py-2 rounded-full ${selectedCategory === "Vehicles" ? "bg-primary text-white" : ""
-              }`}
-            onClick={() => setSelectedCategory("Vehicles")}
-          >
-            Vehicles
-          </button>
+          {
+            allCategories?.map((category, index) => {
+              return (
+                <button
+                  key={index}
+                  className={`mr-4 mt-4 border-2 border-primary px-4 py-2 rounded-full ${selectedCategory === category.name ? "bg-primary text-white" : ""
+                    }`}
+                  onClick={() => setSelectedCategory(category.name)}
+                >
+                  {category.name}
+                </button>
+              )
+            })
+          }
         </div>
         <br />
         <div>
@@ -150,7 +167,7 @@ const Shop = ({ allProducts }) => {
                 category={card.category}
                 seller={card.owner.name}
                 productId={card._id}
-                tag = {card?.tag}
+                tag={card?.tag}
                 tagBgColor={card?.tagBgColor}
               />
             </div>

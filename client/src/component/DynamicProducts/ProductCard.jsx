@@ -92,12 +92,12 @@ const ProductCard = ({
             </div>
           )}
           {!loading && (
-            <button
+            stock > 0 && (<button
               onClick={handleAddToCart}
               className="w-48 block bg-white py-2 my-2 rounded-md"
             >
               Add To Cart
-            </button>
+            </button>)
           )}
           {!loading2 && (
             <button
@@ -116,8 +116,11 @@ const ProductCard = ({
               className="object-cover h-64 w-full"
             />
             {
-              tag ? (<p className={`absolute top-0 text-white px-6 py-2 text-lg rounded-lg`} style={{background : tagBgColor}}>{tag}</p>) : ("")
+              stock < 1 ? (<p className={`absolute top-0 text-white bg-black px-6 py-2 text-lg rounded-lg`}>Out Of Stock</p>) : (tag ? (<p className={`absolute top-0 text-white px-6 py-2 text-lg rounded-lg`} style={{ background: tagBgColor }}>{tag}</p>) : (""))
             }
+            {/* {
+              tag ? (<p className={`absolute top-0 text-white px-6 py-2 text-lg rounded-lg`} style={{background : tagBgColor}}>{tag}</p>) : ("")
+            } */}
           </div>
         </NavLink>
         <div className="p-4">

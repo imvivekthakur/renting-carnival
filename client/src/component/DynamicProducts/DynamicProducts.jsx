@@ -14,7 +14,9 @@ const DynamicProducts = () => {
     dispatch(getAllProductThunk())
       .then((res) => {
         if (res.payload.data.success) {
-          setAllProducts(res.payload.data.products);
+          let limitProduct = res.payload.data.products
+          limitProduct = limitProduct.slice(0, 6)
+          setAllProducts(limitProduct);
           setLoading(false);
         }
         return res;

@@ -24,11 +24,13 @@ const Items = ({ allProducts }) => {
     if (index === 1) {
       setFilteredProducts(allProducts); // Show all products for "Popular" tab
     } else {
+      let limitProduct = [];
       const filtered = allProducts.filter(
         (product) => product.category === getCategoryName(index)
       );
+      limitProduct = filtered.slice(0, 6)
       // console.log("filtered ", filtered);
-      setFilteredProducts(filtered);
+      setFilteredProducts(limitProduct);
     }
   };
 
@@ -88,8 +90,8 @@ const Items = ({ allProducts }) => {
       <div className="flex flex-wrap w-[90%] mx-auto">
         <div
           className={`text-center w-full lg:w-1/4 p-6 border-b-2 ${activeTab === 1
-              ? "text-primary border-primary font-bold cursor-pointer"
-              : ""
+            ? "text-primary border-primary font-bold cursor-pointer"
+            : ""
             }`}
           onClick={() => handleClick(1)}
         >
@@ -125,10 +127,10 @@ const Items = ({ allProducts }) => {
       </div>
       {/* <Products/> */}
       {/* {console.log("filtered products ", filteredProducts)} */}
-      {activeTab === 1 && <DynamicProducts />}
+      {activeTab === 1 && <DynamicProducts allProducts={allProducts} />}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8 w-[90%] mx-auto mt-5 pt-5 mb-5 ">
         {activeTab !== 1 &&
-          filteredProducts.map((card) => (
+          filteredProducts.map((card) => {
             <ProductCard
               img={card.productImages}
               desc={card.description}
@@ -140,7 +142,7 @@ const Items = ({ allProducts }) => {
               category={card.category}
               tag={card.tag}
             />
-          ))}
+          })}
       </div>
       <div className="text-center my-6">
         <Link to="/shop">

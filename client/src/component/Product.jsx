@@ -208,12 +208,22 @@ const Product = ({ allProducts }) => {
 
                   <div className="flex mt-4">
                     <div>
-                      <button
-                        className="bg-primary p-3 rounded-lg hover:bg-gray-500 hover:text-white hover:no-underline text-white text-center my-4"
-                        onClick={handleAddToCart}
-                      >
-                        Add To Cart
-                      </button>
+                      {
+                        product?.stock < 1 ? (<p className="my-2 bg-red-600 text-white px-4 py-2 rounded-lg">Out Of Stock</p>) : (<button
+                          className="bg-primary p-3 rounded-lg hover:bg-gray-500 hover:text-white hover:no-underline text-white text-center my-4"
+                          onClick={handleAddToCart}
+                        >
+                          Add To Cart
+                        </button>)
+                      }
+                    </div>
+                  </div>
+
+                  <div className="flex mt-4">
+                    <div>
+                      {
+                        product?.stock < 1 ? ('') : product?.tag ? ((<p className={'text-white bg-black px-6 py-2 text-lg rounded-lg'}>{product.tag}</p>)) : ('')
+                      }
                     </div>
                   </div>
 

@@ -12,7 +12,10 @@ const Categories = () => {
     dispatch(getAllCategoryThunk())
       .then((res) => {
         if (res.payload.data.success) {
-          setAllCategories(res.payload.data.allCategories);
+          let limitCategory = res.payload.data.allCategories
+          limitCategory = limitCategory.slice(0, 9)
+          setAllCategories(limitCategory);
+          console.log("limitCategory", limitCategory)
           console.log("res.payload.data.allCategories", res.payload.data.allCategories)
           setLoading(false);
         }
@@ -51,6 +54,11 @@ const Categories = () => {
           })
         }
       </div>
+      <Link to={'/shop'}>
+        <div>
+          <p className="text-xl bg-[#CDA274] w-fit text-white  font-bold m-8 mx-auto px-4 py-2 rounded-lg">Show More</p>
+        </div>
+      </Link>
       {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <div>
           <NavLink to="/furniture">

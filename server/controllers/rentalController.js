@@ -9,10 +9,6 @@ const createRental = async (req, res, next) => {
 
         owner = req.user._id;
 
-        if (req.user.role === "buyer") {
-            next(new ErrorHandler(400, "Buyer cannot create a rental"));
-        }
-
         if (!pickUpLocation) {
             next(new ErrorHandler(400, "pickUpLocation is required"));
         } else if (!pickUpDate) {

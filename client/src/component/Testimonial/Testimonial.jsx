@@ -51,7 +51,7 @@ const Testimonial = () => {
             <div className='my-6 md:my-12 mx-3 md:mx-12'>
                 <div className='py-2 md:py-4'>
                     {/* <h1 className='text-center text-2xl font-[Poppins] font-[500] leading-5 tracking-wider'>See What Others Are Saying</h1> */}
-                    <h1 className='text-center text-2xl font-[Poppins] font-[500] leading-5 tracking-wider'>Our Testimonials</h1>
+                    <h1 className='text-center text-primary text-4xl font-bold my-10'>Our Testimonials</h1>
                 </div>
 
                 <div className='px-2 md:px-12'>

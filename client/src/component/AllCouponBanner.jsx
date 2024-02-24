@@ -31,7 +31,7 @@ const AllCouponBanner = () => {
     }, []);
     return (
         <div className='my-12 py-8 w-[92%] mx-auto md:h-[300px] flex flex-col gap-4'>
-            <h2 className='pl-6 text-2xl font-plus-jakarta-sans '>Offers and Discount</h2>
+            <h2 className='text-center text-primary text-4xl font-bold my-10'>Offers and Discount</h2>
             <div className='pl-6 flex flex-col md:flex-row gap-6'>
 
                 {
