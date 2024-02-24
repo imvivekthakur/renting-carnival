@@ -152,7 +152,7 @@ const PackageCartView = () => {
                         </div> */}
 
                         <div className="bt text-white text-center mt-4 mb-4 text-lg">
-                            Pay :<span className="text-2xl"> Rs {pricingFormat === "halfYearly" ? singlePackageData.packagePrice[0] : singlePackageData.packagePrice[1]}</span> / month
+                            Pay :<span className="text-2xl"> Rs {pricingFormat === "halfYearly" ? singlePackageData?.packagePrice[0] : singlePackageData?.packagePrice[1]}</span> / month
                         </div>
 
                         <hr className="border-t-2 border-white my-2 w-full" />

@@ -191,9 +191,9 @@ const AllProductPackage = () => {
                 </div>
                 <br />
                 <div>
-                    <div className="mr-4 mt-4 border-0 border-b-2 border-primary px-4 py-2 text-black text-xl w-fit">
+                    {/* <div className="mr-4 mt-4 border-0 border-b-2 border-primary px-4 py-2 text-black text-xl w-fit">
                         Total Items in Cart : <span className='text-green-500 font-medium'>{allPackageCart?.length}</span> / {packageData?.limitProduct}
-                    </div>
+                    </div> */}
 
                     <div className="mr-4 mt-4 border-0 border-b-2 border-primary px-4 py-2 text-black text-xl w-fit">
                         Your Billing Cycle : <span className='text-green-500 font-medium'>{pricingFormat === "halfYearly" ? "Half Yearly" : "Yearly"}</span>

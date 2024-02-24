@@ -8,12 +8,155 @@ const { populate } = require("../models/otpModel");
 const addToCart = async (req, res, next) => {
     try {
 
-        console.log("Entering in Package Cart")
+        // console.log("Entering in Package Cart")
+        // const user = req.user;
+        // const userId = user._id;
+
+        // // packageId
+        // // const packageId = req.query.params
+
+        // if (!user) {
+        //     return next(new ErrorHandler(400, "Login or signup to continue"));
+        // }
+
+        // const { productId, packageId } = req.body;
+
+        // if (!productId) {
+        //     return next(new ErrorHandler(400, "select any product to continue"));
+        // }
+
+        // const product = await Product.findOne({
+        //     _id: productId,
+        // });
+        // console.log("product", product);
+
+        // if (!product) {
+        //     return next(new ErrorHandler(400, "Product not found"));
+        // }
+
+        // let cart = await PackageCart.findOne({ user: userId }).populate({
+        //     path: "items.product",
+        //     populate: {
+        //         path: "owner",
+        //         select: "name",
+        //     },
+        // });
+        // console.log("cart ", cart);
+
+        // if (!cart) {
+        //     cart = await PackageCart.create({ user: userId, items: [] });
+        //     console.log("cart which is created now")
+        // }
+
+        // const cartItem = cart?.items.find(
+        //     (item) => item.product && item.product.equals(product._id)
+        // );
+        // console.log("cartItem ", cartItem);
+
+        // const userPackage = await Package.findById({ _id: packageId, });
+        // const maxItemsAllowed = userPackage?.limitProduct;
+        // const maxPriceLimit = userPackage?.totalProductsCost;
+
+        // console.log(maxItemsAllowed, "maxItemsAllowed");
+        // console.log(maxPriceLimit, "maxPriceLimit");
+
+
+
+        // // Check if adding this product exceeds the maximum number of items allowed
+        // if (cart?.items?.length > maxItemsAllowed) {
+        //     return next(
+        //         new ErrorHandler(400, "Exceeded maximum number of items allowed")
+        //     );
+        // }
+
+        // let totalPriceInCart = 0;
+
+        // cart?.items?.map((item) => {
+        //     totalPriceInCart += item.product.price * item.quantity;
+        // })
+        // console.log("totalPriceInCart", totalPriceInCart)
+
+
+        // if (cartItem) {
+
+        //     // let totalPriceInCart = 0;
+
+        //     // if (cart?.items?.length > 0) {
+        //     //     cart?.items?.map((item) => {
+        //     //         // console.log("item", item)
+        //     //         // totalPriceInCart = totalPriceInCart +  item.product.price * item.quantity
+        //     //         totalSum= item.product.price * item.quantity;
+        //     //         totalPriceInCart = totalPriceInCart + totalSum
+        //     //     })
+        //     //     console.log("totalPriceInCart cartItem", totalPriceInCart)
+        //     // }
+
+        //     if (totalPriceInCart <= maxPriceLimit && product.price <= maxPriceLimit && cart?.items?.length < maxItemsAllowed) {
+        //         console.log("cart.items.length", cart?.items?.length)
+        //         await PackageCart.populate(cartItem, { path: "product" });
+        //         if (cartItem.quantity < maxItemsAllowed) {
+        //             // Product already in cart, increase quantity
+        //             cartItem.quantity++;
+        //         } else {
+        //             return next(
+        //                 new ErrorHandler(400, "Adding this product exceeds Max Items limit")
+        //             );
+        //         }
+        //     }
+        //     else {
+        //         return next(
+        //             new ErrorHandler(400, "Exceeds Price limit or Exceed no of items limit")
+        //         );
+        //     }
+
+        // } else {
+
+        //     console.log("came in this else part")
+
+        //     let totalProductquantity = 0;
+
+        //     cart?.items?.map((item, index) => {
+        //         totalProductquantity = totalProductquantity + item?.quantity
+        //     })
+
+        //     console.log("totalProductquantity", totalProductquantity)
+
+        //     if (cart?.items?.length > maxItemsAllowed || totalProductquantity == maxItemsAllowed) {
+        //         return next(
+        //             new ErrorHandler(400, "Exceeded maximum number of items allowed")
+        //         );
+        //     }
+
+        //     // cart?.items?.map((item) => {
+        //     //     totalPriceInCart += item.product.price * item.quantity;
+        //     // })
+        //     console.log("totalPriceInCart else statemetn", totalPriceInCart)
+
+        //     if (cart?.items.length === 0 && product.price <= maxPriceLimit && totalPriceInCart <= maxPriceLimit) {
+        //         cart?.items.push({ product: product._id, quantity: 1, price: product.price })
+        //         console.log("cart.item", cart?.items)
+        //         // cart.item increases
+        //     } else if (product.price <= maxPriceLimit && cart?.items.length < maxItemsAllowed && totalPriceInCart <= maxPriceLimit) {
+        //         cart?.items.push({ product: product._id, quantity: 1, price: product.price })
+        //         console.log("cart.item", cart?.items)
+        //     }
+        //     else {
+        //         return next(
+        //             new ErrorHandler(400, "Adding this product exceeds price limit")
+        //         );
+        //     }
+        //     console.log("cart", cart)
+        // }
+
+
+
+
+
+        // -------------
+
+        console.log("Entering in Package Cart");
         const user = req.user;
         const userId = user._id;
-
-        // packageId
-        // const packageId = req.query.params
 
         if (!user) {
             return next(new ErrorHandler(400, "Login or signup to continue"));
@@ -22,12 +165,10 @@ const addToCart = async (req, res, next) => {
         const { productId, packageId } = req.body;
 
         if (!productId) {
-            return next(new ErrorHandler(400, "select any product to continue"));
+            return next(new ErrorHandler(400, "Select any product to continue"));
         }
 
-        const product = await Product.findOne({
-            _id: productId,
-        });
+        const product = await Product.findOne({ _id: productId });
         console.log("product", product);
 
         if (!product) {
@@ -43,105 +184,55 @@ const addToCart = async (req, res, next) => {
         });
         console.log("cart ", cart);
 
-        const cartItem = cart?.items.find(
-            (item) => item.product && item.product.equals(product._id)
-        );
-        console.log("cartItem ", cartItem);
+        if (!cart) {
+            cart = await PackageCart.create({ user: userId, items: [] });
+            console.log("cart which is created now")
+        }
 
-        const userPackage = await Package.findById({ _id: packageId, });
-        const maxItemsAllowed = userPackage?.limitProduct;
-        const maxPriceLimit = userPackage?.totalProductsCost;
+        const userPackage = await Package.findById(packageId);
+        const maxItemsAllowed = userPackage.limitProduct;
+        const maxPriceLimit = userPackage.totalProductsCost;
 
         console.log(maxItemsAllowed, "maxItemsAllowed");
         console.log(maxPriceLimit, "maxPriceLimit");
 
-        // Check if adding this product exceeds the maximum number of items allowed
-        if (cart?.items?.length > maxItemsAllowed) {
-            return next(
-                new ErrorHandler(400, "Exceeded maximum number of items allowed")
-            );
+        let totalQuantityInCart = 0;
+
+        cart.items.forEach(item => {
+            totalQuantityInCart += item.quantity;
+        });
+
+        console.log("totalQuantityInCart", totalQuantityInCart);
+
+        if (totalQuantityInCart >= maxItemsAllowed) {
+            return next(new ErrorHandler(400, "Exceeded maximum number of items allowed"));
         }
 
         let totalPriceInCart = 0;
 
-        cart?.items?.map((item) => {
+        cart.items.forEach(item => {
             totalPriceInCart += item.product.price * item.quantity;
-        })
-        console.log("totalPriceInCart", totalPriceInCart)
+        });
 
+        console.log("totalPriceInCart", totalPriceInCart);
 
-        if (cartItem) {
-            // let totalPriceInCart = 0;
-
-            if (cart?.items?.length > 0) {
-                cart?.items?.map((item) => {
-                    console.log("item", item)
-                    // totalPriceInCart = totalPriceInCart +  item.product.price * item.quantity
-                    totalPriceInCart += item.product.price * item.quantity;
-                })
-                console.log("totalPriceInCart", totalPriceInCart)
-            }
-
-            if (totalPriceInCart <= maxPriceLimit && product.price <= maxPriceLimit && cart?.items?.length <= maxItemsAllowed) {
-                await PackageCart.populate(cartItem, { path: "product" });
-                // Product already in cart, increase quantity
-                cartItem.quantity++;
-            }
-            else {
-                return next(
-                    new ErrorHandler(400, "Adding this product exceeds price limit")
-                );
-            }
-
-        } else {
-
-            console.log("came in this else part")
-
-            if (cart?.items?.length > maxItemsAllowed) {
-                return next(
-                    new ErrorHandler(400, "Exceeded maximum number of items allowed")
-                );
-            }
-
-            cart?.items?.map((item) => {
-                totalPriceInCart += item.product.price * item.quantity;
-            })
-            console.log("totalPriceInCart", totalPriceInCart)
-
-            if (cart?.items.length === 0 && product.price < maxPriceLimit) {
-                cart?.items.push({ product: product._id, quantity: 1, price: product.price })
-                console.log("cart.item", cart?.items)
-                // cart.item increases
-            } else if(product.price < maxPriceLimit && cart?.items.length < maxItemsAllowed){
-                cart?.items.push({ product: product._id, quantity: 1, price: product.price })
-                console.log("cart.item", cart?.items)
-            }
-            else {
-                return next(
-                    new ErrorHandler(400, "Adding this product exceeds price limit")
-                );
-            }
-            console.log("cart", cart)
+        if (product.price + totalPriceInCart > maxPriceLimit) {
+            return next(new ErrorHandler(400, "Adding this product exceeds price limit"));
         }
 
-        // let newCart = await PackageCart.findOne({ user: userId }).populate('items.product');
-        // console.log("new Cart ", newCart);
+        let cartItem = cart.items.find(item => item.product && item.product.equals(product._id));
 
-        // Calculate the total price in the cart
-        // const totalPriceInCart = cart.items.reduce(
-        //     (total, item) => total + item.product.price * item.quantity,
-        //     0
-        // );
+        if (cartItem) {
+            if (cartItem.quantity + 1 > maxItemsAllowed) {
+                return next(new ErrorHandler(400, "Adding this product exceeds Max Items limit"));
+            }
+            await PackageCart.populate(cartItem, { path: "product" });
+            cartItem.quantity++;
+        } else {
+            cart.items.push({ product: product._id, quantity: 1, price: product.price });
+        }
 
-        // console.log("totalPriceinCart", totalPriceInCart)
-
-        // const productPrice = product.price;
-
-        // if (totalPriceInCart > maxPriceLimit) {
-        //     return next(
-        //         new ErrorHandler(400, "Adding this product exceeds price limit")
-        //     );
-        // }
+        console.log("cart", cart);
         await cart.save();
 
         return res.status(200).json({
