@@ -13,6 +13,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import Working from "./Working";
 import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL, PackageAPI } from "../redux/API";
+import Rooms from "./Rooms";
 
 const TogglePack = () => {
   useEffect(() => {
@@ -213,7 +214,7 @@ const TogglePack = () => {
 
   const navigate = useNavigate()
 
-  function navigateToPackageProduct(packageId){
+  function navigateToPackageProduct(packageId) {
     localStorage.setItem("packageId", packageId)
     navigate("/browse/packageProducts")
   }
@@ -311,7 +312,7 @@ const TogglePack = () => {
                                 Browse Catalog
                               </button>
                             </Link> */}
-                            <button onClick={()=>navigateToPackageProduct(pack?._id)} className="px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
+                            <button onClick={() => navigateToPackageProduct(pack?._id)} className="px-3 py-2 bg-primary hover:bg-gray-700 hover:text-white rounded-md font-medium text-sm lg:text-base transition-background">
                               Browse Catalog
                             </button>
                           </div>
@@ -352,7 +353,7 @@ const TogglePack = () => {
             </div>
           </div>
         </div>
-        <div className="max-w-screen-lg mx-auto p-8 my-10">
+        {/* <div className="max-w-screen-lg mx-auto p-8 my-10">
           <h2 className="text-3xl font-bold mb-4 text-center">
             Unlimited opportunities to furnish your home.
           </h2>
@@ -382,7 +383,8 @@ const TogglePack = () => {
               Explore More
             </button>
           </div>
-        </div>
+        </div> */}
+        <Rooms />
         <div className="w-[90%] mx-auto my-20">
           <div className="text-center m-8">
             <h1 className="text-2xl font-bold m-3">

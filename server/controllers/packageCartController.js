@@ -56,7 +56,7 @@ const addToCart = async (req, res, next) => {
         console.log(maxPriceLimit, "maxPriceLimit");
 
         // Check if adding this product exceeds the maximum number of items allowed
-        if (cart.items.length > maxItemsAllowed) {
+        if (cart?.items?.length > maxItemsAllowed) {
             return next(
                 new ErrorHandler(400, "Exceeded maximum number of items allowed")
             );
@@ -73,8 +73,8 @@ const addToCart = async (req, res, next) => {
         if (cartItem) {
             // let totalPriceInCart = 0;
 
-            if (cart.items.length > 0) {
-                cart.items.map((item) => {
+            if (cart?.items?.length > 0) {
+                cart?.items?.map((item) => {
                     console.log("item", item)
                     // totalPriceInCart = totalPriceInCart +  item.product.price * item.quantity
                     totalPriceInCart += item.product.price * item.quantity;
@@ -82,7 +82,7 @@ const addToCart = async (req, res, next) => {
                 console.log("totalPriceInCart", totalPriceInCart)
             }
 
-            if (totalPriceInCart <= maxPriceLimit && product.price <= maxPriceLimit && cart.items.length <= maxItemsAllowed) {
+            if (totalPriceInCart <= maxPriceLimit && product.price <= maxPriceLimit && cart?.items?.length <= maxItemsAllowed) {
                 await PackageCart.populate(cartItem, { path: "product" });
                 // Product already in cart, increase quantity
                 cartItem.quantity++;
@@ -97,7 +97,7 @@ const addToCart = async (req, res, next) => {
 
             console.log("came in this else part")
 
-            if (cart.items.length > maxItemsAllowed) {
+            if (cart?.items?.length > maxItemsAllowed) {
                 return next(
                     new ErrorHandler(400, "Exceeded maximum number of items allowed")
                 );
@@ -108,13 +108,13 @@ const addToCart = async (req, res, next) => {
             })
             console.log("totalPriceInCart", totalPriceInCart)
 
-            if (cart.items.length === 0 && product.price < maxPriceLimit) {
-                cart.items.push({ product: product._id, quantity: 1, price: product.price })
-                console.log("cart.item", cart.items)
+            if (cart?.items.length === 0 && product.price < maxPriceLimit) {
+                cart?.items.push({ product: product._id, quantity: 1, price: product.price })
+                console.log("cart.item", cart?.items)
                 // cart.item increases
-            } else if(product.price < maxPriceLimit && cart.items.length < maxItemsAllowed){
-                cart.items.push({ product: product._id, quantity: 1, price: product.price })
-                console.log("cart.item", cart.items)
+            } else if(product.price < maxPriceLimit && cart?.items.length < maxItemsAllowed){
+                cart?.items.push({ product: product._id, quantity: 1, price: product.price })
+                console.log("cart.item", cart?.items)
             }
             else {
                 return next(

@@ -9,6 +9,7 @@ import { getAllProductThunk } from '../../redux/productSlice';
 import PackageProductCard from './PackageProductCard';
 import { BASE_URL, PackageAPI } from '../../redux/API';
 import { getPackageCartThunk } from '../../redux/packageCartSlice';
+import { getAllCategoryThunk } from '../../redux/categorySlice';
 
 
 const AllProductPackage = () => {
@@ -61,6 +62,8 @@ const AllProductPackage = () => {
         };
         fetchSinglePackage();
     }, []);
+
+
 
     const getPackageCartItems = () => {
         dispatch(getPackageCartThunk())
@@ -128,6 +131,24 @@ const AllProductPackage = () => {
     const endIndex = startIndex + itemsPerPage;
     const currentProducts = filteredProduct.slice(startIndex, endIndex);
 
+    // category dynamic
+    const [allCategories, setAllCategories] = useState([]);
+
+    useEffect(() => {
+        dispatch(getAllCategoryThunk())
+            .then((res) => {
+                if (res.payload.data.success) {
+                    setAllCategories(res.payload.data.allCategories);
+                    setLoading(false);
+                }
+                return res;
+            })
+            .catch((err) => {
+                return err.response;
+            });
+
+    }, []);
+
     console.log(currentProducts);
     return (
         <>
@@ -151,31 +172,22 @@ const AllProductPackage = () => {
                             }`}
                         onClick={() => setSelectedCategory("popular")}
                     >
-                        Popular
+                        All
                     </button>
-                    <button
-                        className={`mr-4 mt-4 border-2 border-primary px-4 py-2 rounded-full ${selectedCategory === "Furniture" ? "bg-primary text-white" : ""
-                            }`}
-                        onClick={() => setSelectedCategory("Furniture")}
-                    >
-                        Furniture
-                    </button>
-                    <button
-                        className={`mr-4 mt-4 border-2 border-primary px-4 py-2 rounded-full ${selectedCategory === "Decorative Items"
-                            ? "bg-primary text-white"
-                            : ""
-                            }`}
-                        onClick={() => setSelectedCategory("Decorative Items")}
-                    >
-                        Decorative Items
-                    </button>
-                    <button
-                        className={`mr-4 mt-4 border-2 border-primary px-4 py-2 rounded-full ${selectedCategory === "Vehicles" ? "bg-primary text-white" : ""
-                            }`}
-                        onClick={() => setSelectedCategory("Vehicles")}
-                    >
-                        Vehicles
-                    </button>
+                    {
+                        allCategories?.map((category, index) => {
+                            return (
+                                <button
+                                    key={index}
+                                    className={`mr-4 mt-4 border-2 border-primary px-4 py-2 rounded-full ${selectedCategory === category.name ? "bg-primary text-white" : ""
+                                        }`}
+                                    onClick={() => setSelectedCategory(category.name)}
+                                >
+                                    {category.name}
+                                </button>
+                            )
+                        })
+                    }
                 </div>
                 <br />
                 <div>
@@ -202,13 +214,13 @@ const AllProductPackage = () => {
                                 seller={card.owner.name}
                                 productId={card._id}
                                 packageId={packageId}
-                                pricingFormat = {pricingFormat}
+                                pricingFormat={pricingFormat}
                             />
                         </div>
                     ))
                 ) : (
                     <div className="loader-container w-full h-full flex items-center justify-center">
-                        <ColorRing
+                        {/* <ColorRing
                             visible={true}
                             height="80"
                             width="80"
@@ -221,7 +233,8 @@ const AllProductPackage = () => {
                             }}
                             wrapperClass="color-ring-wrapper"
                             colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
-                        />
+                        /> */}
+                        <p className='text-[#cda274] text-center md:text-4xl text-2xl font-bold my-10'>No Products found </p>
                     </div>
                 )}
             </div>

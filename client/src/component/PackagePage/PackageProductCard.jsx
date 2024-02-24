@@ -36,7 +36,7 @@ const PackageProductCard = ({
 
     const handleAddToCart = () => {
         setLoading(true);
-        dispatch(addToPackageCartThunk({ productId , packageId }))
+        dispatch(addToPackageCartThunk({ productId, packageId }))
             .then((res) => {
                 if (res.payload.data.success) {
                     setLoading(false);
@@ -56,7 +56,7 @@ const PackageProductCard = ({
 
     const addToWishlistF = () => {
         setLoading2(true);
-        dispatch(addToWishlistThunk({ productId}))
+        dispatch(addToWishlistThunk({ productId }))
             .then((res) => {
                 setLoading2(false);
                 if (res.payload.data.success) {
