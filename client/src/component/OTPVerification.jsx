@@ -8,12 +8,12 @@ import toast from "react-hot-toast";
 const OTPVerification = () => {
   const [otp, setOTP] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
-  // const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  let email = localStorage.getItem('userEmail')
+  // let email = localStorage.getItem('userEmail')
 
   const data = {
     email,
@@ -34,7 +34,10 @@ const OTPVerification = () => {
         if (res.payload.data.success) {
           toast.success(`${res.payload.data.msg}`);
           setLoading(false);
+          
+          setEmail("");
           setOTP("");
+
 
           localStorage.setItem("userInfo", JSON.stringify(res.payload.data));
 
