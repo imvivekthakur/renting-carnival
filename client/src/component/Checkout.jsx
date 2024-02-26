@@ -165,19 +165,25 @@ const Checkout = () => {
 
 
   const makePayment = async () => {
+
+    if (formData.firstName === "" || formData.lastName === "" || formData.email === "" || formData.phone === "" || formData.country === "" || formData.address === "" || formData.city === "" || formData.pinCode === "") {
+      toast.error("All Fields are required")
+      return;
+    }
+    
     const stripe = await loadStripe(
       "pk_test_51OUUpPSAXRW2sHukUtP8nHfxLnDC2pX0pgP0LdWW0BEUdWQh5txtBTux9yPvNiWGQYDyqYBqBOYhn4Ej1Con6LU300fMfqNxOi"
     );
     const body = {
       products: cart2,
       customer: {
-        name: "John Doe",
+        name: formData.firstName + formData.lastName,
         address: {
-          line1: "123 Main St",
-          city: "New Delhi",
-          state: "Delhi",
-          postal_code: "110043",
-          country: "IN",
+          line1: formData.address,
+          city: formData.city,
+          state: formData.city,
+          postal_code: formData.pinCode,
+          country: formData.country,
         },
       },
       totalPrice: overallTotal
