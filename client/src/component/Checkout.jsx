@@ -71,13 +71,21 @@ const Checkout = () => {
   };
 
   const placeOrder = async () => {
+
+    console.log("fromData", formData)
+
+    if (formData.firstName === "" || formData.lastName === "" || formData.email === "" || formData.phone === "" || formData.country === "" || formData.address === "" || formData.city === "" || formData.pinCode === "") {
+      toast.error("All Fields are required")
+      return;
+    }
+
     let accessToken = await JSON.parse(localStorage.getItem("userInfo"))
       .accessToken;
     try {
       const productsForOrder = cart2.map((item) => ({
         _id: item.product._id,
       }));
-      const response = await fetch("https://renting-carnival.onrender.com/order/create", {
+      const response = await fetch(`${BASE_URL}/order/create`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -245,17 +253,17 @@ const Checkout = () => {
   const [allCoupens, setAllCoupens] = useState([]);
 
   useEffect(() => {
-      dispatch(getAllCoupenThunk())
-          .then((res) => {
-              if (res.payload.data.success) {
-                  setAllCoupens(res.payload.data.allCoupens);
-                  setLoading(false);
-              }
-              return res;
-          })
-          .catch((err) => {
-              return err.response;
-          });
+    dispatch(getAllCoupenThunk())
+      .then((res) => {
+        if (res.payload.data.success) {
+          setAllCoupens(res.payload.data.allCoupens);
+          setLoading(false);
+        }
+        return res;
+      })
+      .catch((err) => {
+        return err.response;
+      });
   }, []);
 
 
@@ -384,7 +392,7 @@ const Checkout = () => {
                 value={formData.pinCode}
                 onChange={handleInputChange}
                 placeholder="Pin Code"
-                required = {true}
+                required={true}
               />
             </div>
           </div>
